@@ -1,0 +1,184 @@
+package models.services.product;
+
+import models.entities.Product;
+import models.entities.ProductImages;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import utils.FileUtil;
+import utils.HibernateUtils;
+import view_models.products.ProductCreateRequest;
+import view_models.products.ProductGetPagingRequest;
+import view_models.products.ProductUpdateRequest;
+import view_models.products.ProductViewModel;
+
+import java.util.*;
+
+public class ProductService implements IProductService {
+
+    private static ProductService instance = null;
+
+    public ProductService(){
+
+    }
+    @Override
+    public int insert(ProductCreateRequest request) {
+        Session session = HibernateUtils.getSession();
+        Transaction tx = null;
+
+        Product product = new Product();
+
+        product.setName(request.getProductName());
+        product.setDescription(request.getDescription());
+        product.setOrigin(request.getOrigin());
+        product.setDateCreated(request.getDateCreated());
+        product.setStatus(request.getStatus());
+        product.setPrice(request.getPrice());
+        product.setQuantity(request.getQuantity());
+        product.setCategoryId(request.getCategoryId());
+        product.setBrandId(request.getBrandId());
+        product.setSize(request.getSize());
+        product.setColor(request.getColor());
+
+        int productId = -1;
+        try {
+            tx = session.beginTransaction();
+            session.persist(product);
+            productId = product.getProductId();
+            if(productId == -1){
+                return -1;
+            }
+            ProductImages img = new ProductImages();
+            img.setDefault(true);
+            img.setProductId(productId);
+            img.setImage(FileUtil.encodeBase64(request.getImage()));
+            session.persist(img);
+
+            tx.commit();
+        }catch(Exception e){
+            if(tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        session.close();
+        return productId;
+    }
+
+    @Override
+    public boolean update(ProductUpdateRequest request) {
+        Session session = HibernateUtils.getSession();
+        Transaction tx = null;
+        Product product = session.find(Product.class, request.getProductId());
+
+        product.setName(request.getProductName());
+        product.setOrigin(request.getOrigin());
+        product.setDescription(request.getDescription());
+        product.setStatus(request.getStatus());
+        product.setDateCreated(request.getDateCreated());
+        product.setPrice(request.getPrice());
+        product.setQuantity(request.getQuantity());
+        product.setCategoryId(request.getCategoryId());
+        product.setBrandId(request.getBrandId());
+        product.setSize(request.getSize());
+        product.setColor(request.getColor());
+
+        try {
+            tx = session.beginTransaction();
+            session.merge(product);
+
+            if(request.getImage() != null){
+
+                Query q = session.createQuery("select ProductImages from ProductImages where productId=:s1 and isDefault = true");
+                q.setParameter("s1", request.getProductId());
+
+                ProductImages image = (ProductImages)q.getSingleResult();
+
+                image.setImage(FileUtil.encodeBase64(request.getImage()));
+
+                session.merge(image);
+            }
+
+            tx.commit();
+        }catch(Exception e){
+            if(tx != null)
+                tx.rollback();
+            e.printStackTrace();
+            session.close();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean delete(Integer entityId) {
+        Session session = HibernateUtils.getSession();
+        Product product = session.find(Product.class, entityId);
+        product.setStatus(0);
+        return HibernateUtils.merge(product);
+    }
+
+    public static ProductService getInstance() {
+        if(instance == null)
+            instance = new ProductService();
+        return instance;
+    }
+    private ProductViewModel getProductViewModel(Product product, Session session){
+        Query q1 = session.createQuery("select image from ProductImages where id =:s1 and isDefault = true");
+        q1.setParameter("s1", product.getProductId());
+        String image = q1.getSingleResult().toString();
+        Query q2 = session.createQuery("select brandName from Brand where brandId =:s1" );
+        q2.setParameter("s1", product.getBrandId());
+        String brandName = q2.getSingleResult().toString();
+        Query q3 = session.createQuery("select categoryName from Category where categoryId =:s1" );
+        q3.setParameter("s1", product.getCategoryId());
+        String categoryName = q3.getSingleResult().toString();
+
+        ProductViewModel productViewModel = new ProductViewModel();
+
+        productViewModel.setProductId(product.getProductId());
+        productViewModel.setName(product.getName());
+        productViewModel.setDescription(product.getDescription());
+        productViewModel.setOrigin(product.getOrigin());
+        productViewModel.setDateCreated(product.getDateCreated());
+        productViewModel.setStatus(product.getStatus());
+        productViewModel.setPrice(product.getPrice());
+        productViewModel.setQuantity(product.getQuantity());
+        productViewModel.setImage(image);
+        productViewModel.setBrandName(brandName);
+        productViewModel.setCategoryName(categoryName);
+        productViewModel.setSize(product.getSize());
+        productViewModel.setColor(product.getColor());
+
+        return productViewModel;
+    }
+    @Override
+    public ProductViewModel retrieveById(Integer entityId) {
+        Session session = HibernateUtils.getSession();
+        Product product = session.find(Product.class, entityId);
+
+        ProductViewModel productViewModel = getProductViewModel(product, session);
+        session.close();
+
+        return productViewModel;
+    }
+
+
+    @Override
+    public ArrayList<ProductViewModel> retrieveAll(ProductGetPagingRequest request) {
+        ArrayList<ProductViewModel> list = new ArrayList<>();
+        Session session = HibernateUtils.getSession();
+        int offset = (request.getPageIndex() - 1)*request.getPageSize();
+        String cmd = HibernateUtils.getRetrieveAllQuery("Product", request.getColumnName(), request.getKeyword(), request.getTypeSort());
+        Query q = session.createQuery(cmd);
+        q.setFirstResult(offset);
+        q.setMaxResults(request.getPageSize());
+        List<Product> products = q.list();
+
+        for(Product product:products){
+            ProductViewModel v = getProductViewModel(product, session);
+            list.add(v);
+        }
+        session.close();
+        return list;
+    }
+}

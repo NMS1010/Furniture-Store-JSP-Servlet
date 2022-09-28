@@ -1,0 +1,158 @@
+package models.entities;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "orders")
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int orderId;
+    @Column(nullable = false)
+    private int userId;
+    @Column
+    private int discountId;
+    @Column
+    private Date dateDone;
+
+    @Column(nullable = false)
+    private Date dateCreated;
+
+    @Column(nullable = false)
+    private double totalPrice;
+
+    @Column(nullable = false)
+    private double shipping;
+
+    @Column(nullable = false)
+    private double totalItemPrice;
+
+    @Column(nullable = false)
+    private String address;
+    @Column(nullable = false)
+    private String name;
+    @Column(nullable = false)
+    private String phone;
+    @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
+    private int status;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "orderId")
+    private List<OrderItem> orderItems;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getDiscountId() {
+        return discountId;
+    }
+
+    public void setDiscountId(int discountId) {
+        this.discountId = discountId;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public Date getDateDone() {
+        return dateDone;
+    }
+
+    public void setDateDone(Date dateDone) {
+        this.dateDone = dateDone;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public double getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(double shipping) {
+        this.shipping = shipping;
+    }
+
+    public double getTotalItemPrice() {
+        return totalItemPrice;
+    }
+
+    public void setTotalItemPrice(double totalItemPrice) {
+        this.totalItemPrice = totalItemPrice;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+}
