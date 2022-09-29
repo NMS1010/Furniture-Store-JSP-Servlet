@@ -99,7 +99,7 @@ public class HibernateUtils {
     }
     public static String getRetrieveAllQuery(String tableName, String columnName, String keyword, String typeSort){
         String cmd = "from " + tableName;
-        if(keyword != null){
+        if(keyword != null && keyword != ""){
             cmd += " where " + columnName + "=" + keyword;
         }
         cmd += " order by " + columnName + " " + typeSort;

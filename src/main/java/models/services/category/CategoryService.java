@@ -12,6 +12,7 @@ import view_models.categories.CategoryUpdateRequest;
 import view_models.categories.CategoryViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CategoryService implements ICategoryService{
@@ -32,7 +33,7 @@ public class CategoryService implements ICategoryService{
         category.setDescription(request.getDescription());
         category.setParentCategoryId(request.getParentCategoryId());
         category.setImage(FileUtil.encodeBase64(request.getImage()));
-
+        category.setStatus(request.getStatus());
         int categoryId = -1;
         try {
             tx = session.beginTransaction();
@@ -62,7 +63,7 @@ public class CategoryService implements ICategoryService{
         category.setDescription(request.getDescription());
         category.setParentCategoryId(request.getParentCategoryId());
         category.setImage(FileUtil.encodeBase64(request.getImage()));
-
+        category.setStatus(request.getStatus());
 
         return HibernateUtils.merge(category);
     }
@@ -81,15 +82,38 @@ public class CategoryService implements ICategoryService{
         CategoryViewModel categoryViewModel = new CategoryViewModel();
 
         categoryViewModel.setCategoryId(category.getCategoryId());
-        categoryViewModel.setName(categoryViewModel.getName());
-        categoryViewModel.setParentCategoryId(category.getParentCategoryId());
+        categoryViewModel.setName(category.getCategoryName());
 
-        Query q3 = session.createQuery("select categoryName from Category where categoryId =:s1" );
-        q3.setParameter("s1", category.getParentCategoryId());
-        String parentCategoryName = q3.getSingleResult().toString();
+        String parentCategoryName = "";
+        if(category.getParentCategoryId() > 0) {
+            Query q1 = session.createQuery("select categoryName from Category where categoryId =:s1");
+            q1.setParameter("s1", category.getParentCategoryId());
+            parentCategoryName = q1.getSingleResult().toString();
+        }
+        categoryViewModel.setParentCategoryId(category.getParentCategoryId());
         categoryViewModel.setParentCategoryName(parentCategoryName);
+
+
         categoryViewModel.setImage(category.getImage());
         categoryViewModel.setDescription(category.getDescription());
+        categoryViewModel.setStatus(category.getStatus());
+
+        Query q2 = session.createQuery("select count(*) from Product where categoryId=:s1");
+        q2.setParameter("s1",category.getCategoryId());
+        categoryViewModel.setTotalProduct(((Long)q2.getSingleResult()).intValue());
+
+        Query q3 = session.createQuery("select count(*) from OrderItem o inner join Product p on o.productId = p.productId where p.categoryId =:s1");
+        q3.setParameter("s1",category.getCategoryId());
+        categoryViewModel.setTotalSell(((Long)q3.getSingleResult()).intValue());
+
+
+        Query q4 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
+        q4.setParameter("s1",category.getCategoryId());
+        categoryViewModel.setSubCategoryIds(q4.list());
+
+        Query q5 = session.createQuery("select categoryName from Category where parentCategoryId=:s4");
+        q5.setParameter("s4",category.getCategoryId());
+        categoryViewModel.setSubCategoryNames(q5.list());
 
         return categoryViewModel;
     }

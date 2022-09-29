@@ -2,11 +2,11 @@ package common.paging;
 
 public class PagingRequest {
     private int pageIndex = 1;
-    private int pageSize = 10;
+    private int pageSize = 1000;
 
     private String columnName;
-    private String typeSort;
-    private String keyword;
+    private String typeSort = "ASC";
+    private String keyword = null;
 
     public String getColumnName() {
         return columnName;

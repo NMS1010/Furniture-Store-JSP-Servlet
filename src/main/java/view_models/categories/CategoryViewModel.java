@@ -1,19 +1,36 @@
 package view_models.categories;
 
-public class CategoryViewModel {
-    public int categoryId;
-    public String name;
-    public String description;
-    public int parentCategoryId;
-    public String parentCategoryName;
-    public String image;
+import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
-    public String getImage() {
-        return image;
+public class CategoryViewModel {
+    private int categoryId;
+    private String name;
+    private String description;
+    private int parentCategoryId;
+    private String parentCategoryName;
+    private List<Integer> subCategoryIds;
+    
+    private List<String> subCategoryNames;
+    private String image;
+    private int status;
+    private int totalProduct;
+    private int totalSell;
+
+    public List<Integer> getSubCategoryIds() {
+        return subCategoryIds;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setSubCategoryIds(List<Integer> subCategoryIds) {
+        this.subCategoryIds = subCategoryIds;
+    }
+
+    public List<String> getSubCategoryNames() {
+        return subCategoryNames;
+    }
+
+    public void setSubCategoryNames(List<String> subCategoryNames) {
+        this.subCategoryNames = subCategoryNames;
     }
 
     public int getCategoryId() {
@@ -36,8 +53,8 @@ public class CategoryViewModel {
         return description;
     }
 
-    public void setDescription(String content) {
-        this.description = content;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getParentCategoryId() {
@@ -54,5 +71,37 @@ public class CategoryViewModel {
 
     public void setParentCategoryName(String parentCategoryName) {
         this.parentCategoryName = parentCategoryName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getTotalProduct() {
+        return totalProduct;
+    }
+
+    public void setTotalProduct(int totalProduct) {
+        this.totalProduct = totalProduct;
+    }
+
+    public int getTotalSell() {
+        return totalSell;
+    }
+
+    public void setTotalSell(int totalSell) {
+        this.totalSell = totalSell;
     }
 }
