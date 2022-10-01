@@ -4,9 +4,11 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "cart_items")
+@Table(name = "cart_items",uniqueConstraints =
+@UniqueConstraint(columnNames = {"productId","userId"}))
 public class CartItem {
     @Id
+    @Column(name = "cartItemId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartItemId;
 
@@ -18,8 +20,6 @@ public class CartItem {
 
     @Column(nullable = false)
     private double totalPrice;
-    @Column(nullable = false)
-    private double unitPrice;
     @Column(nullable = false)
     private int quantity;
 
@@ -69,13 +69,6 @@ public class CartItem {
         this.totalPrice = totalPrice;
     }
 
-    public double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
-    }
 
     public int getQuantity() {
         return quantity;

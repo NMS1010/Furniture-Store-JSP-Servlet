@@ -4,9 +4,11 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "wish_list_items")
+@Table(name = "wish_list_items",uniqueConstraints =
+@UniqueConstraint(columnNames = {"productId","userId"}))
 public class WishListItem {
     @Id
+    @Column(name = "wishListItemId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int wishListItemId;
 

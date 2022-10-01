@@ -4,7 +4,6 @@ public class CartItemCreateRequest {
     private int productId;
     private int userId ;
     private int quantity;
-    private double unitPrice;
     private int status;
 
     public int getStatus() {
@@ -39,11 +38,4 @@ public class CartItemCreateRequest {
         this.quantity = quantity;
     }
 
-    public double getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(double unitPrice) {
-        this.unitPrice = unitPrice;
-    }
 }

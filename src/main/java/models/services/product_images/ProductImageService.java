@@ -1,6 +1,6 @@
 package models.services.product_images;
 
-import models.entities.ProductImages;
+import models.entities.ProductImage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -35,13 +35,13 @@ public class ProductImageService implements  IProductImageService{
         try {
             tx = session.beginTransaction();
             for(Part f: files){
-                ProductImages productImages = new ProductImages();
+                ProductImage productImage = new ProductImage();
 
-                productImages.setProductId(request.getProductId());
-                productImages.setDefault(false);
-                productImages.setImage(FileUtil.encodeBase64(f));
+                productImage.setProductId(request.getProductId());
+                productImage.setDefault(false);
+                productImage.setImage(FileUtil.encodeBase64(f));
 
-                session.persist(productImages);
+                session.persist(productImage);
             }
             tx.commit();
         }
@@ -59,7 +59,7 @@ public class ProductImageService implements  IProductImageService{
     public boolean update(ProductImageUpdateRequest request) {
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
-        ProductImages img = session.find(ProductImages.class, request.productImageId);
+        ProductImage img = session.find(ProductImage.class, request.productImageId);
 
         img.setImage(FileUtil.encodeBase64(request.getImage()));
         return HibernateUtils.merge(img);
@@ -69,25 +69,25 @@ public class ProductImageService implements  IProductImageService{
     @Override
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
-        ProductImages img = session.find(ProductImages.class, entityId);
+        ProductImage img = session.find(ProductImage.class, entityId);
         return HibernateUtils.remove(img);
     }
-    private ProductImageViewModel getProductImageViewModel(ProductImages productImages){
+    private ProductImageViewModel getProductImageViewModel(ProductImage productImage){
         ProductImageViewModel productImageViewModel = new ProductImageViewModel();
 
-        productImageViewModel.setId(productImages.getId());
-        productImageViewModel.setDefault(productImages.getDefault());
-        productImageViewModel.setImage(productImages.getImage());
-        productImageViewModel.setProductId(productImages.getProductId());
+        productImageViewModel.setId(productImage.getId());
+        productImageViewModel.setDefault(productImage.getDefault());
+        productImageViewModel.setImage(productImage.getImage());
+        productImageViewModel.setProductId(productImage.getProductId());
 
         return productImageViewModel;
     }
     @Override
     public ProductImageViewModel retrieveById(Integer entityId) {
         Session session = HibernateUtils.getSession();
-        ProductImages productImages = session.find(ProductImages.class, entityId);
+        ProductImage productImage = session.find(ProductImage.class, entityId);
 
-        ProductImageViewModel productImageViewModel = getProductImageViewModel(productImages);
+        ProductImageViewModel productImageViewModel = getProductImageViewModel(productImage);
         session.close();
         return productImageViewModel;
     }
@@ -98,14 +98,14 @@ public class ProductImageService implements  IProductImageService{
         Session session = HibernateUtils.getSession();
 
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("ProductImages", request.getColumnName(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("ProductImage", request.getColumnName(), request.getKeyword(), request.getTypeSort());
 
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());
-        List<ProductImages> productImages = q.list();
+        List<ProductImage> productImages = q.list();
 
-        for(ProductImages productImg:productImages){
+        for(ProductImage productImg:productImages){
             ProductImageViewModel v = getProductImageViewModel(productImg);
             list.add(v);
         }

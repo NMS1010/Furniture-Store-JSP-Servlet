@@ -11,6 +11,7 @@ import view_models.categories.CategoryGetPagingRequest;
 import view_models.categories.CategoryUpdateRequest;
 import view_models.categories.CategoryViewModel;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,6 @@ public class CategoryService implements ICategoryService{
         category.setDescription(request.getDescription());
         category.setParentCategoryId(request.getParentCategoryId());
         category.setImage(FileUtil.encodeBase64(request.getImage()));
-        category.setStatus(request.getStatus());
         int categoryId = -1;
         try {
             tx = session.beginTransaction();
@@ -56,14 +56,13 @@ public class CategoryService implements ICategoryService{
     @Override
     public boolean update(CategoryUpdateRequest request) {
         Session session = HibernateUtils.getSession();
-        Transaction tx = null;
         Category category = session.find(Category.class, request.getCategoryId());
 
         category.setCategoryName(request.getName());
         category.setDescription(request.getDescription());
         category.setParentCategoryId(request.getParentCategoryId());
-        category.setImage(FileUtil.encodeBase64(request.getImage()));
-        category.setStatus(request.getStatus());
+        if(request.getImage().getSubmittedFileName() != "")
+            category.setImage(FileUtil.encodeBase64(request.getImage()));
 
         return HibernateUtils.merge(category);
     }
@@ -72,10 +71,16 @@ public class CategoryService implements ICategoryService{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Category category = session.find(Category.class, entityId);
-        String cmd = "update Product set categoryId = null where categoryId =:s1";
-        Query q = session.createQuery(cmd);
-        q.setParameter("s1", category.getCategoryId());
-        q.executeUpdate();
+        Query q1 = session.createQuery("select productId from Product where categoryId=:s1");
+        q1.setParameter("s1",category.getCategoryId());
+        List<Integer> productIds = q1.list();
+
+        productIds.forEach(id -> {
+            Query q2 = session.createQuery("update Product set categoryId = null where productId =:s1");
+            q2.setParameter("s1", id);
+            q2.executeUpdate();
+        });
+        session.close();
         return HibernateUtils.remove(category);
     }
     private CategoryViewModel getCategoryViewModel(Category category, Session session){
@@ -96,7 +101,6 @@ public class CategoryService implements ICategoryService{
 
         categoryViewModel.setImage(category.getImage());
         categoryViewModel.setDescription(category.getDescription());
-        categoryViewModel.setStatus(category.getStatus());
 
         Query q2 = session.createQuery("select count(*) from Product where categoryId=:s1");
         q2.setParameter("s1",category.getCategoryId());

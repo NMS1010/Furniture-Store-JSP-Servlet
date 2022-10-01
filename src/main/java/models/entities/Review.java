@@ -4,10 +4,12 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "reviews")
+@Table(name = "reviews",uniqueConstraints =
+@UniqueConstraint(columnNames = {"productId","userId"}))
 public class Review {
 
     @Id
+    @Column(name = "reviewId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewId;
 

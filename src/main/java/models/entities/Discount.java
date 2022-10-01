@@ -8,6 +8,7 @@ import java.util.List;
 @Table(name = "discounts")
 public class Discount {
     @Id
+    @Column(name = "discountId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int discountId;
 
@@ -22,9 +23,20 @@ public class Discount {
     @Column(nullable = false)
     private int status;
 
-    @OneToMany
+    @Column(nullable = false)
+    private int quantity;
+
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "discountId")
     private List<Order> orders;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public int getDiscountId() {
         return discountId;

@@ -4,9 +4,11 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "order_items")
+@Table(name = "order_items",uniqueConstraints =
+@UniqueConstraint(columnNames = {"productId","orderId"}))
 public class OrderItem {
     @Id
+    @Column(name = "orderItemId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderItemId;
 

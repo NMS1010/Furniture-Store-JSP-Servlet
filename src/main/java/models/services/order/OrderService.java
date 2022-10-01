@@ -35,12 +35,28 @@ public class OrderService implements IOrderService{
         order.setEmail(request.getEmail());
         order.setPhone(request.getPhone());
         order.setName(request.getName());
-        order.setDiscountId(request.getDiscountId());
+
+        int discountId = 0;
+        if(request.getDiscountCode() != null){
+            Query q = session.createQuery("select discountId from Discount where discountCode =: s1");
+            q.setParameter("s1",request.getDiscountCode());
+            discountId = (int)q.getSingleResult();
+        }
+        order.setDiscountId(discountId);
         order.setUserId(request.getUserId());
         order.setDateDone(DateUtils.dateNow());
         order.setShipping(request.getShipping());
         order.setTotalItemPrice(request.getTotalItemPrice());
-        order.setTotalPrice(request.getTotalItemPrice() + request.getShipping());
+
+        double totalPrice = request.getTotalItemPrice() + request.getShipping();
+        if(discountId > 0){
+
+            Query q = session.createQuery("select discountValue from Discount where discountId =: s1");
+            q.setParameter("s1",discountId);
+            double discountVal = (double)q.getSingleResult();
+            totalPrice = totalPrice - totalPrice * discountVal;
+        }
+        order.setTotalPrice(totalPrice);
 
         int orderId = -1;
         try {

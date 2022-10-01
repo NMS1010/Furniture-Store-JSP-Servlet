@@ -1,7 +1,7 @@
 package models.services.product;
 
 import models.entities.Product;
-import models.entities.ProductImages;
+import models.entities.ProductImage;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -37,8 +37,6 @@ public class ProductService implements IProductService {
         product.setQuantity(request.getQuantity());
         product.setCategoryId(request.getCategoryId());
         product.setBrandId(request.getBrandId());
-        product.setSize(request.getSize());
-        product.setColor(request.getColor());
 
         int productId = -1;
         try {
@@ -48,12 +46,13 @@ public class ProductService implements IProductService {
             if(productId == -1){
                 return -1;
             }
-            ProductImages img = new ProductImages();
-            img.setDefault(true);
-            img.setProductId(productId);
-            img.setImage(FileUtil.encodeBase64(request.getImage()));
-            session.persist(img);
-
+            if(request.getImage() != null){
+                ProductImage img = new ProductImage();
+                img.setDefault(true);
+                img.setProductId(productId);
+                img.setImage(FileUtil.encodeBase64(request.getImage()));
+                session.persist(img);
+            }
             tx.commit();
         }catch(Exception e){
             if(tx != null)
@@ -79,8 +78,6 @@ public class ProductService implements IProductService {
         product.setQuantity(request.getQuantity());
         product.setCategoryId(request.getCategoryId());
         product.setBrandId(request.getBrandId());
-        product.setSize(request.getSize());
-        product.setColor(request.getColor());
 
         try {
             tx = session.beginTransaction();
@@ -88,10 +85,10 @@ public class ProductService implements IProductService {
 
             if(request.getImage() != null){
 
-                Query q = session.createQuery("select ProductImages from ProductImages where productId=:s1 and isDefault = true");
+                Query q = session.createQuery("select ProductImage from ProductImage where productId=:s1 and isDefault = true");
                 q.setParameter("s1", request.getProductId());
 
-                ProductImages image = (ProductImages)q.getSingleResult();
+                ProductImage image = (ProductImage)q.getSingleResult();
 
                 image.setImage(FileUtil.encodeBase64(request.getImage()));
 
@@ -123,7 +120,7 @@ public class ProductService implements IProductService {
         return instance;
     }
     private ProductViewModel getProductViewModel(Product product, Session session){
-        Query q1 = session.createQuery("select image from ProductImages where id =:s1 and isDefault = true");
+        Query q1 = session.createQuery("select image from ProductImage where id =:s1 and isDefault = true");
         q1.setParameter("s1", product.getProductId());
         String image = q1.getSingleResult().toString();
         Query q2 = session.createQuery("select brandName from Brand where brandId =:s1" );
@@ -146,8 +143,7 @@ public class ProductService implements IProductService {
         productViewModel.setImage(image);
         productViewModel.setBrandName(brandName);
         productViewModel.setCategoryName(categoryName);
-        productViewModel.setSize(product.getSize());
-        productViewModel.setColor(product.getColor());
+
 
         return productViewModel;
     }

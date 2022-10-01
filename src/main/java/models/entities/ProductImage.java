@@ -5,10 +5,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "product_images")
-public class ProductImages {
+public class ProductImage {
     @Id
+    @Column(name = "productImageId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int productImageId;
 
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String image;
@@ -27,11 +28,11 @@ public class ProductImages {
     }
 
     public int getId() {
-        return id;
+        return productImageId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int productImageId) {
+        this.productImageId = productImageId;
     }
 
 

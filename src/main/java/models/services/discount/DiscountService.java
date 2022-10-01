@@ -34,6 +34,7 @@ public class DiscountService implements IDiscountService{
         discount.setStatus(request.getStatus());
         discount.setDateStart(request.getStartDate());
         discount.setDateEnd(request.getEndDate());
+        discount.setQuantity(request.getQuantity());
 
         int discountId = -1;
         try {
@@ -64,7 +65,7 @@ public class DiscountService implements IDiscountService{
         discount.setStatus(request.getStatus());
         discount.setDateStart(request.getStartDate());
         discount.setDateEnd(request.getEndDate());
-
+        discount.setQuantity(request.getQuantity());
         return HibernateUtils.merge(discount);
     }
 
@@ -87,6 +88,7 @@ public class DiscountService implements IDiscountService{
         discountViewModel.setStartDate(discount.getDateStart());
         discountViewModel.setEndDate(discount.getDateEnd());
         discountViewModel.setStatus(discount.getStatus());
+        discountViewModel.setQuantity(discount.getQuantity());
 
         return discountViewModel;
     }

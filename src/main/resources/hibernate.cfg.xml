@@ -25,7 +25,7 @@
     <mapping class="models.entities.Order"/>
     <mapping class="models.entities.OrderItem"/>
     <mapping class="models.entities.Product"/>
-    <mapping class="models.entities.ProductImages"/>
+    <mapping class="models.entities.ProductImage"/>
     <mapping class="models.entities.User"/>
     <mapping class="models.entities.Review"/>
     <mapping class="models.entities.Discount"/>
@@ -33,5 +33,6 @@
     <mapping class="models.entities.Role"/>
     <mapping class="models.entities.UserRole"/>
     <mapping class="models.entities.WishListItem"/>
+
   </session-factory>
 </hibernate-configuration>

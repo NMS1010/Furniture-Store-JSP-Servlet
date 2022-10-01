@@ -9,6 +9,15 @@ public class DiscountViewModel {
     private Date startDate;
     private Date endDate;
     private int status;
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public int getDiscountId() {
         return discountId;

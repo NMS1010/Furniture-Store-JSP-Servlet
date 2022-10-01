@@ -2,7 +2,7 @@ package view_models.orders;
 
 public class OrderCreateRequest {
     private int userId;
-    private int discountId;
+    private String discountCode;
     private double totalItemPrice;
     private double shipping;
     private String address;
@@ -19,12 +19,12 @@ public class OrderCreateRequest {
         this.userId = userId;
     }
 
-    public int getDiscountId() {
-        return discountId;
+    public String getDiscountCode() {
+        return discountCode;
     }
 
-    public void setDiscountId(int discountId) {
-        this.discountId = discountId;
+    public void setDiscountCode(String discountCode) {
+        this.discountCode = discountCode;
     }
 
     public double getTotalItemPrice() {

@@ -3,11 +3,13 @@ package models.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user_roles")
+@Table(name = "user_roles",uniqueConstraints =
+@UniqueConstraint(columnNames = {"roleId","userId"}))
 public class UserRole {
     @Id
+    @Column(name = "userRoleId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int userRoleId;
 
     @Column(nullable = false)
     private int userId;
@@ -16,11 +18,11 @@ public class UserRole {
     private int roleId;
 
     public int getId() {
-        return id;
+        return userRoleId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int userRoleId) {
+        this.userRoleId = userRoleId;
     }
 
     public int getUserId() {

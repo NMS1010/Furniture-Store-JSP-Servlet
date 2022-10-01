@@ -4,6 +4,7 @@ import org.apache.commons.fileupload.FileItem;
 
 import javax.servlet.http.Part;
 import java.sql.Date;
+import java.util.HashMap;
 
 public class ProductCreateRequest {
     private String productName;
@@ -25,26 +26,6 @@ public class ProductCreateRequest {
     private int categoryId;
 
     private int brandId;
-
-    private String size;
-
-    private String color;
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public String getProductName() {
         return productName;

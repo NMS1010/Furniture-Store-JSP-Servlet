@@ -7,6 +7,7 @@ import java.util.List;
 @Table(name = "roles")
 public class Role {
     @Id
+    @Column(name = "roleId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roleId;
 

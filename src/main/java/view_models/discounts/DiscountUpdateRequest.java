@@ -8,10 +8,18 @@ public class DiscountUpdateRequest {
     private String discountCode;
 
     private double discountValue;
-
+    private int quantity;
     private Date startDate;
     private Date endDate;
     private int status;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public int getDiscountId() {
         return discountId;

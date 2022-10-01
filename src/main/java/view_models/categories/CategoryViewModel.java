@@ -13,7 +13,6 @@ public class CategoryViewModel {
     
     private List<String> subCategoryNames;
     private String image;
-    private int status;
     private int totalProduct;
     private int totalSell;
 
@@ -81,13 +80,6 @@ public class CategoryViewModel {
         this.image = image;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     public int getTotalProduct() {
         return totalProduct;

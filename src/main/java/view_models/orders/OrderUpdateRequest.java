@@ -3,7 +3,6 @@ package view_models.orders;
 public class OrderUpdateRequest {
     private int orderId;
     private int status;
-
     public int getOrderId() {
         return orderId;
     }

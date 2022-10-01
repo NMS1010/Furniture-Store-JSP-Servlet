@@ -8,6 +8,7 @@ import java.util.List;
 @Table(name = "products")
 public class Product{
     @Id
+    @Column(name = "productId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
@@ -35,14 +36,9 @@ public class Product{
     private int brandId;
     @Column
     private int categoryId;
-    @Column(nullable = false)
-    private String size;
-
-    @Column(nullable = false)
-    private String color;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId")
-    private List<ProductImages> productImages;
+    private List<ProductImage> productImages;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId")
@@ -60,28 +56,13 @@ public class Product{
     @JoinColumn(name = "productId")
     private List<WishListItem> wishListItems;
 
-    public List<WishListItem> getWishLists() {
+
+    public List<WishListItem> getWishListItems() {
         return wishListItems;
     }
 
-    public void setWishLists(List<WishListItem> wishListItems) {
+    public void setWishListItems(List<WishListItem> wishListItems) {
         this.wishListItems = wishListItems;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public int getBrandId() {
@@ -164,11 +145,11 @@ public class Product{
         this.status = status;
     }
 
-    public List<ProductImages> getProductImages() {
+    public List<ProductImage> getProductImages() {
         return productImages;
     }
 
-    public void setProductImages(List<ProductImages> productImages) {
+    public void setProductImages(List<ProductImage> productImages) {
         this.productImages = productImages;
     }
 

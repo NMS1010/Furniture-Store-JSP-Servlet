@@ -1,7 +1,6 @@
 package controllers.admin.category;
 
 import models.services.category.CategoryService;
-import utils.CATEGORY_STATUS;
 import view_models.categories.CategoryCreateRequest;
 import view_models.categories.CategoryGetPagingRequest;
 import view_models.categories.CategoryViewModel;
@@ -13,21 +12,15 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "CategoryControllers", value = "/admin/categories")
+@WebServlet(name = "AddCategory", value = "/admin/category/add")
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10,      // 10 MB
         maxRequestSize = 1024 * 1024 * 100   // 100 MB
 )
-public class CategoryControllers extends HttpServlet {
+public class AddCategory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CategoryGetPagingRequest req = new CategoryGetPagingRequest();
-        req.setColumnName("categoryName");
-        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAll(req);
-        request.setAttribute("categories",categories);
-
-        request.getRequestDispatcher("/views/admin/category/main-category.jsp").forward(request,response);
     }
 
     @Override
@@ -42,10 +35,9 @@ public class CategoryControllers extends HttpServlet {
         req.setDescription(description);
         req.setName(categoryName);
         req.setImage(categoryLogo);
-        req.setStatus(CATEGORY_STATUS.ACTIVE);
 
         int categoryId = CategoryService.getInstance().insert(req);
 
-        doGet(request,response);
+        response.sendRedirect(request.getContextPath() + "/admin/categories");
     }
 }

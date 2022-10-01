@@ -5,9 +5,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "categories")
-
 public class Category{
     @Id
+    @Column(name = "categoryId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryId;
     @Column(nullable = false)
@@ -19,20 +19,9 @@ public class Category{
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String image;
 
-    @Column(nullable = false)
-    private int status;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoryId")
     private List<Product> products;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     public String getImage() {
         return image;
