@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 public class HibernateUtils {
     private static final SessionFactory sessionFactory = buildSessionFactory();
 
@@ -97,12 +99,18 @@ public class HibernateUtils {
 
         return count;
     }
-    public static String getRetrieveAllQuery(String tableName, String columnName, String keyword, String typeSort){
+    public static String getRetrieveAllQuery(String tableName, List<String> columnName, String sortBy, String keyword, String typeSort){
         String cmd = "from " + tableName;
-        if(keyword != null && keyword != ""){
-            cmd += " where " + columnName + "=" + keyword;
+        if(keyword != null && keyword != "" && columnName!= null && (long) columnName.size() > 0){
+            String list = "";
+            for(String c:columnName){
+                list += c + " like '%" + keyword + "%' or ";
+            }
+            list = list.substring(0, list.lastIndexOf("or "));
+            cmd += " where " + list;
         }
-        cmd += " order by " + columnName + " " + typeSort;
+        if(sortBy != null && !sortBy.equals(""))
+            cmd += " order by " + sortBy + " " + typeSort;
 
         return cmd;
     }

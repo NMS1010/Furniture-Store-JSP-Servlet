@@ -1,6 +1,7 @@
 package models.services.brand;
 
 import models.entities.Brand;
+import models.entities.Product;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -73,19 +74,37 @@ public class BrandService implements  IBrandService{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Brand brand = session.find(Brand.class, entityId);
-        String cmd = "update Product set brandId = null where brandId =:s1";
+        String cmd = "select productId from Product where brandId =:s1";
         Query q = session.createQuery(cmd);
         q.setParameter("s1", brand.getBrandId());
-        q.executeUpdate();
+        List<Integer> productIds = q.list();
+
+        Transaction tx = session.beginTransaction();
+        try {
+            productIds.forEach(id -> {
+                Product product = session.find(Product.class, id);
+                product.setBrandId(0);
+                session.merge(product);
+            });
+            tx.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        session.close();
         return HibernateUtils.remove(brand);
     }
-    private BrandViewModel getBrandViewModel(Brand brand){
+    private BrandViewModel getBrandViewModel(Brand brand, Session session){
         BrandViewModel brandViewModel = new BrandViewModel();
 
         brandViewModel.setBrandId(brand.getBrandId());
         brandViewModel.setBrandName(brand.getBrandName());
         brandViewModel.setOrigin(brand.getOrigin());
         brandViewModel.setImage(brand.getImage());
+
+        Query q = session.createQuery("select count(*) from Product where brandId=:s1");
+        q.setParameter("s1",brand.getBrandId());
+        brandViewModel.setTotalProducts(((Long)q.getSingleResult()).intValue());
 
         return brandViewModel;
     }
@@ -94,7 +113,7 @@ public class BrandService implements  IBrandService{
         Session session = HibernateUtils.getSession();
         Brand brand = session.find(Brand.class, entityId);
 
-        BrandViewModel brandViewModel = getBrandViewModel(brand);
+        BrandViewModel brandViewModel = getBrandViewModel(brand, session);
         session.close();
 
         return brandViewModel;
@@ -105,14 +124,14 @@ public class BrandService implements  IBrandService{
         ArrayList<BrandViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("Brand", request.getColumnName(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("Brand", request.getColumnName(), request.getSortBy(), request.getKeyword(), request.getTypeSort());
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());
         List<Brand> brands = q.list();
 
         for(Brand brand:brands){
-            BrandViewModel v = getBrandViewModel(brand);
+            BrandViewModel v = getBrandViewModel(brand, session);
             list.add(v);
         }
         session.close();

@@ -1,18 +1,29 @@
 package common.paging;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PagingRequest {
     private int pageIndex = 1;
     private int pageSize = 1000;
-
-    private String columnName;
+    private String sortBy = null;
+    private List<String> columnName;
     private String typeSort = "ASC";
     private String keyword = null;
 
-    public String getColumnName() {
+    public String getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(String sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    public List<String> getColumnName() {
         return columnName;
     }
 
-    public void setColumnName(String columnName) {
+    public void setColumnName(List<String> columnName) {
         this.columnName = columnName;
     }
 

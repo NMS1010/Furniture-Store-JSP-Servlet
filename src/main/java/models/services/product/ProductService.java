@@ -164,7 +164,7 @@ public class ProductService implements IProductService {
         ArrayList<ProductViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("Product", request.getColumnName(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("Product", request.getColumnName(),request.getSortBy(), request.getKeyword(), request.getTypeSort());
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());

@@ -1,6 +1,7 @@
 package models.services.category;
 
 import models.entities.Category;
+import models.entities.Product;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -14,6 +15,7 @@ import view_models.categories.CategoryViewModel;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class CategoryService implements ICategoryService{
@@ -74,12 +76,27 @@ public class CategoryService implements ICategoryService{
         Query q1 = session.createQuery("select productId from Product where categoryId=:s1");
         q1.setParameter("s1",category.getCategoryId());
         List<Integer> productIds = q1.list();
+        Query q2 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
+        q2.setParameter("s1",category.getCategoryId());
+        List<Integer> categoryIds = q2.list();
 
-        productIds.forEach(id -> {
-            Query q2 = session.createQuery("update Product set categoryId = null where productId =:s1");
-            q2.setParameter("s1", id);
-            q2.executeUpdate();
-        });
+        Transaction tx = session.beginTransaction();
+        try {
+            productIds.forEach(id -> {
+                Product product = session.find(Product.class, id);
+                product.setCategoryId(0);
+                session.merge(product);
+            });
+            categoryIds.forEach(id -> {
+                Category c = session.find(Category.class, id);
+                c.setParentCategoryId(0);
+                session.merge(c);
+            });
+            tx.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
         session.close();
         return HibernateUtils.remove(category);
     }
@@ -137,7 +154,7 @@ public class CategoryService implements ICategoryService{
         ArrayList<CategoryViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("Category", request.getColumnName(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("Category", request.getColumnName(), request.getSortBy(), request.getKeyword(), request.getTypeSort());
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());
@@ -149,5 +166,18 @@ public class CategoryService implements ICategoryService{
         }
         session.close();
         return list;
+    }
+
+    @Override
+    public HashMap<Integer, String> getParentCategory() {
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("from Category where parentCategoryId = 0");
+        List<Category> l = q.list();
+        HashMap<Integer, String> parentCategory = new HashMap<>();
+        l.forEach(category ->
+                parentCategory.put(category.getCategoryId(), category.getCategoryName())
+        );
+
+        return parentCategory;
     }
 }
