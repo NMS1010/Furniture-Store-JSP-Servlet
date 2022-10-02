@@ -9,4 +9,5 @@ import view_models.reviews.ReviewViewModel;
 
 public interface IReviewService extends IModifyEntity<ReviewCreateRequest, ReviewUpdateRequest, Integer>,
         IRetrieveEntity<ReviewViewModel, ReviewGetPagingRequest, Integer> {
+    void ChangeStatus(int reviewId);
 }

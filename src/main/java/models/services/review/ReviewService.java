@@ -128,4 +128,13 @@ public class ReviewService implements IReviewService{
         session.close();
         return list;
     }
+
+    @Override
+    public void ChangeStatus(int reviewId) {
+        Session session = HibernateUtils.getSession();
+        Review review = session.find(Review.class, reviewId);
+        review.setStatus(review.getStatus() == 1 ? 0 : 1);
+        session.close();
+        HibernateUtils.merge(review);
+    }
 }

@@ -13,7 +13,6 @@ public class ReviewViewModel {
     private String content;
     private int rating;
     private int status;
-
     private Date dateUpdated;
 
     public Date getDateUpdated() {
