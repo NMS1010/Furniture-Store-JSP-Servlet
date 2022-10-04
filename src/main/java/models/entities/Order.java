@@ -1,6 +1,7 @@
 package models.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
@@ -22,13 +23,13 @@ public class Order {
     private Date dateCreated;
 
     @Column(nullable = false)
-    private double totalPrice;
+    private BigDecimal totalPrice;
 
     @Column(nullable = false)
-    private double shipping;
+    private BigDecimal shipping;
 
     @Column(nullable = false)
-    private double totalItemPrice;
+    private BigDecimal totalItemPrice;
 
     @Column(nullable = false)
     private String address;
@@ -109,27 +110,27 @@ public class Order {
         this.dateCreated = dateCreated;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public double getShipping() {
+    public BigDecimal getShipping() {
         return shipping;
     }
 
-    public void setShipping(double shipping) {
+    public void setShipping(BigDecimal shipping) {
         this.shipping = shipping;
     }
 
-    public double getTotalItemPrice() {
+    public BigDecimal getTotalItemPrice() {
         return totalItemPrice;
     }
 
-    public void setTotalItemPrice(double totalItemPrice) {
+    public void setTotalItemPrice(BigDecimal totalItemPrice) {
         this.totalItemPrice = totalItemPrice;
     }
 

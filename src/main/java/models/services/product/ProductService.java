@@ -2,11 +2,14 @@ package models.services.product;
 
 import models.entities.Product;
 import models.entities.ProductImage;
+import models.services.product_images.ProductImageService;
+import org.hibernate.Interceptor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.FileUtil;
 import utils.HibernateUtils;
+import view_models.product_images.ProductImageViewModel;
 import view_models.products.ProductCreateRequest;
 import view_models.products.ProductGetPagingRequest;
 import view_models.products.ProductUpdateRequest;
@@ -46,7 +49,7 @@ public class ProductService implements IProductService {
             if(productId == -1){
                 return -1;
             }
-            if(request.getImage() != null){
+            if(request.getImage() != null && !request.getImage().getSubmittedFileName().equals("")){
                 ProductImage img = new ProductImage();
                 img.setDefault(true);
                 img.setProductId(productId);
@@ -73,23 +76,23 @@ public class ProductService implements IProductService {
         product.setOrigin(request.getOrigin());
         product.setDescription(request.getDescription());
         product.setStatus(request.getStatus());
-        product.setDateCreated(request.getDateCreated());
         product.setPrice(request.getPrice());
         product.setQuantity(request.getQuantity());
-        product.setCategoryId(request.getCategoryId());
-        product.setBrandId(request.getBrandId());
+        if(request.getCategoryId() > 0)
+            product.setCategoryId(request.getCategoryId());
+        if(request.getBrandId() > 0)
+            product.setBrandId(request.getBrandId());
 
         try {
             tx = session.beginTransaction();
             session.merge(product);
 
-            if(request.getImage() != null){
+            if(request.getImage() != null && !request.getImage().getSubmittedFileName().equals("")){
 
                 Query q = session.createQuery("select ProductImage from ProductImage where productId=:s1 and isDefault = true");
                 q.setParameter("s1", request.getProductId());
 
                 ProductImage image = (ProductImage)q.getSingleResult();
-
                 image.setImage(FileUtil.encodeBase64(request.getImage()));
 
                 session.merge(image);
@@ -111,6 +114,7 @@ public class ProductService implements IProductService {
         Session session = HibernateUtils.getSession();
         Product product = session.find(Product.class, entityId);
         product.setStatus(0);
+        session.close();
         return HibernateUtils.merge(product);
     }
 
@@ -120,7 +124,7 @@ public class ProductService implements IProductService {
         return instance;
     }
     private ProductViewModel getProductViewModel(Product product, Session session){
-        Query q1 = session.createQuery("select image from ProductImage where id =:s1 and isDefault = true");
+        Query q1 = session.createQuery("select image from ProductImage where productId =:s1 and isDefault = true");
         q1.setParameter("s1", product.getProductId());
         String image = q1.getSingleResult().toString();
         Query q2 = session.createQuery("select brandName from Brand where brandId =:s1" );
@@ -129,6 +133,13 @@ public class ProductService implements IProductService {
         Query q3 = session.createQuery("select categoryName from Category where categoryId =:s1" );
         q3.setParameter("s1", product.getCategoryId());
         String categoryName = q3.getSingleResult().toString();
+        Query q4 = session.createQuery("select productImageId from ProductImage where  productId=:s1 and isDefault = false");
+        q4.setParameter("s1", product.getProductId());
+        List<Integer> subProductImageIds = q4.list();
+        Query q5 = session.createQuery("select count(*) from OrderItem  where productId=:s1");
+        q5.setParameter("s1",product.getProductId());
+        Object res = q5.getSingleResult();
+        long totalPurchased = res == null ? 0 : (long)res;
 
         ProductViewModel productViewModel = new ProductViewModel();
 
@@ -143,8 +154,14 @@ public class ProductService implements IProductService {
         productViewModel.setImage(image);
         productViewModel.setBrandName(brandName);
         productViewModel.setCategoryName(categoryName);
-
-
+        productViewModel.setCategoryId(product.getCategoryId());
+        productViewModel.setBrandId(product.getBrandId());
+        productViewModel.setTotalPurchased(totalPurchased);
+        List<ProductImageViewModel> productImageViewModels = new ArrayList<>();
+        subProductImageIds.forEach(id -> {
+            productImageViewModels.add(ProductImageService.getInstance().retrieveById(id));
+        });
+        productViewModel.setProductImages(productImageViewModels);
         return productViewModel;
     }
     @Override

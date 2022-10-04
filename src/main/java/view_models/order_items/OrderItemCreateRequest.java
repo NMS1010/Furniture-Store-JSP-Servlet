@@ -1,10 +1,12 @@
 package view_models.order_items;
 
+import java.math.BigDecimal;
+
 public class OrderItemCreateRequest {
     private int orderId;
     private int productId;
     private int quantity;
-    private double unitPrice;
+    private BigDecimal unitPrice;
 
     public int getOrderId() {
         return orderId;
@@ -30,11 +32,11 @@ public class OrderItemCreateRequest {
         this.quantity = quantity;
     }
 
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 }

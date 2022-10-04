@@ -13,6 +13,7 @@ import view_models.orders.OrderGetPagingRequest;
 import view_models.orders.OrderUpdateRequest;
 import view_models.orders.OrderViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,13 +49,13 @@ public class OrderService implements IOrderService{
         order.setShipping(request.getShipping());
         order.setTotalItemPrice(request.getTotalItemPrice());
 
-        double totalPrice = request.getTotalItemPrice() + request.getShipping();
+        BigDecimal totalPrice = request.getTotalItemPrice().add(request.getShipping());
         if(discountId > 0){
 
             Query q = session.createQuery("select discountValue from Discount where discountId =: s1");
             q.setParameter("s1",discountId);
             double discountVal = (double)q.getSingleResult();
-            totalPrice = totalPrice - totalPrice * discountVal;
+            totalPrice = totalPrice.subtract(totalPrice.multiply(BigDecimal.valueOf(discountVal)));
         }
         order.setTotalPrice(totalPrice);
 

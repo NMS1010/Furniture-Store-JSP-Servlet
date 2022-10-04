@@ -35,13 +35,15 @@ public class ProductImageService implements  IProductImageService{
         try {
             tx = session.beginTransaction();
             for(Part f: files){
-                ProductImage productImage = new ProductImage();
+                if(f != null && !f.getSubmittedFileName().equals("")){
+                    ProductImage productImage = new ProductImage();
 
-                productImage.setProductId(request.getProductId());
-                productImage.setDefault(false);
-                productImage.setImage(FileUtil.encodeBase64(f));
+                    productImage.setProductId(request.getProductId());
+                    productImage.setDefault(false);
+                    productImage.setImage(FileUtil.encodeBase64(f));
 
-                session.persist(productImage);
+                    session.persist(productImage);
+                }
             }
             tx.commit();
         }
@@ -59,10 +61,28 @@ public class ProductImageService implements  IProductImageService{
     public boolean update(ProductImageUpdateRequest request) {
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
-        ProductImage img = session.find(ProductImage.class, request.productImageId);
 
-        img.setImage(FileUtil.encodeBase64(request.getImage()));
-        return HibernateUtils.merge(img);
+        session.close();
+        try {
+            tx = session.beginTransaction();
+            request.getProductImages().forEach((id, f) -> {
+                ProductImage productImage = session.find(ProductImage.class, id);
+                productImage.setDefault(false);
+                if(f!= null && !f.getSubmittedFileName().equals(""))
+                    productImage.setImage(FileUtil.encodeBase64(f));
+
+                session.merge(productImage);
+            });
+            tx.commit();
+        }
+        catch (Exception e){
+            if(tx != null)
+                tx.rollback();
+            e.printStackTrace();
+            session.close();
+            return false;
+        }
+        return true;
 
     }
 
@@ -70,6 +90,7 @@ public class ProductImageService implements  IProductImageService{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         ProductImage img = session.find(ProductImage.class, entityId);
+        session.close();
         return HibernateUtils.remove(img);
     }
     private ProductImageViewModel getProductImageViewModel(ProductImage productImage){

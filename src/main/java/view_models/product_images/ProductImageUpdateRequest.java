@@ -3,25 +3,17 @@ package view_models.product_images;
 import org.apache.commons.fileupload.FileItem;
 
 import javax.servlet.http.Part;
+import java.util.HashMap;
 
 public class ProductImageUpdateRequest {
-    public int productImageId;
 
-    public Part image;
+    private HashMap<Integer, Part> productImages;
 
-    public int getProductImageId() {
-        return productImageId;
+    public HashMap<Integer, Part> getProductImages() {
+        return productImages;
     }
 
-    public void setProductImageId(int productImageId) {
-        this.productImageId = productImageId;
-    }
-
-    public Part getImage() {
-        return image;
-    }
-
-    public void setImage(Part image) {
-        this.image = image;
+    public void setProductImages(HashMap<Integer, Part> productImages) {
+        this.productImages = productImages;
     }
 }

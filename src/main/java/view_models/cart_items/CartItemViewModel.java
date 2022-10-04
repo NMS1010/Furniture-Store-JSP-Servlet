@@ -1,5 +1,6 @@
 package view_models.cart_items;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class CartItemViewModel {
@@ -10,8 +11,8 @@ public class CartItemViewModel {
     private int userId;
     private String userName;
     private int quantity;
-    private double totalPrice;
-    private double unitPrice;
+    private BigDecimal totalPrice;
+    private BigDecimal unitPrice;
     private Date dateAdded;
     private int status;
 
@@ -79,19 +80,19 @@ public class CartItemViewModel {
         this.quantity = quantity;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

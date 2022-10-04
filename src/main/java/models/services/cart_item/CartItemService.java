@@ -16,6 +16,7 @@ import view_models.cart_items.CartItemUpdateRequest;
 import view_models.cart_items.CartItemViewModel;
 import view_models.products.ProductViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +39,8 @@ public class CartItemService implements ICartItemService{
         cartItem.setDateAdded(DateUtils.dateNow());
         Query q = session.createQuery("select price from Product where productId =:s1");
         q.setParameter("s1",request.getProductId());
-        double unitPrice = (double)q.getSingleResult();
-        cartItem.setTotalPrice(unitPrice * request.getQuantity());
+        BigDecimal unitPrice = (BigDecimal)q.getSingleResult();
+        cartItem.setTotalPrice(unitPrice.multiply(BigDecimal.valueOf(request.getQuantity())) );
         cartItem.setStatus(request.getStatus());
 
         int cartItemId = -1;
@@ -90,7 +91,7 @@ public class CartItemService implements ICartItemService{
 
         Query q1 = session.createQuery("select price from Product where productId =:s1");
         q1.setParameter("s1",cartItem.getProductId());
-        double unitPrice = (double)q1.getSingleResult();
+        BigDecimal unitPrice = (BigDecimal)q1.getSingleResult();
 
         cartItemViewModel.setUnitPrice(unitPrice);
         cartItemViewModel.setTotalPrice(cartItem.getTotalPrice());

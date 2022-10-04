@@ -1,16 +1,19 @@
 package view_models.products;
 
 import org.apache.commons.fileupload.FileItem;
+import view_models.product_images.ProductImageViewModel;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class ProductViewModel {
     private int productId;
     private String name;
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
     private int quantity;
 
@@ -21,10 +24,46 @@ public class ProductViewModel {
     private Date dateCreated;
 
     private String image;
-
+    private int categoryId;
+    private int brandId;
     private String categoryName;
-
     private String brandName;
+
+    private long totalPurchased;
+
+    private List<ProductImageViewModel> productImages;
+
+    public long getTotalPurchased() {
+        return totalPurchased;
+    }
+
+    public void setTotalPurchased(long totalPurchased) {
+        this.totalPurchased = totalPurchased;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public int getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(int brandId) {
+        this.brandId = brandId;
+    }
+
+    public List<ProductImageViewModel> getProductImages() {
+        return productImages;
+    }
+
+    public void setProductImages(List<ProductImageViewModel> productImages) {
+        this.productImages = productImages;
+    }
 
     public int getProductId() {
         return productId;
@@ -50,11 +89,11 @@ public class ProductViewModel {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

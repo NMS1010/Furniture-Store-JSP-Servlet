@@ -1,6 +1,7 @@
 package models.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
@@ -19,9 +20,9 @@ public class OrderItem {
     private int productId;
 
     @Column(nullable = false)
-    private double totalPrice;
+    private BigDecimal totalPrice;
     @Column(nullable = false)
-    private double unitPrice;
+    private BigDecimal unitPrice;
     @Column(nullable = false)
     private int quantity;
 
@@ -29,19 +30,19 @@ public class OrderItem {
     private Date dateOrder;
 
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 

@@ -1,6 +1,7 @@
 package models.entities;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class CartItem {
     private int userId;
 
     @Column(nullable = false)
-    private double totalPrice;
+    private BigDecimal totalPrice;
     @Column(nullable = false)
     private int quantity;
 
@@ -61,11 +62,11 @@ public class CartItem {
         this.userId = userId;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 

@@ -1,5 +1,6 @@
 package view_models.orders;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class OrderViewModel {
@@ -9,9 +10,9 @@ public class OrderViewModel {
     private int discountId;
     private String discountCode;
     private double discountValue;
-    private double totalItemPrice;
-    private double shipping;
-    private double totalPrice;
+    private BigDecimal totalItemPrice;
+    private BigDecimal shipping;
+    private BigDecimal totalPrice;
     private String address;
     private String name;
     private String email;
@@ -68,27 +69,27 @@ public class OrderViewModel {
         this.discountValue = discountValue;
     }
 
-    public double getTotalItemPrice() {
+    public BigDecimal getTotalItemPrice() {
         return totalItemPrice;
     }
 
-    public void setTotalItemPrice(double totalItemPrice) {
+    public void setTotalItemPrice(BigDecimal totalItemPrice) {
         this.totalItemPrice = totalItemPrice;
     }
 
-    public double getShipping() {
+    public BigDecimal getShipping() {
         return shipping;
     }
 
-    public void setShipping(double shipping) {
+    public void setShipping(BigDecimal shipping) {
         this.shipping = shipping;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 

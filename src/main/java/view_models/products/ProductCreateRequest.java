@@ -3,6 +3,7 @@ package view_models.products;
 import org.apache.commons.fileupload.FileItem;
 
 import javax.servlet.http.Part;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ public class ProductCreateRequest {
 
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
     private int quantity;
 
@@ -43,11 +44,11 @@ public class ProductCreateRequest {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

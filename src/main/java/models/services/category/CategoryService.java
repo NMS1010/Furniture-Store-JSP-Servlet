@@ -63,7 +63,7 @@ public class CategoryService implements ICategoryService{
         category.setCategoryName(request.getName());
         category.setDescription(request.getDescription());
         category.setParentCategoryId(request.getParentCategoryId());
-        if(request.getImage().getSubmittedFileName() != "")
+        if(!request.getImage().getSubmittedFileName().equals(""))
             category.setImage(FileUtil.encodeBase64(request.getImage()));
 
         return HibernateUtils.merge(category);

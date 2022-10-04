@@ -12,4 +12,8 @@ public class ServletUtils {
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
     }
+    public static void redirect(HttpServletResponse response, String url)
+            throws ServletException, IOException {
+        response.sendRedirect(url);
+    }
 }

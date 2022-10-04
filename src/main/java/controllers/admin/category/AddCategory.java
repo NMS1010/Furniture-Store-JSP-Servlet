@@ -1,6 +1,8 @@
 package controllers.admin.category;
 
 import models.services.category.CategoryService;
+import utils.ServletUtils;
+import utils.StringUtils;
 import view_models.categories.CategoryCreateRequest;
 import view_models.categories.CategoryGetPagingRequest;
 import view_models.categories.CategoryViewModel;
@@ -36,12 +38,12 @@ public class AddCategory extends HttpServlet {
         req.setName(categoryName);
         req.setImage(categoryLogo);
         if(parentCategoryId != null && !parentCategoryId.equals(""))
-            req.setParentCategoryId(Integer.parseInt(parentCategoryId));
+            req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
 
         int categoryId = CategoryService.getInstance().insert(req);
         if(parentCategoryId == null || parentCategoryId.equals(""))
-            response.sendRedirect(request.getContextPath() + "/admin/categories");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories");
         else
-            response.sendRedirect(request.getContextPath() + "/admin/categories?sub-categories=true");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true");
     }
 }

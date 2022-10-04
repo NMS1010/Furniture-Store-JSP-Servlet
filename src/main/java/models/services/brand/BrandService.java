@@ -62,7 +62,7 @@ public class BrandService implements  IBrandService{
 
         brand.setBrandName(request.getBrandName());
         brand.setOrigin(request.getOrigin());
-        if(request.getImage() != null){
+        if(!request.getImage().getSubmittedFileName().equals("")){
             brand.setImage(FileUtil.encodeBase64(request.getImage()));
         }
 

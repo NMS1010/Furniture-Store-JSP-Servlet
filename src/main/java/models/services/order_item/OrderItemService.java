@@ -15,6 +15,7 @@ import view_models.order_items.OrderItemViewModel;
 import view_models.orders.OrderViewModel;
 import view_models.products.ProductViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class OrderItemService implements IOrderItemService{
         orderItem.setProductId(request.getProductId());
         orderItem.setQuantity(request.getQuantity());
         orderItem.setUnitPrice(request.getUnitPrice());
-        orderItem.setTotalPrice(request.getUnitPrice()* request.getQuantity());
+        orderItem.setTotalPrice(request.getUnitPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
 
         int orderItemId = -1;
         try {

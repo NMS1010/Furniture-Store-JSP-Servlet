@@ -1,10 +1,12 @@
 package view_models.orders;
 
+import java.math.BigDecimal;
+
 public class OrderCreateRequest {
     private int userId;
     private String discountCode;
-    private double totalItemPrice;
-    private double shipping;
+    private BigDecimal totalItemPrice;
+    private BigDecimal shipping;
     private String address;
     private String name;
     private String email;
@@ -27,19 +29,19 @@ public class OrderCreateRequest {
         this.discountCode = discountCode;
     }
 
-    public double getTotalItemPrice() {
+    public BigDecimal getTotalItemPrice() {
         return totalItemPrice;
     }
 
-    public void setTotalItemPrice(double totalItemPrice) {
+    public void setTotalItemPrice(BigDecimal totalItemPrice) {
         this.totalItemPrice = totalItemPrice;
     }
 
-    public double getShipping() {
+    public BigDecimal getShipping() {
         return shipping;
     }
 
-    public void setShipping(double shipping) {
+    public void setShipping(BigDecimal shipping) {
         this.shipping = shipping;
     }
 

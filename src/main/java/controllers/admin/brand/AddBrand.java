@@ -1,6 +1,7 @@
 package controllers.admin.brand;
 
 import models.services.brand.BrandService;
+import utils.ServletUtils;
 import view_models.brands.BrandCreateRequest;
 import view_models.brands.BrandGetPagingRequest;
 import view_models.brands.BrandViewModel;
@@ -36,6 +37,6 @@ public class AddBrand extends HttpServlet {
 
         int brandId = BrandService.getInstance().insert(brandReq);
 
-        response.sendRedirect(request.getContextPath() + "/admin/brands");
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/brands");
     }
 }

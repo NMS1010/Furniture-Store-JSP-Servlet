@@ -1,5 +1,6 @@
 package view_models.order_items;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 public class OrderItemViewModel {
@@ -9,8 +10,8 @@ public class OrderItemViewModel {
     private String productName;
     private String productImage;
     private int quantity;
-    private double unitPrice;
-    private double totalPrice;
+    private BigDecimal unitPrice;
+    private BigDecimal totalPrice;
     private Date dateCreated;
 
     public int getOrderItemId() {
@@ -61,19 +62,19 @@ public class OrderItemViewModel {
         this.quantity = quantity;
     }
 
-    public double getUnitPrice() {
+    public BigDecimal getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(double unitPrice) {
+    public void setUnitPrice(BigDecimal unitPrice) {
         this.unitPrice = unitPrice;
     }
 
-    public double getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(double totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
 
