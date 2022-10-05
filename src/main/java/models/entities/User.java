@@ -37,8 +37,11 @@ public class User {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
+    private String avatar;
     @Column(nullable = false)
     private LocalDateTime lastLogin;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
     private List<Order> orders;
@@ -58,6 +61,14 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
     private List<WishListItem> wishListItem;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public Date getDateUpdated() {
         return dateUpdated;
@@ -123,11 +134,11 @@ public class User {
         this.orders = orders;
     }
 
-    public int getId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setId(int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

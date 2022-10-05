@@ -92,10 +92,14 @@ public class ReviewService implements IReviewService{
         reviewViewModel.setProductName(product.getName());
         reviewViewModel.setDateUpdated(review.getUpdatedAt());
 
-        Query q = session.createQuery("select username from User where id = :s1");
-        q.setParameter("s1",review.getUserId());
+        Query q1 = session.createQuery("select username from User where id = :s1");
+        q1.setParameter("s1",review.getUserId());
 
-        reviewViewModel.setUserName(q.getSingleResult().toString());
+        reviewViewModel.setUserName(q1.getSingleResult().toString());
+        Query q2 = session.createQuery("select avatar from User where id = :s1");
+        q2.setParameter("s1",review.getUserId());
+
+        reviewViewModel.setUserAvatar(q2.getSingleResult().toString());
 
         return reviewViewModel;
     }
@@ -136,5 +140,19 @@ public class ReviewService implements IReviewService{
         review.setStatus(review.getStatus() == 1 ? 0 : 1);
         session.close();
         HibernateUtils.merge(review);
+    }
+
+    @Override
+    public ArrayList<ReviewViewModel> retrieveByProductId(Integer productId) {
+        Session session = HibernateUtils.getSession();
+        ArrayList<ReviewViewModel> reviews = new ArrayList<>();
+        Query q = session.createQuery("select reviewId from Review  where productId =:s1");
+        q.setParameter("s1",productId);
+        List<Integer> l = q.list();
+        if(l!= null)
+            l.forEach(reviewId -> {
+                reviews.add(retrieveById((Integer)reviewId));
+            });
+        return reviews;
     }
 }

@@ -17,6 +17,15 @@ public class UserViewModel {
     private String username;
     private String email;
     private LocalDateTime lastLogin;
+    private String avatar;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public Date getDateUpdated() {
         return dateUpdated;

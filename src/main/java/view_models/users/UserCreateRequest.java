@@ -1,5 +1,6 @@
 package view_models.users;
 
+import javax.servlet.http.Part;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
@@ -14,6 +15,15 @@ public class UserCreateRequest {
     private String username;
     private String password;
     private String email;
+    private Part avatar;
+
+    public Part getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Part avatar) {
+        this.avatar = avatar;
+    }
 
     public String getFirstName() {
         return firstName;

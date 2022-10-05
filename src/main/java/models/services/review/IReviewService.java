@@ -7,7 +7,11 @@ import view_models.reviews.ReviewGetPagingRequest;
 import view_models.reviews.ReviewUpdateRequest;
 import view_models.reviews.ReviewViewModel;
 
+import java.util.ArrayList;
+
 public interface IReviewService extends IModifyEntity<ReviewCreateRequest, ReviewUpdateRequest, Integer>,
         IRetrieveEntity<ReviewViewModel, ReviewGetPagingRequest, Integer> {
     void ChangeStatus(int reviewId);
+
+    ArrayList<ReviewViewModel> retrieveByProductId(Integer productId);
 }

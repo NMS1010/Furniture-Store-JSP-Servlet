@@ -9,11 +9,20 @@ public class ReviewViewModel {
     private String productImage;
     private int userId;
     private String userName;
+    private String userAvatar;
     private Date dateCreated;
     private String content;
     private int rating;
     private int status;
     private Date dateUpdated;
+
+    public String getUserAvatar() {
+        return userAvatar;
+    }
+
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
+    }
 
     public Date getDateUpdated() {
         return dateUpdated;

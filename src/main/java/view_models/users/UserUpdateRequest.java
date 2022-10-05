@@ -1,5 +1,6 @@
 package view_models.users;
 
+import javax.servlet.http.Part;
 import java.sql.Date;
 import java.time.LocalDateTime;
 
@@ -15,6 +16,15 @@ public class UserUpdateRequest {
     private String username;
     private String email;
     private LocalDateTime lastLogin;
+    private Part avatar;
+
+    public Part getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Part avatar) {
+        this.avatar = avatar;
+    }
 
     public int getUserId() {
         return userId;

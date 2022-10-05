@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.DateUtils;
+import utils.FileUtil;
 import utils.HibernateUtils;
 import view_models.products.ProductViewModel;
 import view_models.users.UserViewModel;
@@ -46,12 +47,15 @@ public class UserService implements IUserService{
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setGender(request.getGender());
+        if(request.getAvatar()!= null && !request.getAvatar().getSubmittedFileName().equals("")){
+            user.setAvatar(FileUtil.encodeBase64(request.getAvatar()));
+        }
 
         int userId = -1;
         try {
             tx = session.beginTransaction();
             session.persist(user);
-            userId = user.getId();
+            userId = user.getUserId();
             tx.commit();
         }catch(Exception e){
             if(tx != null)
@@ -71,15 +75,18 @@ public class UserService implements IUserService{
         User user = session.find(User.class, request.getUserId());
         user.setAddress(request.getAddress());
         user.setDateUpdated(DateUtils.dateNow());
-        user.setStatus(request.getStatus());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
-        user.setUsername(request.getUsername());
         user.setDateOfBirth(request.getDateOfBirth());
+        user.setPhone(request.getPhone());
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setGender(request.getGender());
-
+        user.setStatus(request.getStatus());
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
+        if(request.getAvatar()!= null && !request.getAvatar().getSubmittedFileName().equals("")){
+            user.setAvatar(FileUtil.encodeBase64(request.getAvatar()));
+        }
+        session.close();
         return HibernateUtils.merge(user);
     }
 
@@ -91,7 +98,7 @@ public class UserService implements IUserService{
     }
     private UserViewModel getUserViewModel(User user, Session session){
         UserViewModel userViewModel = new UserViewModel();
-        userViewModel.setId(user.getId());
+        userViewModel.setId(user.getUserId());
         userViewModel.setAddress(user.getAddress());
         userViewModel.setDateCreated(user.getDateCreated());
         userViewModel.setStatus(user.getStatus());
@@ -104,7 +111,7 @@ public class UserService implements IUserService{
         userViewModel.setPhone(user.getPhone());
         userViewModel.setUsername(user.getUsername());
         userViewModel.setDateOfBirth(user.getDateOfBirth());
-
+        userViewModel.setAvatar(user.getAvatar());
         return userViewModel;
     }
     @Override
