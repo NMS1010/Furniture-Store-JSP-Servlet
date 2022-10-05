@@ -26,9 +26,6 @@ public class OrderItem {
     @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false)
-    private Date dateOrder;
-
 
     public BigDecimal getTotalPrice() {
         return totalPrice;
@@ -78,11 +75,4 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public Date getDateOrder() {
-        return dateOrder;
-    }
-
-    public void setDateOrder(Date dateOrder) {
-        this.dateOrder = dateOrder;
-    }
 }

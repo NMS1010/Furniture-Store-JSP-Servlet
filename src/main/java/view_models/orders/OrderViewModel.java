@@ -20,6 +20,51 @@ public class OrderViewModel {
     private Date dateCreated;
     private Date dateDone;
     private int status;
+    private String statusCode;
+    private String statusClass;
+    private int payment;
+    private String paymentMethod;
+    private long totalItem;
+
+    public String getStatusClass() {
+        return statusClass;
+    }
+
+    public void setStatusClass(String statusClass) {
+        this.statusClass = statusClass;
+    }
+
+    public long getTotalItem() {
+        return totalItem;
+    }
+
+    public void setTotalItem(long totalItem) {
+        this.totalItem = totalItem;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
 
     public int getOrderId() {
         return orderId;

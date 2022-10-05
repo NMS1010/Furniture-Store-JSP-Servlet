@@ -12,6 +12,15 @@ public class OrderCreateRequest {
     private String email;
     private String phone;
     private int status;
+    private int payment;
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
 
     public int getUserId() {
         return userId;

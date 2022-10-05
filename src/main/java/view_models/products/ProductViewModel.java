@@ -16,8 +16,9 @@ public class ProductViewModel {
     private BigDecimal price;
 
     private int quantity;
-
     private int status;
+    private String statusCode;
+    private String statusClass;
 
     private String origin;
 
@@ -31,7 +32,23 @@ public class ProductViewModel {
 
     private long totalPurchased;
 
+    public String getStatusClass() {
+        return statusClass;
+    }
+
+    public void setStatusClass(String statusClass) {
+        this.statusClass = statusClass;
+    }
+
     private List<ProductImageViewModel> productImages;
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
 
     public long getTotalPurchased() {
         return totalPurchased;

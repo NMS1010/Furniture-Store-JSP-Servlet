@@ -89,10 +89,13 @@ public class HibernateUtils {
 
         return isSucceed;
     }
-    public static Long count(String table) {
+    public static Long count(String table, String condition ) {
         Session session = getSession();
 
         String query = "SELECT COUNT(*) FROM " + table;
+        if(condition != null && !condition.equals("")){
+            query += " where " + condition;
+        }
         Long count = (Long) session
                 .createQuery(query)
                 .getSingleResult();

@@ -40,7 +40,17 @@ public class Order {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
+    private int payment;
+    @Column(nullable = false)
     private int status;
+
+    public int getPayment() {
+        return payment;
+    }
+
+    public void setPayment(int payment) {
+        this.payment = payment;
+    }
 
     public String getName() {
         return name;

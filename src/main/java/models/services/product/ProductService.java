@@ -9,6 +9,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.FileUtil;
 import utils.HibernateUtils;
+import utils.HtmlClassUtils;
+import utils.constants.PRODUCT_STATUS;
 import view_models.product_images.ProductImageViewModel;
 import view_models.products.ProductCreateRequest;
 import view_models.products.ProductGetPagingRequest;
@@ -113,7 +115,7 @@ public class ProductService implements IProductService {
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Product product = session.find(Product.class, entityId);
-        product.setStatus(0);
+        product.setStatus(PRODUCT_STATUS.SUSPENDED);
         session.close();
         return HibernateUtils.merge(product);
     }
@@ -122,6 +124,24 @@ public class ProductService implements IProductService {
         if(instance == null)
             instance = new ProductService();
         return instance;
+    }
+    private String getStatus(int i){
+        String status = "";
+        switch (i){
+            case PRODUCT_STATUS.IN_STOCK:
+                status = "In Stock";
+                break;
+            case PRODUCT_STATUS.OUT_STOCK:
+                status = "Out Stock";
+                break;
+            case PRODUCT_STATUS.SUSPENDED:
+                status = "Suspended";
+                break;
+            default:
+                status = "Undefined";
+                break;
+        }
+        return status;
     }
     private ProductViewModel getProductViewModel(Product product, Session session){
         Query q1 = session.createQuery("select image from ProductImage where productId =:s1 and isDefault = true");
@@ -149,6 +169,7 @@ public class ProductService implements IProductService {
         productViewModel.setOrigin(product.getOrigin());
         productViewModel.setDateCreated(product.getDateCreated());
         productViewModel.setStatus(product.getStatus());
+        productViewModel.setStatusCode(getStatus(product.getStatus()));
         productViewModel.setPrice(product.getPrice());
         productViewModel.setQuantity(product.getQuantity());
         productViewModel.setImage(image);
@@ -157,6 +178,7 @@ public class ProductService implements IProductService {
         productViewModel.setCategoryId(product.getCategoryId());
         productViewModel.setBrandId(product.getBrandId());
         productViewModel.setTotalPurchased(totalPurchased);
+        productViewModel.setStatusClass(HtmlClassUtils.generateProductStatusClass(product.getStatus()));
         List<ProductImageViewModel> productImageViewModels = new ArrayList<>();
         subProductImageIds.forEach(id -> {
             productImageViewModels.add(ProductImageService.getInstance().retrieveById(id));

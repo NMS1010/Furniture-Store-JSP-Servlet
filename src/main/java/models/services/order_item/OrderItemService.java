@@ -33,7 +33,6 @@ public class OrderItemService implements IOrderItemService{
 
         OrderItem orderItem = new OrderItem();
 
-        orderItem.setDateOrder(DateUtils.dateNow());
         orderItem.setOrderItemId(request.getOrderId());
         orderItem.setProductId(request.getProductId());
         orderItem.setQuantity(request.getQuantity());
@@ -80,7 +79,6 @@ public class OrderItemService implements IOrderItemService{
         orderItemViewModel.setProductId(orderItem.getProductId());
         orderItemViewModel.setOrderId(orderItem.getOrderId());
         orderItemViewModel.setProductImage(product.getImage());
-        orderItemViewModel.setDateCreated(orderItem.getDateOrder());
         orderItemViewModel.setProductName(product.getName());
         orderItemViewModel.setOrderItemId(orderItem.getOrderItemId());
         orderItemViewModel.setUnitPrice(orderItem.getUnitPrice());

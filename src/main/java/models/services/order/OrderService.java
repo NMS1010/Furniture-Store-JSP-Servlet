@@ -7,6 +7,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.DateUtils;
 import utils.HibernateUtils;
+import utils.HtmlClassUtils;
+import utils.constants.ORDER_PAYMENT;
+import utils.constants.ORDER_STATUS;
 import view_models.discounts.DiscountViewModel;
 import view_models.orders.OrderCreateRequest;
 import view_models.orders.OrderGetPagingRequest;
@@ -32,6 +35,7 @@ public class OrderService implements IOrderService{
         Order order = new Order();
         order.setAddress(request.getAddress());
         order.setDateCreated(DateUtils.dateNow());
+        order.setPayment(request.getPayment());
         order.setStatus(request.getStatus());
         order.setEmail(request.getEmail());
         order.setPhone(request.getPhone());
@@ -84,6 +88,7 @@ public class OrderService implements IOrderService{
         Order order = session.find(Order.class, request.getOrderId());
 
         order.setStatus(request.getStatus());
+        session.close();
         return HibernateUtils.merge(order);
     }
 
@@ -91,7 +96,51 @@ public class OrderService implements IOrderService{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Order order = session.find(Order.class, entityId);
+        session.close();
         return HibernateUtils.remove(order);
+    }
+
+    private String getStatus(int i){
+        String status = "";
+        switch (i){
+            case ORDER_STATUS.PENDING:
+                status = "Đang đợi";
+                break;
+            case ORDER_STATUS.READY_TO_SHIP:
+                status = "Sẵn sàng chuyển đi";
+                break;
+            case ORDER_STATUS.ON_THE_WAY:
+                status = "Đang giao";
+                break;
+            case ORDER_STATUS.DELIVERED:
+                status = "Đã giao thành công";
+                break;
+            case ORDER_STATUS.CANCEL:
+                status = "Đã huỷ";
+                break;
+            case ORDER_STATUS.RETURN:
+                status = "Hoàn trả";
+                break;
+            default:
+                status = "Undefined";
+                break;
+        }
+        return status;
+    }
+    private String getPayment(int i){
+        String payment = "";
+        switch (i){
+            case ORDER_PAYMENT.PAID:
+                payment = "PAID";
+                break;
+            case ORDER_PAYMENT.COD:
+                payment = "COD";
+                break;
+            default:
+                payment = "Undefined";
+                break;
+        }
+        return payment;
     }
     private OrderViewModel getOrderViewModel(Order order, Session session){
         OrderViewModel orderViewModel = new OrderViewModel();
@@ -104,6 +153,7 @@ public class OrderService implements IOrderService{
         orderViewModel.setAddress(order.getAddress());
         orderViewModel.setDateCreated(order.getDateCreated());
         orderViewModel.setStatus(order.getStatus());
+        orderViewModel.setStatusCode(getStatus(order.getStatus()));
         orderViewModel.setEmail(order.getEmail());
         orderViewModel.setPhone(order.getPhone());
         orderViewModel.setName(order.getName());
@@ -115,7 +165,10 @@ public class OrderService implements IOrderService{
         orderViewModel.setShipping(order.getShipping());
         orderViewModel.setTotalItemPrice(order.getTotalItemPrice());
         orderViewModel.setTotalPrice(order.getTotalPrice());
-
+        orderViewModel.setPayment(order.getPayment());
+        orderViewModel.setPaymentMethod(getPayment(order.getPayment()));
+        orderViewModel.setTotalItem(HibernateUtils.count("OrderItem","orderId = " + order.getOrderId()));
+        orderViewModel.setStatusClass(HtmlClassUtils.generateOrderStatusClass(order.getStatus()));
         return orderViewModel;
     }
     @Override
@@ -146,5 +199,23 @@ public class OrderService implements IOrderService{
         }
         session.close();
         return list;
+    }
+
+    @Override
+    public ArrayList<OrderViewModel> retrieveDeliveredOrder(OrderGetPagingRequest request) {
+        ArrayList<OrderViewModel> all = retrieveAll(request);
+
+        all.removeIf(x -> x.getStatus() != ORDER_STATUS.DELIVERED);
+
+        return all;
+    }
+
+    @Override
+    public ArrayList<OrderViewModel> retrieveNewOrder(OrderGetPagingRequest request) {
+        ArrayList<OrderViewModel> all = retrieveAll(request);
+
+        all.removeIf(x -> x.getStatus() == ORDER_STATUS.DELIVERED);
+
+        return all;
     }
 }
