@@ -7,6 +7,9 @@ import view_models.roles.RoleGetPagingRequest;
 import view_models.roles.RoleUpdateRequest;
 import view_models.roles.RoleViewModel;
 
+import java.util.ArrayList;
+
 public interface IRoleService  extends IModifyEntity<RoleCreateRequest, RoleUpdateRequest, Integer>,
         IRetrieveEntity<RoleViewModel, RoleGetPagingRequest, Integer> {
+
 }

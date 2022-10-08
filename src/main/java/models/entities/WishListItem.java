@@ -2,6 +2,8 @@ package models.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "wish_list_items",uniqueConstraints =
@@ -19,7 +21,7 @@ public class WishListItem {
     @Column(nullable = false)
     private int status;
     @Column(nullable = false)
-    private Date dateAdded;
+    private LocalDateTime dateAdded;
 
     public int getWishListItemId() {
         return wishListItemId;
@@ -53,11 +55,11 @@ public class WishListItem {
         this.status = status;
     }
 
-    public Date getDateAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 }

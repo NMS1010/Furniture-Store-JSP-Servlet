@@ -1,12 +1,18 @@
 package utils;
 
-import java.util.Date;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class DateUtils {
-    public static java.sql.Date dateNow() {
-        return java.sql.Date.valueOf(LocalDate.now());
+    public static LocalDate dateNow() {
+        return LocalDate.now();
+    }
+    public static LocalDateTime dateTimeNow() {
+        return LocalDateTime.now();
     }
 
     public static String toString(Date date, String format){
@@ -15,11 +21,11 @@ public class DateUtils {
         return dateFormat.format(date);
     }
 
-    public static Date stringToDate(String date, String format){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-        Date res = new Date();
+    public static LocalDate stringToLocalDate(String date, String format){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
+        LocalDate res = LocalDate.now();
         try {
-            res = simpleDateFormat.parse(date);
+            res = LocalDate.parse(date, dtf);
         }catch(Exception e){
 
         }

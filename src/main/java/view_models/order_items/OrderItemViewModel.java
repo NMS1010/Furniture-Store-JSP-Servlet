@@ -2,6 +2,7 @@ package view_models.order_items;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class OrderItemViewModel {
     private int orderItemId;
@@ -12,7 +13,7 @@ public class OrderItemViewModel {
     private int quantity;
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
 
     public int getOrderItemId() {
         return orderItemId;
@@ -78,11 +79,11 @@ public class OrderItemViewModel {
         this.totalPrice = totalPrice;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 }

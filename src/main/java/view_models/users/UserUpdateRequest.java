@@ -1,22 +1,36 @@
 package view_models.users;
 
+import models.entities.Role;
+import view_models.roles.RoleViewModel;
+
 import javax.servlet.http.Part;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class UserUpdateRequest {
     private int userId;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String address;
-    private String gender;
+    private int gender;
     private String phone;
-    private String status;
+    private int status;
     private String username;
     private String email;
     private LocalDateTime lastLogin;
     private Part avatar;
+    private ArrayList<Role> roles;
+
+    public ArrayList<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<Role> roles) {
+        this.roles = roles;
+    }
 
     public Part getAvatar() {
         return avatar;
@@ -50,11 +64,11 @@ public class UserUpdateRequest {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -66,11 +80,11 @@ public class UserUpdateRequest {
         this.address = address;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -82,11 +96,11 @@ public class UserUpdateRequest {
         this.phone = phone;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

@@ -37,8 +37,8 @@ public class ReviewService implements IReviewService{
         review.setContent(request.getContent());
         review.setStatus(request.getStatus());
         review.setRating(request.getRating());
-        review.setCreatedAt(DateUtils.dateNow());
-        review.setUpdatedAt(DateUtils.dateNow());
+        review.setCreatedAt(DateUtils.dateTimeNow());
+        review.setUpdatedAt(DateUtils.dateTimeNow());
         review.setUserId(request.getUserId());
         review.setProductId(request.getProductId());
 
@@ -68,7 +68,7 @@ public class ReviewService implements IReviewService{
         review.setContent(request.getContent());
         review.setStatus(request.getStatus());
         review.setRating(request.getRating());
-        review.setUpdatedAt(DateUtils.dateNow());
+        review.setUpdatedAt(DateUtils.dateTimeNow());
         return HibernateUtils.merge(review);
     }
 
@@ -153,6 +153,7 @@ public class ReviewService implements IReviewService{
             l.forEach(reviewId -> {
                 reviews.add(retrieveById((Integer)reviewId));
             });
+        session.close();
         return reviews;
     }
 }

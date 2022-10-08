@@ -1,6 +1,8 @@
 package view_models.discounts;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class DiscountUpdateRequest {
     private int discountId;
@@ -9,8 +11,8 @@ public class DiscountUpdateRequest {
 
     private double discountValue;
     private int quantity;
-    private Date startDate;
-    private Date endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     private int status;
 
     public int getQuantity() {
@@ -45,19 +47,19 @@ public class DiscountUpdateRequest {
         this.discountValue = discountValue;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 

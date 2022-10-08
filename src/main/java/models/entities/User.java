@@ -1,7 +1,7 @@
 package models.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,19 +17,19 @@ public class User {
     @Column(nullable = false)
     private String lastName;
     @Column(nullable = false)
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     @Column(nullable = false)
     private String address;
     @Column(nullable = false)
-    private String gender;
+    private int gender;
     @Column(nullable = false)
     private String phone;
     @Column(nullable = false)
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
     @Column(nullable = false)
-    private Date dateUpdated;
+    private LocalDateTime dateUpdated;
     @Column(nullable = false)
-    private String status;
+    private int status;
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
@@ -70,11 +70,11 @@ public class User {
         this.avatar = avatar;
     }
 
-    public Date getDateUpdated() {
+    public LocalDateTime getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(Date dateUpdated) {
+    public void setDateUpdated(LocalDateTime dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
 
@@ -158,11 +158,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -174,11 +174,11 @@ public class User {
         this.address = address;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -190,19 +190,19 @@ public class User {
         this.phone = phone;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

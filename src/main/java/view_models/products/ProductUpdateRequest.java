@@ -21,7 +21,6 @@ public class ProductUpdateRequest {
 
     private String origin;
 
-    private Date dateCreated;
 
     private Part image;
 
@@ -84,13 +83,6 @@ public class ProductUpdateRequest {
         this.origin = origin;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
 
     public Part getImage() {
         return image;

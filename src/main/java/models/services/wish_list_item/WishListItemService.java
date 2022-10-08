@@ -33,7 +33,7 @@ public class WishListItemService implements IWishListItemService{
         WishListItem wishListItem = new WishListItem();
         wishListItem.setProductId(request.getProductId());
         wishListItem.setUserId(request.getUserId());
-        wishListItem.setDateAdded(DateUtils.dateNow());
+        wishListItem.setDateAdded(DateUtils.dateTimeNow());
         wishListItem.setStatus(request.getStatus());
 
         int wishListItemId = -1;

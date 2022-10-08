@@ -7,6 +7,7 @@ import org.hibernate.Interceptor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import utils.DateUtils;
 import utils.FileUtil;
 import utils.HibernateUtils;
 import utils.HtmlClassUtils;
@@ -36,7 +37,7 @@ public class ProductService implements IProductService {
         product.setName(request.getProductName());
         product.setDescription(request.getDescription());
         product.setOrigin(request.getOrigin());
-        product.setDateCreated(request.getDateCreated());
+        product.setDateCreated(DateUtils.dateTimeNow());
         product.setStatus(request.getStatus());
         product.setPrice(request.getPrice());
         product.setQuantity(request.getQuantity());

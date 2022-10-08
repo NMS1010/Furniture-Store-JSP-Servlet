@@ -74,7 +74,6 @@ public class AddProduct extends HttpServlet {
         req.setImage(file);
         req.setCategoryId(categoryId);
         req.setBrandId(brandId);
-        req.setDateCreated(DateUtils.dateNow());
         req.setStatus(status);
         int productId = ProductService.getInstance().insert(req);
 

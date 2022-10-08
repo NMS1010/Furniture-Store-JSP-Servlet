@@ -1,23 +1,82 @@
 package view_models.users;
 
-import java.sql.Date;
+import view_models.roles.RoleViewModel;
+import view_models.user_roles.UserRoleViewModel;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class UserViewModel {
     private int id;
     private String firstName;
     private String lastName;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private String address;
-    private String gender;
+    private int gender;
+    private String genderCode;
     private String phone;
-    private Date dateCreated;
-    private Date dateUpdated;
-    private String status;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateUpdated;
+    private int status;
+    private String statusCode;
     private String username;
     private String email;
     private LocalDateTime lastLogin;
     private String avatar;
+
+    private long totalBought;
+    private long totalWishListItem;
+    private ArrayList<UserRoleViewModel> roles;
+    private ArrayList<Integer> roleIds;
+
+    public ArrayList<Integer> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(ArrayList<Integer> roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public ArrayList<UserRoleViewModel> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(ArrayList<UserRoleViewModel> roles) {
+        this.roles = roles;
+    }
+
+    public long getTotalWishListItem() {
+        return totalWishListItem;
+    }
+
+    public void setTotalWishListItem(long totalWishListItem) {
+        this.totalWishListItem = totalWishListItem;
+    }
+
+    public String getGenderCode() {
+        return genderCode;
+    }
+
+    public void setGenderCode(String genderCode) {
+        this.genderCode = genderCode;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public long getTotalBought() {
+        return totalBought;
+    }
+
+    public void setTotalBought(long totalBought) {
+        this.totalBought = totalBought;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -27,11 +86,11 @@ public class UserViewModel {
         this.avatar = avatar;
     }
 
-    public Date getDateUpdated() {
+    public LocalDateTime getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(Date dateUpdated) {
+    public void setDateUpdated(LocalDateTime dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
 
@@ -59,11 +118,11 @@ public class UserViewModel {
         this.lastName = lastName;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -75,11 +134,11 @@ public class UserViewModel {
         this.address = address;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
@@ -91,19 +150,19 @@ public class UserViewModel {
         this.phone = phone;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

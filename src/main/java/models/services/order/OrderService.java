@@ -1,6 +1,7 @@
 package models.services.order;
 
 import models.entities.Order;
+import models.entities.User;
 import models.services.discount.DiscountService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -34,7 +35,7 @@ public class OrderService implements IOrderService{
 
         Order order = new Order();
         order.setAddress(request.getAddress());
-        order.setDateCreated(DateUtils.dateNow());
+        order.setDateCreated(DateUtils.dateTimeNow());
         order.setPayment(request.getPayment());
         order.setStatus(request.getStatus());
         order.setEmail(request.getEmail());
@@ -49,7 +50,8 @@ public class OrderService implements IOrderService{
         }
         order.setDiscountId(discountId);
         order.setUserId(request.getUserId());
-        order.setDateDone(DateUtils.dateNow());
+        if(request.getPayment() == ORDER_PAYMENT.PAID)
+            order.setDateDone(DateUtils.dateTimeNow());
         order.setShipping(request.getShipping());
         order.setTotalItemPrice(request.getTotalItemPrice());
 
@@ -145,10 +147,14 @@ public class OrderService implements IOrderService{
     private OrderViewModel getOrderViewModel(Order order, Session session){
         OrderViewModel orderViewModel = new OrderViewModel();
         DiscountViewModel discount = DiscountService.getInstance().retrieveById(order.getDiscountId());
-        Query q = session.createQuery("select username from User where id =:s1");
+        Query q = session.createQuery("from User where id =:s1");
         q.setParameter("s1",order.getUserId());
+        User user = (User)q.getSingleResult();
 
-        orderViewModel.setUserName(q.getSingleResult().toString());
+        orderViewModel.setUserName(user.getUsername());
+        orderViewModel.setUserAddress(user.getAddress());
+        orderViewModel.setUserPhone(user.getPhone());
+
         orderViewModel.setOrderId(order.getOrderId());
         orderViewModel.setAddress(order.getAddress());
         orderViewModel.setDateCreated(order.getDateCreated());

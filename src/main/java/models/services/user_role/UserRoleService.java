@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.HibernateUtils;
+import view_models.roles.RoleViewModel;
 import view_models.user_roles.UserRoleCreateRequest;
 import view_models.user_roles.UserRoleGetPagingRequest;
 import view_models.user_roles.UserRoleUpdateRequest;
@@ -108,5 +109,21 @@ public class UserRoleService implements IUserRoleService{
         }
         session.close();
         return list;
+    }
+
+    @Override
+    public ArrayList<UserRoleViewModel> getByUserId(int userId) {
+        ArrayList<UserRoleViewModel> userRoles = new ArrayList<>();
+        Session session = HibernateUtils.getSession();
+        Query q1 = session.createQuery("select userRoleId from UserRole where userId=:s1");
+        q1.setParameter("s1",userId);
+        List<Integer> userRoleIds = q1.list();
+        if(userRoleIds != null){
+
+            for(Integer userRoleId:userRoleIds){
+                userRoles.add(retrieveById(userRoleId));
+            }
+        }
+        return userRoles;
     }
 }

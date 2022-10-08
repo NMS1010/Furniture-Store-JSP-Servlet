@@ -2,6 +2,8 @@ package view_models.cart_items;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CartItemViewModel {
     private int cartItemId;
@@ -13,7 +15,7 @@ public class CartItemViewModel {
     private int quantity;
     private BigDecimal totalPrice;
     private BigDecimal unitPrice;
-    private Date dateAdded;
+    private LocalDateTime dateAdded;
     private int status;
 
     public int getStatus() {
@@ -96,11 +98,11 @@ public class CartItemViewModel {
         this.unitPrice = unitPrice;
     }
 
-    public Date getDateAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 }

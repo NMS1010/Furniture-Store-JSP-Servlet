@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileItem;
 import javax.servlet.http.Part;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class ProductCreateRequest {
@@ -20,7 +21,6 @@ public class ProductCreateRequest {
 
     private String origin;
 
-    private Date dateCreated;
 
     private Part image;
 
@@ -76,13 +76,6 @@ public class ProductCreateRequest {
         this.origin = origin;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
 
     public Part getImage() {
         return image;

@@ -102,7 +102,7 @@ public class BrandService implements  IBrandService{
         brandViewModel.setOrigin(brand.getOrigin());
         brandViewModel.setImage(brand.getImage());
 
-        Query q = session.createQuery("select count(*) from Product where brandId=:s1");
+        Query q = session.createQuery("select sum(quantity) from Product where brandId=:s1");
         q.setParameter("s1",brand.getBrandId());
         brandViewModel.setTotalProducts(((Long)q.getSingleResult()).intValue());
 

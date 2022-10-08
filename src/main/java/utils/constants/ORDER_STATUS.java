@@ -1,5 +1,7 @@
 package utils.constants;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ORDER_STATUS {
@@ -9,7 +11,11 @@ public class ORDER_STATUS {
     public static final int DELIVERED = 3;
     public static final int CANCEL = 4;
     public static final int RETURN = 5;
-
+    public static String isCompleted(int orderStatus, int status){
+        if(orderStatus >= status)
+            return "completed";
+        return "";
+    }
     public static HashMap<String, Integer> Status = new HashMap<String, Integer>(){
         {
             put("Đang đợi", PENDING);

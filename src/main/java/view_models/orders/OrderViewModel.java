@@ -2,11 +2,14 @@ package view_models.orders;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class OrderViewModel {
     private int orderId;
     private int userId;
     private String userName;
+    private String userAddress;
+    private String userPhone;
     private int discountId;
     private String discountCode;
     private double discountValue;
@@ -17,14 +20,30 @@ public class OrderViewModel {
     private String name;
     private String email;
     private String phone;
-    private Date dateCreated;
-    private Date dateDone;
+    private LocalDateTime dateCreated;
+    private LocalDateTime dateDone;
     private int status;
     private String statusCode;
     private String statusClass;
     private int payment;
     private String paymentMethod;
     private long totalItem;
+
+    public String getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
 
     public String getStatusClass() {
         return statusClass;
@@ -170,19 +189,19 @@ public class OrderViewModel {
         this.phone = phone;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public Date getDateDone() {
+    public LocalDateTime getDateDone() {
         return dateDone;
     }
 
-    public void setDateDone(Date dateDone) {
+    public void setDateDone(LocalDateTime dateDone) {
         this.dateDone = dateDone;
     }
 

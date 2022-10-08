@@ -9,6 +9,7 @@ import view_models.products.ProductGetPagingRequest;
 import view_models.products.ProductUpdateRequest;
 import view_models.products.ProductViewModel;
 
-public interface IProductService extends IModifyEntity<ProductCreateRequest, ProductUpdateRequest, Integer>, IRetrieveEntity<ProductViewModel, ProductGetPagingRequest, Integer> {
+public interface IProductService extends IModifyEntity<ProductCreateRequest, ProductUpdateRequest, Integer>,
+        IRetrieveEntity<ProductViewModel, ProductGetPagingRequest, Integer> {
 
 }

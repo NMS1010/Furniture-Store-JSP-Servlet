@@ -119,11 +119,11 @@ public class CategoryService implements ICategoryService{
         categoryViewModel.setImage(category.getImage());
         categoryViewModel.setDescription(category.getDescription());
 
-        Query q2 = session.createQuery("select count(*) from Product where categoryId=:s1");
+        Query q2 = session.createQuery("select sum(quantity) from Product where categoryId=:s1");
         q2.setParameter("s1",category.getCategoryId());
         categoryViewModel.setTotalProduct(((Long)q2.getSingleResult()).intValue());
 
-        Query q3 = session.createQuery("select count(*) from OrderItem o inner join Product p on o.productId = p.productId where p.categoryId =:s1");
+        Query q3 = session.createQuery("select sum(o.quantity) from OrderItem o inner join Product p on o.productId = p.productId where p.categoryId =:s1");
         q3.setParameter("s1",category.getCategoryId());
         categoryViewModel.setTotalSell(((Long)q3.getSingleResult()).intValue());
 

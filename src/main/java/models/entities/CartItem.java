@@ -3,6 +3,8 @@ package models.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cart_items",uniqueConstraints =
@@ -25,7 +27,7 @@ public class CartItem {
     private int quantity;
 
     @Column(nullable = false)
-    private Date dateAdded;
+    private LocalDateTime dateAdded;
 
     @Column(nullable = false)
     private int status;
@@ -79,11 +81,11 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public Date getDateAdded() {
+    public LocalDateTime getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(Date dateAdded) {
+    public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
     }
 }

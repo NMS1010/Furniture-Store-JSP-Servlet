@@ -36,7 +36,7 @@ public class CartItemService implements ICartItemService{
         cartItem.setProductId(request.getProductId());
         cartItem.setUserId(request.getUserId());
         cartItem.setQuantity(request.getQuantity());
-        cartItem.setDateAdded(DateUtils.dateNow());
+        cartItem.setDateAdded(DateUtils.dateTimeNow());
         Query q = session.createQuery("select price from Product where productId =:s1");
         q.setParameter("s1",request.getProductId());
         BigDecimal unitPrice = (BigDecimal)q.getSingleResult();

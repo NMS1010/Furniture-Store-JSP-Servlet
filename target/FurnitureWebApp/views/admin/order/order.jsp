@@ -22,9 +22,9 @@
         <div class="breadcrumb-wrapper breadcrumb-wrapper-2">
           <h1>New Orders</h1>
           <div class="d-flex justify-content-between">
-            <a href="<%=request.getContextPath()%>/admin/orders?new=true" class="btn btn-outline-info">View New Orders</a>
-            <a href="<%=request.getContextPath()%>/admin/orders?delivered=true" class="btn btn-outline-info">View Delivered Orders</a>
+            <a href="<%=request.getContextPath()%>/admin/orders?new=true" class="btn btn-outline-info mr-4">View New Orders</a>
             <a href="<%=request.getContextPath()%>/admin/orders" class="btn btn-outline-info">View All Orders</a>
+            <a href="<%=request.getContextPath()%>/admin/orders?delivered=true" class="btn btn-outline-info ml-4">View Delivered Orders</a>
           </div>
           <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
             <span><i class="mdi mdi-chevron-right"></i></span>Orders
@@ -76,9 +76,8 @@
                             </button>
 
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href="#">Detail</a>
-                              <a class="dropdown-item" href="#">Track</a>
-                              <a class="dropdown-item" href="#">Cancel</a>
+                              <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/order/detail?orderId=${order.orderId}">Chi tiết đơn hàng</a>
+                              <a class="dropdown-item" href="#">Cập nhật trạng thái</a>
                             </div>
                           </div>
                         </td>
@@ -99,13 +98,6 @@
 </div>
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
-  $(document).ready(function () {
-    $('#modal-change-review').on('show.bs.modal', function (event) {
-      let id = $(event.relatedTarget).attr('data-id');
-      let link = "<%=request.getContextPath()%>/admin/review/editStatus?reviewId=" + id;
-      document.getElementById('link-change').href = link
-    });
-  });
 </script>
 </body>
 </html>

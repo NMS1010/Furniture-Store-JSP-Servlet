@@ -76,9 +76,8 @@
                             </button>
 
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href="#">Detail</a>
-                              <a class="dropdown-item" href="#">Track</a>
-                              <a class="dropdown-item" href="#">Cancel</a>
+                              <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/order/detail?orderId=${order.orderId}">Chi tiết đơn hàng</a>
+                              <a class="dropdown-item" href="#">Cập nhật trạng thái</a>
                             </div>
                           </div>
                         </td>
@@ -99,13 +98,6 @@
 </div>
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
-  $(document).ready(function () {
-    $('#modal-change-review').on('show.bs.modal', function (event) {
-      let id = $(event.relatedTarget).attr('data-id');
-      let link = "<%=request.getContextPath()%>/admin/review/editStatus?reviewId=" + id;
-      document.getElementById('link-change').href = link
-    });
-  });
 </script>
 </body>
 </html>

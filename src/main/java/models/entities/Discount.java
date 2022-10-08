@@ -2,6 +2,8 @@ package models.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,9 +19,9 @@ public class Discount {
     @Column(nullable = false)
     private double discountValue;
     @Column(nullable = false)
-    private Date dateStart;
+    private LocalDateTime dateStart;
     @Column(nullable = false)
-    private Date dateEnd;
+    private LocalDateTime dateEnd;
     @Column(nullable = false)
     private int status;
 
@@ -62,19 +64,19 @@ public class Discount {
         this.discountValue = discountValue;
     }
 
-    public Date getDateStart() {
+    public LocalDateTime getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(Date dateStart) {
+    public void setDateStart(LocalDateTime dateStart) {
         this.dateStart = dateStart;
     }
 
-    public Date getDateEnd() {
+    public LocalDateTime getDateEnd() {
         return dateEnd;
     }
 
-    public void setDateEnd(Date dateEnd) {
+    public void setDateEnd(LocalDateTime dateEnd) {
         this.dateEnd = dateEnd;
     }
 

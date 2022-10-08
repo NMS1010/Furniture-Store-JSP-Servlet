@@ -3,6 +3,7 @@ package models.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class Product{
     private BigDecimal price;
 
     @Column(nullable = false)
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(nullable = false)
     private String origin;
@@ -122,11 +123,11 @@ public class Product{
         this.price = price;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 

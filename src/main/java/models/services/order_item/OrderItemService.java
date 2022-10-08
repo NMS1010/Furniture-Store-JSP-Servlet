@@ -3,6 +3,7 @@ package models.services.order_item;
 import models.entities.Order;
 import models.entities.OrderItem;
 import models.services.product.ProductService;
+import org.hibernate.Interceptor;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -115,5 +116,20 @@ public class OrderItemService implements IOrderItemService{
         }
         session.close();
         return list;
+    }
+
+    @Override
+    public ArrayList<OrderItemViewModel> getByOrderId(int orderId) {
+        Session session = HibernateUtils.getSession();
+        ArrayList<OrderItemViewModel> orders = new ArrayList<>();
+        Query q = session.createQuery("select orderItemId from OrderItem where orderId=:s1");
+        q.setParameter("s1", orderId);
+
+        List<Integer> l = q.list();
+        l.forEach(id -> {
+            orders.add(retrieveById(id));
+        });
+
+        return orders;
     }
 }

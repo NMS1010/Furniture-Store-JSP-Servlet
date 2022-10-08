@@ -5,6 +5,7 @@ import view_models.product_images.ProductImageViewModel;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ProductViewModel {
 
     private String origin;
 
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
 
     private String image;
     private int categoryId;
@@ -138,11 +139,11 @@ public class ProductViewModel {
         this.origin = origin;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 

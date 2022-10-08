@@ -7,6 +7,9 @@ import view_models.order_items.OrderItemGetPagingRequest;
 import view_models.order_items.OrderItemUpdateRequest;
 import view_models.order_items.OrderItemViewModel;
 
+import java.util.ArrayList;
+
 public interface IOrderItemService  extends IModifyEntity<OrderItemCreateRequest, OrderItemUpdateRequest, Integer>,
         IRetrieveEntity<OrderItemViewModel, OrderItemGetPagingRequest, Integer> {
+    ArrayList<OrderItemViewModel> getByOrderId(int orderId);
 }
