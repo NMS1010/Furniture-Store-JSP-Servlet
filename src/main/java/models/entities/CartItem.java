@@ -8,10 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "cart_items",uniqueConstraints =
-@UniqueConstraint(columnNames = {"productId","userId"}))
+@UniqueConstraint(columnNames = {"productId","cartId"}))
 public class CartItem {
     @Id
-    @Column(name = "cartItemId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartItemId;
 
@@ -19,7 +18,7 @@ public class CartItem {
     private int productId;
 
     @Column(nullable = false)
-    private int userId;
+    private int cartId;
 
     @Column(nullable = false)
     private BigDecimal totalPrice;
@@ -31,14 +30,6 @@ public class CartItem {
 
     @Column(nullable = false)
     private int status;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     public int getCartItemId() {
         return cartItemId;
@@ -56,12 +47,12 @@ public class CartItem {
         this.productId = productId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
     public BigDecimal getTotalPrice() {
@@ -71,7 +62,6 @@ public class CartItem {
     public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
     }
-
 
     public int getQuantity() {
         return quantity;
@@ -87,5 +77,13 @@ public class CartItem {
 
     public void setDateAdded(LocalDateTime dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

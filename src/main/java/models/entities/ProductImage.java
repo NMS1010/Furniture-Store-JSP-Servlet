@@ -19,22 +19,14 @@ public class ProductImage {
     @Column(nullable = false)
     private int productId;
 
-    public int getProductId() {
-        return productId;
-    }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getId() {
+    public int getProductImageId() {
         return productImageId;
     }
 
-    public void setId(int productImageId) {
+    public void setProductImageId(int productImageId) {
         this.productImageId = productImageId;
     }
-
 
     public String getImage() {
         return image;
@@ -48,7 +40,16 @@ public class ProductImage {
         return isDefault;
     }
 
-    public void setDefault(boolean isDefault) {
-        this.isDefault = isDefault;
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
     }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
 }

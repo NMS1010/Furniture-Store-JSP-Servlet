@@ -3,6 +3,7 @@ package models.entities;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "order_items",uniqueConstraints =
@@ -25,7 +26,6 @@ public class OrderItem {
     private BigDecimal unitPrice;
     @Column(nullable = false)
     private int quantity;
-
 
     public BigDecimal getTotalPrice() {
         return totalPrice;

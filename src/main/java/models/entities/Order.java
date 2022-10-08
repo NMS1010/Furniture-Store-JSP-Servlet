@@ -46,6 +46,12 @@ public class Order {
     @Column(nullable = false)
     private int status;
 
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "orderId")
+    private List<OrderItem> orderItems;
+
+
     public int getPayment() {
         return payment;
     }
@@ -78,9 +84,6 @@ public class Order {
         this.email = email;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderId")
-    private List<OrderItem> orderItems;
 
     public int getUserId() {
         return userId;

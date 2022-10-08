@@ -33,21 +33,21 @@ public class CartItemService implements ICartItemService{
         Transaction tx = null;
 
         CartItem cartItem = new CartItem();
-        cartItem.setProductId(request.getProductId());
-        cartItem.setUserId(request.getUserId());
-        cartItem.setQuantity(request.getQuantity());
-        cartItem.setDateAdded(DateUtils.dateTimeNow());
-        Query q = session.createQuery("select price from Product where productId =:s1");
-        q.setParameter("s1",request.getProductId());
-        BigDecimal unitPrice = (BigDecimal)q.getSingleResult();
-        cartItem.setTotalPrice(unitPrice.multiply(BigDecimal.valueOf(request.getQuantity())) );
-        cartItem.setStatus(request.getStatus());
+//        cartItem.setProductId(request.getProductId());
+//        cartItem.setUserId(request.getUserId());
+//        cartItem.setQuantity(request.getQuantity());
+//        cartItem.setDateAdded(DateUtils.dateTimeNow());
+//        Query q = session.createQuery("select price from Product where productId =:s1");
+//        q.setParameter("s1",request.getProductId());
+//        BigDecimal unitPrice = (BigDecimal)q.getSingleResult();
+//        cartItem.setTotalPrice(unitPrice.multiply(BigDecimal.valueOf(request.getQuantity())) );
+//        cartItem.setStatus(request.getStatus());
 
         int cartItemId = -1;
         try {
             tx = session.beginTransaction();
             session.persist(cartItem);
-            cartItemId = cartItem.getCartItemId();
+//            cartItemId = cartItem.getCartItemId();
             tx.commit();
         }catch(Exception e){
             if(tx != null)
@@ -67,8 +67,8 @@ public class CartItemService implements ICartItemService{
         Transaction tx = null;
         CartItem cartItem = session.find(CartItem.class, request.getCartItemId());
 
-        cartItem.setQuantity(request.getQuantity());
-        cartItem.setStatus(request.getStatus());
+//        cartItem.setQuantity(request.getQuantity());
+//        cartItem.setStatus(request.getStatus());
 
         return HibernateUtils.merge(cartItem);
     }
@@ -81,28 +81,28 @@ public class CartItemService implements ICartItemService{
     }
     private CartItemViewModel getCartItemViewModel(CartItem cartItem, Session session){
         CartItemViewModel cartItemViewModel = new CartItemViewModel();
-        ProductViewModel product = ProductService.getInstance().retrieveById(cartItem.getProductId());
-
-        cartItemViewModel.setCartItemId(cartItem.getCartItemId());
-        cartItemViewModel.setDateAdded(cartItem.getDateAdded());
-        cartItemViewModel.setQuantity(cartItem.getQuantity());
-        cartItemViewModel.setProductImage(product.getImage());
-        cartItemViewModel.setProductName(product.getName());
-
-        Query q1 = session.createQuery("select price from Product where productId =:s1");
-        q1.setParameter("s1",cartItem.getProductId());
-        BigDecimal unitPrice = (BigDecimal)q1.getSingleResult();
-
-        cartItemViewModel.setUnitPrice(unitPrice);
-        cartItemViewModel.setTotalPrice(cartItem.getTotalPrice());
-        cartItemViewModel.setProductId(cartItem.getProductId());
-        cartItemViewModel.setUserId(cartItem.getUserId());
-        cartItemViewModel.setStatus(cartItem.getStatus());
-
-        Query q2 = session.createQuery("select username from User where id = :s1");
-        q2.setParameter("s1",cartItem.getUserId());
-
-        cartItemViewModel.setUserName(q2.getSingleResult().toString());
+//        ProductViewModel product = ProductService.getInstance().retrieveById(cartItem.getProductId());
+//
+//        cartItemViewModel.setCartItemId(cartItem.getCartItemId());
+//        cartItemViewModel.setDateAdded(cartItem.getDateAdded());
+//        cartItemViewModel.setQuantity(cartItem.getQuantity());
+//        cartItemViewModel.setProductImage(product.getImage());
+//        cartItemViewModel.setProductName(product.getName());
+//
+//        Query q1 = session.createQuery("select price from Product where productId =:s1");
+//        q1.setParameter("s1",cartItem.getProductId());
+//        BigDecimal unitPrice = (BigDecimal)q1.getSingleResult();
+//
+//        cartItemViewModel.setUnitPrice(unitPrice);
+//        cartItemViewModel.setTotalPrice(cartItem.getTotalPrice());
+//        cartItemViewModel.setProductId(cartItem.getProductId());
+//        cartItemViewModel.setUserId(cartItem.getUserId());
+//        cartItemViewModel.setStatus(cartItem.getStatus());
+//
+//        Query q2 = session.createQuery("select username from User where id = :s1");
+//        q2.setParameter("s1",cartItem.getUserId());
+//
+//        cartItemViewModel.setUserName(q2.getSingleResult().toString());
 
         return cartItemViewModel;
     }

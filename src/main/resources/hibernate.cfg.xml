@@ -28,11 +28,14 @@
     <mapping class="models.entities.ProductImage"/>
     <mapping class="models.entities.User"/>
     <mapping class="models.entities.Review"/>
+    <mapping class="models.entities.ReviewItem"/>
     <mapping class="models.entities.Discount"/>
     <mapping class="models.entities.CartItem"/>
+    <mapping class="models.entities.Cart"/>
     <mapping class="models.entities.Role"/>
     <mapping class="models.entities.UserRole"/>
-    <mapping class="models.entities.WishListItem"/>
+    <mapping class="models.entities.WishItem"/>
+    <mapping class="models.entities.WishList"/>
 
   </session-factory>
 </hibernate-configuration>

@@ -1,6 +1,6 @@
-package view_models.wish_list_items;
+package view_models.wish_items;
 
-public class WishListItemUpdateRequest {
+public class WishItemUpdateRequest {
     private int wishListItemId;
     private int status;
 

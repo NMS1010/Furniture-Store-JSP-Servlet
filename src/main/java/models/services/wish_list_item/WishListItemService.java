@@ -1,8 +1,6 @@
 package models.services.wish_list_item;
 
-import models.entities.WishListItem;
-import models.entities.WishListItem;
-import models.entities.WishListItem;
+import models.entities.WishItem;
 import models.services.product.ProductService;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,10 +8,10 @@ import org.hibernate.query.Query;
 import utils.DateUtils;
 import utils.HibernateUtils;
 import view_models.products.ProductViewModel;
-import view_models.wish_list_items.WishListItemCreateRequest;
-import view_models.wish_list_items.WishListItemGetPagingRequest;
-import view_models.wish_list_items.WishListItemUpdateRequest;
-import view_models.wish_list_items.WishListItemViewModel;
+import view_models.wish_items.WishItemCreateRequest;
+import view_models.wish_items.WishItemGetPagingRequest;
+import view_models.wish_items.WishItemUpdateRequest;
+import view_models.wish_items.WishItemViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +24,21 @@ public class WishListItemService implements IWishListItemService{
         return instance;
     }
     @Override
-    public int insert(WishListItemCreateRequest request) {
+    public int insert(WishItemCreateRequest request) {
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
 
-        WishListItem wishListItem = new WishListItem();
-        wishListItem.setProductId(request.getProductId());
-        wishListItem.setUserId(request.getUserId());
-        wishListItem.setDateAdded(DateUtils.dateTimeNow());
-        wishListItem.setStatus(request.getStatus());
+        WishItem wishItem = new WishItem();
+        wishItem.setProductId(request.getProductId());
+        wishItem.setUserId(request.getUserId());
+        wishItem.setDateAdded(DateUtils.dateTimeNow());
+        wishItem.setStatus(request.getStatus());
 
         int wishListItemId = -1;
         try {
             tx = session.beginTransaction();
-            session.persist(wishListItem);
-            wishListItemId = wishListItem.getWishListItemId();
+            session.persist(wishItem);
+            wishListItemId = wishItem.getWishListItemId();
             tx.commit();
         }catch(Exception e){
             if(tx != null)
@@ -55,64 +53,64 @@ public class WishListItemService implements IWishListItemService{
     }
 
     @Override
-    public boolean update(WishListItemUpdateRequest request) {
+    public boolean update(WishItemUpdateRequest request) {
         Session session = HibernateUtils.getSession();
-        WishListItem wishListItem = session.find(WishListItem.class, request.getWishListItemId());
+        WishItem wishItem = session.find(WishItem.class, request.getWishListItemId());
 
-        wishListItem.setStatus(request.getStatus());
+        wishItem.setStatus(request.getStatus());
 
-        return HibernateUtils.merge(wishListItem);
+        return HibernateUtils.merge(wishItem);
     }
 
     @Override
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
-        WishListItem wishListItem = session.find(WishListItem.class, entityId);
-        return HibernateUtils.remove(wishListItem);
+        WishItem wishItem = session.find(WishItem.class, entityId);
+        return HibernateUtils.remove(wishItem);
     }
-    private WishListItemViewModel getWishListItemViewModel(WishListItem wishListItem, Session session){
-        WishListItemViewModel wishListItemViewModel = new WishListItemViewModel();
-        ProductViewModel product = ProductService.getInstance().retrieveById(wishListItem.getProductId());
+    private WishItemViewModel getWishListItemViewModel(WishItem wishItem, Session session){
+        WishItemViewModel wishListItemViewModel = new WishItemViewModel();
+        ProductViewModel product = ProductService.getInstance().retrieveById(wishItem.getProductId());
 
-        wishListItemViewModel.setWishListItemId(wishListItem.getWishListItemId());
-        wishListItemViewModel.setProductId(wishListItem.getProductId());
-        wishListItemViewModel.setUserId(wishListItem.getUserId());
-        wishListItemViewModel.setStatus(wishListItem.getStatus());
+        wishListItemViewModel.setWishListItemId(wishItem.getWishListItemId());
+        wishListItemViewModel.setProductId(wishItem.getProductId());
+        wishListItemViewModel.setUserId(wishItem.getUserId());
+        wishListItemViewModel.setStatus(wishItem.getStatus());
         wishListItemViewModel.setProductImage(product.getImage());
         wishListItemViewModel.setProductName(product.getName());
-        wishListItemViewModel.setDateAdded(wishListItem.getDateAdded());
+        wishListItemViewModel.setDateAdded(wishItem.getDateAdded());
         wishListItemViewModel.setUnitPrice(product.getPrice());
         Query q = session.createQuery("select username from User where id = :s1");
-        q.setParameter("s1",wishListItem.getUserId());
+        q.setParameter("s1", wishItem.getUserId());
 
         wishListItemViewModel.setUserName(q.getSingleResult().toString());
 
         return wishListItemViewModel;
     }
     @Override
-    public WishListItemViewModel retrieveById(Integer entityId) {
+    public WishItemViewModel retrieveById(Integer entityId) {
         Session session = HibernateUtils.getSession();
-        WishListItem wishListItem = session.find(WishListItem.class, entityId);
+        WishItem wishItem = session.find(WishItem.class, entityId);
 
-        WishListItemViewModel wishListItemViewModel = getWishListItemViewModel(wishListItem, session);
+        WishItemViewModel wishListItemViewModel = getWishListItemViewModel(wishItem, session);
         session.close();
 
         return wishListItemViewModel;
     }
 
     @Override
-    public ArrayList<WishListItemViewModel> retrieveAll(WishListItemGetPagingRequest request) {
-        ArrayList<WishListItemViewModel> list = new ArrayList<>();
+    public ArrayList<WishItemViewModel> retrieveAll(WishItemGetPagingRequest request) {
+        ArrayList<WishItemViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("WishListItem", request.getColumnName(),request.getSortBy(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("WishItem", request.getColumnName(),request.getSortBy(), request.getKeyword(), request.getTypeSort());
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());
-        List<WishListItem> wishListItems = q.list();
+        List<WishItem> wishItems = q.list();
 
-        for(WishListItem wishListItem:wishListItems){
-            WishListItemViewModel v = getWishListItemViewModel(wishListItem, session);
+        for(WishItem wishItem : wishItems){
+            WishItemViewModel v = getWishListItemViewModel(wishItem, session);
             list.add(v);
         }
         session.close();

@@ -2,7 +2,6 @@ package models.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class Product{
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId")
-    private List<Review> reviews;
+    private List<ReviewItem> reviewItems;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId")
@@ -56,15 +55,22 @@ public class Product{
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId")
-    private List<WishListItem> wishListItems;
+    private List<WishItem> wishItems;
 
-
-    public List<WishListItem> getWishListItems() {
-        return wishListItems;
+    public List<ReviewItem> getReviewItems() {
+        return reviewItems;
     }
 
-    public void setWishListItems(List<WishListItem> wishListItems) {
-        this.wishListItems = wishListItems;
+    public void setReviewItems(List<ReviewItem> reviewItems) {
+        this.reviewItems = reviewItems;
+    }
+
+    public List<WishItem> getWishItems() {
+        return wishItems;
+    }
+
+    public void setWishItems(List<WishItem> wishItems) {
+        this.wishItems = wishItems;
     }
 
     public int getBrandId() {
@@ -163,13 +169,6 @@ public class Product{
         this.orderItems = orderItems;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
 
     public List<CartItem> getCartItems() {
         return cartItems;

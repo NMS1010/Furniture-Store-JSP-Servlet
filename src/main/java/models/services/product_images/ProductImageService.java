@@ -96,7 +96,7 @@ public class ProductImageService implements  IProductImageService{
     private ProductImageViewModel getProductImageViewModel(ProductImage productImage){
         ProductImageViewModel productImageViewModel = new ProductImageViewModel();
 
-        productImageViewModel.setId(productImage.getId());
+        productImageViewModel.setId(productImage.getProductImageId());
         productImageViewModel.setDefault(productImage.getDefault());
         productImageViewModel.setImage(productImage.getImage());
         productImageViewModel.setProductId(productImage.getProductId());

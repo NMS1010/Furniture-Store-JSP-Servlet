@@ -1,42 +1,39 @@
 package models.entities;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "wish_list_items",uniqueConstraints =
-@UniqueConstraint(columnNames = {"productId","userId"}))
-public class WishListItem {
+@Table(name = "wish_items",uniqueConstraints =
+@UniqueConstraint(columnNames = {"productId","wishId"}))
+public class WishItem {
     @Id
-    @Column(name = "wishListItemId")
+    @Column(name = "wishItemId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int wishListItemId;
+    private int wishItemId;
 
     @Column(nullable = false)
-    private int userId;
+    private int wishId;
     @Column(nullable = false)
     private int productId;
     @Column(nullable = false)
     private int status;
     @Column(nullable = false)
     private LocalDateTime dateAdded;
-
     public int getWishListItemId() {
-        return wishListItemId;
+        return wishItemId;
     }
 
     public void setWishListItemId(int wishListItemId) {
-        this.wishListItemId = wishListItemId;
+        this.wishItemId = wishListItemId;
     }
 
     public int getUserId() {
-        return userId;
+        return wishId;
     }
 
     public void setUserId(int userId) {
-        this.userId = userId;
+        this.wishId = userId;
     }
 
     public int getProductId() {

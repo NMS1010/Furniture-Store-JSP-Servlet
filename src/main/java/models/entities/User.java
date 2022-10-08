@@ -48,19 +48,43 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
-    private List<Review> reviews;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
-    private List<CartItem> cartItems;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userId")
     private List<UserRole> userRoles;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
-    private List<WishListItem> wishListItem;
+    private Cart cart;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private WishList wishList;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId")
+    private Review review;
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public WishList getWishList() {
+        return wishList;
+    }
+
+    public void setWishList(WishList wishList) {
+        this.wishList = wishList;
+    }
+
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -94,14 +118,6 @@ public class User {
         this.email = email;
     }
 
-    public List<WishListItem> getWishListItem() {
-        return wishListItem;
-    }
-
-    public void setWishListItem(List<WishListItem> wishListItem) {
-        this.wishListItem = wishListItem;
-    }
-
     public List<UserRole> getUserRoles() {
         return userRoles;
     }
@@ -110,21 +126,6 @@ public class User {
         this.userRoles = userRoles;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<CartItem> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<CartItem> cartItems) {
-        this.cartItems = cartItems;
-    }
 
     public List<Order> getOrders() {
         return orders;

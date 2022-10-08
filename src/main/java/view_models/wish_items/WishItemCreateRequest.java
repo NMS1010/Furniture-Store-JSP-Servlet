@@ -1,6 +1,6 @@
-package view_models.wish_list_items;
+package view_models.wish_items;
 
-public class WishListItemCreateRequest {
+public class WishItemCreateRequest {
     private int productId;
     private int userId;
     private int status;

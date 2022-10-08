@@ -166,7 +166,7 @@ public class UserService implements IUserService{
         userViewModel.setTotalBought(res1 != null ? (long)q1.getSingleResult() : 0);
         userViewModel.setStatusCode(getUserStatus(user.getStatus()));
         userViewModel.setGenderCode(getUserGender(user.getGender()));
-        Query q2 = session.createQuery("select count(*) from WishListItem where userId =:s1");
+        Query q2 = session.createQuery("select count(*) from WishItem where userId =:s1");
         q2.setParameter("s1",user.getUserId());
         Object res2 = q2.getSingleResult();
         userViewModel.setTotalWishListItem(res2 != null ? (long)q1.getSingleResult() : 0);

@@ -3,10 +3,10 @@ package models.entities;
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
-@Table(name = "reviews",uniqueConstraints =
-@UniqueConstraint(columnNames = {"productId","userId"}))
+@Table(name = "reviews")
 public class Review {
 
     @Id
@@ -14,32 +14,13 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewId;
 
-    @Column(nullable = false)
-    private int userId;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reviewId")
+    private List<ReviewItem> reviewItems;
 
-    @Column(nullable = false)
-    private int productId;
-
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
-    @Column(nullable = false)
-    private int status;
-    @Column(nullable = false)
-    private int rating;
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    @OneToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
     public int getReviewId() {
         return reviewId;
@@ -49,51 +30,19 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    public int getUserId() {
-        return userId;
+    public List<ReviewItem> getReviewItems() {
+        return reviewItems;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setReviewItems(List<ReviewItem> reviewItems) {
+        this.reviewItems = reviewItems;
     }
 
-    public int getProductId() {
-        return productId;
+    public User getUser() {
+        return user;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

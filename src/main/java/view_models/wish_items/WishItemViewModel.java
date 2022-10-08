@@ -1,11 +1,9 @@
-package view_models.wish_list_items;
+package view_models.wish_items;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class WishListItemViewModel {
+public class WishItemViewModel {
     private int wishListItemId;
     private int productId;
     private String productName;
