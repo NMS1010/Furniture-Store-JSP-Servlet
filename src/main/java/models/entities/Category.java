@@ -19,7 +19,7 @@ public class Category{
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String image;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "categoryId")
     private List<Product> products;
 

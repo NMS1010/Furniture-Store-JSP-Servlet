@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="product" scope="request" class="view_models.products.ProductViewModel"/>
-<jsp:useBean id="productReviews" scope="request" type="java.util.ArrayList<view_models.reviews.ReviewViewModel>"/>
+<jsp:useBean id="productReviews" scope="request" type="java.util.ArrayList<view_models.review_items.ReviewItemViewModel>"/>
 <html>
 <head>
   <meta charset="utf-8" />

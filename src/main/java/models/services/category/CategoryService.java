@@ -73,31 +73,15 @@ public class CategoryService implements ICategoryService{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Category category = session.find(Category.class, entityId);
-        Query q1 = session.createQuery("select productId from Product where categoryId=:s1");
-        q1.setParameter("s1",category.getCategoryId());
-        List<Integer> productIds = q1.list();
+
         Query q2 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
         q2.setParameter("s1",category.getCategoryId());
         List<Integer> categoryIds = q2.list();
 
-        Transaction tx = session.beginTransaction();
-        try {
-            productIds.forEach(id -> {
-                Product product = session.find(Product.class, id);
-                product.setCategoryId(0);
-                session.merge(product);
-            });
-            categoryIds.forEach(id -> {
-                Category c = session.find(Category.class, id);
-                c.setParentCategoryId(0);
-                session.merge(c);
-            });
-            tx.commit();
-        }catch (Exception e){
-            e.printStackTrace();
+        session.close();
+        if(categoryIds.size() > 0){
             return false;
         }
-        session.close();
         return HibernateUtils.remove(category);
     }
     private CategoryViewModel getCategoryViewModel(Category category, Session session){
@@ -110,7 +94,7 @@ public class CategoryService implements ICategoryService{
         if(category.getParentCategoryId() > 0) {
             Query q1 = session.createQuery("select categoryName from Category where categoryId =:s1");
             q1.setParameter("s1", category.getParentCategoryId());
-            parentCategoryName = q1.getSingleResult().toString();
+            parentCategoryName = q1.getSingleResult() == null ? "" : q1.getSingleResult().toString();
         }
         categoryViewModel.setParentCategoryId(category.getParentCategoryId());
         categoryViewModel.setParentCategoryName(parentCategoryName);
@@ -121,11 +105,13 @@ public class CategoryService implements ICategoryService{
 
         Query q2 = session.createQuery("select sum(quantity) from Product where categoryId=:s1");
         q2.setParameter("s1",category.getCategoryId());
-        categoryViewModel.setTotalProduct(((Long)q2.getSingleResult()).intValue());
+        Object o2 = q2.getSingleResult();
+        categoryViewModel.setTotalProduct(o2 == null ? 0 : (long)o2);
 
         Query q3 = session.createQuery("select sum(o.quantity) from OrderItem o inner join Product p on o.productId = p.productId where p.categoryId =:s1");
         q3.setParameter("s1",category.getCategoryId());
-        categoryViewModel.setTotalSell(((Long)q3.getSingleResult()).intValue());
+        Object o3 = q3.getSingleResult();
+        categoryViewModel.setTotalSell(o3 == null ? 0 : (long)o3);
 
 
         Query q4 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");

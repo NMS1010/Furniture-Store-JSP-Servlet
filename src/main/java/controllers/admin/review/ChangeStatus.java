@@ -1,9 +1,8 @@
 package controllers.admin.review;
 
-import models.services.review.ReviewService;
+import models.services.review_item.ReviewItemService;
 import utils.ServletUtils;
 import utils.StringUtils;
-import view_models.reviews.ReviewUpdateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,9 +13,9 @@ import java.io.IOException;
 public class ChangeStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String reviewId = request.getParameter("reviewId");
+        String reviewItemId = request.getParameter("reviewItemId");
 
-        ReviewService.getInstance().ChangeStatus(StringUtils.toInt(reviewId));
+        ReviewItemService.getInstance().ChangeStatus(StringUtils.toInt(reviewItemId));
 
         ServletUtils.redirect(response, request.getContextPath() + "/admin/reviews");
     }

@@ -2,16 +2,8 @@ package view_models.wish_items;
 
 public class WishItemCreateRequest {
     private int productId;
-    private int userId;
+    private int wishId;
     private int status;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
 
     public int getProductId() {
         return productId;
@@ -21,11 +13,19 @@ public class WishItemCreateRequest {
         this.productId = productId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getWishId() {
+        return wishId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setWishId(int wishId) {
+        this.wishId = wishId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

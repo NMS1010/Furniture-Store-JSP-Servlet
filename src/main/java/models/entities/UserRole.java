@@ -17,21 +17,11 @@ public class UserRole {
     @Column(nullable = false)
     private int roleId;
 
-
     public int getUserRoleId() {
         return userRoleId;
     }
 
     public void setUserRoleId(int userRoleId) {
-        this.userRoleId = userRoleId;
-    }
-
-
-    public int getId() {
-        return userRoleId;
-    }
-
-    public void setId(int userRoleId) {
         this.userRoleId = userRoleId;
     }
 

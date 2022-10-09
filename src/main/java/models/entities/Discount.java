@@ -28,7 +28,7 @@ public class Discount {
     @Column(nullable = false)
     private int quantity;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "discountId")
     private List<Order> orders;
 

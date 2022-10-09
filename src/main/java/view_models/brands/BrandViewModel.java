@@ -9,13 +9,13 @@ public class BrandViewModel {
     private String origin;
     private String image;
 
-    private int totalProducts;
+    private long totalProducts;
 
-    public int getTotalProducts() {
+    public long getTotalProducts() {
         return totalProducts;
     }
 
-    public void setTotalProducts(int totalProducts) {
+    public void setTotalProducts(long totalProducts) {
         this.totalProducts = totalProducts;
     }
 

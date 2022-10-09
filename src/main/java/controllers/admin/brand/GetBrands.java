@@ -32,7 +32,7 @@ public class GetBrands extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("addAgain","true");
+        request.setAttribute("edit","true");
         doGet(request, response);
     }
 }

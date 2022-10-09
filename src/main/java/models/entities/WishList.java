@@ -9,8 +9,7 @@ public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int wishListId;
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "wishId")
     private List<WishItem> wishItems;
     @OneToOne

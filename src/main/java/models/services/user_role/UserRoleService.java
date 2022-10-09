@@ -35,7 +35,7 @@ public class UserRoleService implements IUserRoleService{
         try {
             tx = session.beginTransaction();
             session.persist(userRole);
-            userRoleId = userRole.getId();
+            userRoleId = userRole.getUserRoleId();
             tx.commit();
         }catch(Exception e){
             if(tx != null)

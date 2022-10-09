@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<jsp:useBean id="reviews" scope="request" type="java.util.ArrayList<view_models.reviews.ReviewViewModel>"/>
+<jsp:useBean id="reviews" scope="request" type="java.util.ArrayList<view_models.review_items.ReviewItemViewModel>"/>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -115,9 +115,9 @@
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
     $(document).ready(function () {
-        $('#modal-change-review').on('show.bs.modal', function (event) {
+        $('#modal-change-review_item').on('show.bs.modal', function (event) {
             let id = $(event.relatedTarget).attr('data-id');
-            let link = "<%=request.getContextPath()%>/admin/review/editStatus?reviewId=" + id;
+            let link = "<%=request.getContextPath()%>/admin/review_item/editStatus?reviewId=" + id;
             document.getElementById('link-change').href = link
         });
     });

@@ -37,23 +37,23 @@ public class Product{
     private int brandId;
     @Column
     private int categoryId;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "productId")
     private List<ProductImage> productImages;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "productId")
     private List<OrderItem> orderItems;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "productId")
     private List<ReviewItem> reviewItems;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "productId")
     private List<CartItem> cartItems;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "productId")
     private List<WishItem> wishItems;
 

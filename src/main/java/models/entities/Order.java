@@ -47,7 +47,7 @@ public class Order {
     private int status;
 
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "orderId")
     private List<OrderItem> orderItems;
 

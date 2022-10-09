@@ -22,14 +22,23 @@ public class UserUpdateRequest {
     private String email;
     private LocalDateTime lastLogin;
     private Part avatar;
-    private ArrayList<Role> roles;
+    private ArrayList<Integer> roleIds;
+    private String password;
 
-    public ArrayList<Role> getRoles() {
-        return roles;
+    public ArrayList<Integer> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoles(ArrayList<Role> roles) {
-        this.roles = roles;
+    public void setRoleIds(ArrayList<Integer> roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Part getAvatar() {

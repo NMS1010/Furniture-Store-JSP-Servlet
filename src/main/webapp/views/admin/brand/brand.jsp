@@ -197,7 +197,7 @@
             });
         });
         $(window).on('load', function() {
-            if(${brand != null} ||  ${addAgain != null}) {
+            if(${brand != null} ||  ${edit != null}) {
                 $('#modal-add-brand').modal('show');
             }
         });

@@ -1,5 +1,6 @@
 <%@ page import="utils.HtmlClassUtils" %>
 <%@ page import="utils.constants.USER_GENDER" %>
+<%@ page import="utils.constants.USER_STATUS" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="users" scope="request" type="java.util.ArrayList<view_models.users.UserViewModel>"/>
@@ -44,13 +45,14 @@
                     <tr>
                       <th>Profile</th>
                       <th>Username</th>
-                      <th>Họ tên</th>
+                      <th>Họ</th>
+                      <th>Tên</th>
                       <th>Ngày sinh</th>
                       <th>Giới tính</th>
                       <th>Email</th>
                       <th>Điện thoại</th>
-                      <th>Tổng sản phẩm đã mua</th>
-                      <th>Trạng thái tài khoản</th>
+                      <th>Đã mua</th>
+                      <th>Trạng thái</th>
                       <th>Ngày tham gia</th>
                       <th>Action</th>
                     </tr>
@@ -59,9 +61,10 @@
                     <tbody>
                     <c:forEach var="user" items="${users}">
                       <tr>
-                        <td><img class="vendor-thumb" src="data:image/png;base64 ${user.avatar}" alt="user profile" /></td>
+                        <td><img class="vendor-thumb" src="data:image/png;base64, ${user.avatar}" alt="user profile" /></td>
                         <td>${user.username}</td>
-                        <td>${user.firstName + user.lastName}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
                         <td>${user.dateOfBirth}</td>
                         <td>${user.genderCode}</td>
                         <td>${user.email}</td>
@@ -81,8 +84,8 @@
                             </button>
 
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href="#">Edit</a>
-                              <a class="dropdown-item" href="#">Delete</a>
+                              <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/user/detail?userId=${user.id}">Edit</a>
+                              <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/user/delete?userId=${user.id}">Delete</a>
                             </div>
                           </div>
                         </td>
@@ -101,20 +104,37 @@
              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-              <form>
+              <form action="<%=request.getContextPath()%>/admin/user/add" method="post" enctype="multipart/form-data">
                 <div class="modal-header px-4">
                   <h5 class="modal-title" id="exampleModalCenterTitle">Thêm tài khoản mới</h5>
                 </div>
 
                 <div class="modal-body px-4">
-                  <div class="form-group row mb-6">
-                    <label for="avatar" class="col-sm-4 col-lg-2 col-form-label">Avatar</label>
 
-                    <div class="col-sm-8 col-lg-10">
-                      <div class="custom-file mb-1">
-                        <input type="file" class="custom-file-input" id="avatar" name="avatar"
-                               required>
-                        <label class="custom-file-label" for="avatar">Chọn ảnh...</label>
+                  <div class="row ec-vendor-uploads">
+                    <label class="col-12 col-form-label" for="avatar">Avatar</label>
+                    <div class="ec-vendor-img-upload">
+                      <div class="ec-vendor-main-img">
+                        <div class="thumb-upload-set col-md-12">
+                          <div class="thumb-upload">
+                            <div class="thumb-edit">
+                              <input type='file' id="avatar" name="avatar"
+                                     class="ec-image-upload"
+                                     accept=".png, .jpg, .jpeg"/>
+                              <label for="avatar">
+                                <img src="<%=request.getContextPath()%>/assets/admin/img/icons/edit.svg"
+                                      class="svg_img header_svg" alt="edit"/>
+                              </label>
+                            </div>
+                            <div class="thumb-preview ec-preview">
+                              <div class="image-thumb-preview">
+                                <img class="image-thumb-preview ec-image-preview clear-img"
+                                        src="<%=request.getContextPath()%>/assets/admin/img/products/vender-upload-thumb-preview.jpg"
+                                     alt="edit" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -144,7 +164,7 @@
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="phone">Phone</label>
-                        <input type="tel" class="form-control" id="phone" pattern="/(7|8|9)\d{9}/"
+                        <input type="text" class="form-control" id="phone"
                                name="phone" required>
                       </div>
                     </div>
@@ -160,7 +180,7 @@
                         <label for="gender">Giới tính</label>
                         <select id="gender" name="gender" class="form-select">
                           <c:forEach var="g" items="<%=USER_GENDER.Gender%>">
-                            <option value="${g.value}" <c:if test="${g.value == user.gender}">selected</c:if>>${g.key}</option>
+                            <option value="${g.value}">${g.key}</option>
                           </c:forEach>
                         </select>
                       </div>
@@ -173,9 +193,9 @@
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
-                        <label for="userName">User name</label>
-                        <input type="text" class="form-control" id="userName"
-                               name="userName">
+                        <label for="username">User name</label>
+                        <input type="text" class="form-control" id="username"
+                               name="username">
                       </div>
                     </div>
 
@@ -191,23 +211,32 @@
                         <label for="confirmPassword">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPassword"
                                name="confirmPassword">
+                        <span id='message'></span>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
-                        <div class="button-group">
-                          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"><span>Roles</span> <span class="caret"></span></button>
-                          <ul class="dropdown-menu">
+                        <label for="status">Trạng thái</label>
+                        <select id="status" name="status" class="form-select">
+                          <c:forEach var="s" items="<%=USER_STATUS.Status%>">
+                            <option value="${s.value}">${s.key}</option>
+                          </c:forEach>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="dropdown button-group">
+                          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-bs-toggle="dropdown">Roles</button>
+                          <ul class="role dropdown-menu">
                             <c:forEach var="role" items="${roles}">
                               <li>
                                 <a href="#" class="small" data-value="${role.roleId}" tabIndex="-1">
-                                  <input type="checkbox" id="roleCheckBox" name="roleCheckBox" value="${role.roleId}"/>&nbsp;${role.roleName}
+                                  <input type="checkbox" id="roleCheckBox-${role.roleId}" name="roleCheckBox" value="${role.roleId}"/>&nbsp;${role.roleName}
                                 </a>
                               </li>
                             </c:forEach>
                           </ul>
                         </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -215,7 +244,7 @@
                 <div class="modal-footer px-4">
                   <button type="button" class="btn btn-secondary btn-pill"
                           data-bs-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary btn-pill">Save Contact</button>
+                  <button type="submit" class="btn btn-primary btn-pill">Save Contact</button>
                 </div>
               </form>
             </div>
@@ -223,14 +252,14 @@
         </div>
       </div>
     </div>
+    <jsp:include page="/views/admin/common/footer.jsp"/>
   </div>
-  <jsp:include page="/views/admin/common/footer.jsp"/>
 </div>
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
   var options = [];
 
-  $( '.dropdown-menu a' ).on( 'click', function( event ) {
+  $( '.role.dropdown-menu a' ).on( 'click', function( event ) {
 
     var $target = $( event.currentTarget ),
             val = $target.attr( 'data-value' ),
@@ -250,6 +279,7 @@
     console.log( options );
     return false;
   });
+
 </script>
 </body>
 </html>

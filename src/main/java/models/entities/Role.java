@@ -14,7 +14,7 @@ public class Role {
     @Column(nullable = false)
     private String roleName;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "roleId")
     private List<UserRole> userRoles;
 

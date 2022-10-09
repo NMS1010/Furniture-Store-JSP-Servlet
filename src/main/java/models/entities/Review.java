@@ -8,19 +8,18 @@ import java.util.List;
 @Entity
 @Table(name = "reviews")
 public class Review {
-
     @Id
-    @Column(name = "reviewId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reviewId;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "reviewId")
     private List<ReviewItem> reviewItems;
 
     @OneToOne
     @JoinColumn(name = "userId")
     private User user;
+
 
     public int getReviewId() {
         return reviewId;

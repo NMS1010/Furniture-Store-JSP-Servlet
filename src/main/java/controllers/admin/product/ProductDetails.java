@@ -1,11 +1,11 @@
 package controllers.admin.product;
 
 import models.services.product.ProductService;
-import models.services.review.ReviewService;
+import models.services.review_item.ReviewItemService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import view_models.products.ProductViewModel;
-import view_models.reviews.ReviewViewModel;
+import view_models.review_items.ReviewItemViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,9 +22,9 @@ public class ProductDetails extends HttpServlet {
         ProductViewModel product = ProductService.getInstance().retrieveById(productId);
         request.setAttribute("product", product);
 
-        ArrayList<ReviewViewModel> productReviews = ReviewService.getInstance().retrieveByProductId(productId);
+        ArrayList<ReviewItemViewModel> productReviews = ReviewItemService.getInstance().retrieveByProductId(productId);
         request.setAttribute("productReviews", productReviews);
-        int totalRating = productReviews.stream().mapToInt(ReviewViewModel::getRating).sum();
+        int totalRating = productReviews.stream().mapToInt(ReviewItemViewModel::getRating).sum();
         long avgRating = Math.round((totalRating * 1.0)/productReviews.size());
 
         request.setAttribute("avgRating",avgRating);

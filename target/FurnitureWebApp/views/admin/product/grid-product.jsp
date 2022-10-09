@@ -29,6 +29,12 @@
             </p>
           </div>
           <div>
+            <a href="<%=request.getContextPath()%>/admin/products?grid=true" class="btn btn-outline-info active">
+              Grid
+            </a>
+            <a href="<%=request.getContextPath()%>/admin/products" class="btn btn-outline-success ">
+              List
+            </a>
             <a href="<%=request.getContextPath()%>/admin/product/add" class="btn btn-primary"> Add Product</a>
           </div>
         </div>

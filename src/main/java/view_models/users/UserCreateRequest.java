@@ -20,14 +20,14 @@ public class UserCreateRequest {
     private String password;
     private String email;
     private Part avatar;
-    private ArrayList<Role> roles;
+    private ArrayList<Integer> roleIds;
 
-    public ArrayList<Role> getRoles() {
-        return roles;
+    public ArrayList<Integer> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoles(ArrayList<Role> roles) {
-        this.roles = roles;
+    public void setRoleIds(ArrayList<Integer> roleIds) {
+        this.roleIds = roleIds;
     }
 
     public Part getAvatar() {

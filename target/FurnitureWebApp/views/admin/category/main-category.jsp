@@ -19,7 +19,10 @@
         <div class="ec-content-wrapper">
           <div class="content">
             <div class="breadcrumb-wrapper breadcrumb-wrapper-2 breadcrumb-contacts">
-              <h1>Main Category</h1>
+              <div>
+                  <a class="btn btn-outline-info active" href="<%=request.getContextPath()%>/admin/categories">Main Category</a>
+                  <a class="btn btn-outline-success" href="<%=request.getContextPath()%>/admin/categories?sub-categories=true">Sub Category</a>
+              </div>
               <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
                 <span><i class="mdi mdi-chevron-right"></i></span>Main Category</p>
             </div>
@@ -86,7 +89,7 @@
                               </div>
                               </div>
                             </div>
-                          </div>
+                        </div>
                         <div class="row mt-4">
                           <div class="col col-6">
                             <input type="button" class="btn btn-danger clear-form" value="Huỷ">

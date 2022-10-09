@@ -65,8 +65,6 @@ public class BrandService implements  IBrandService{
         if(!request.getImage().getSubmittedFileName().equals("")){
             brand.setImage(FileUtil.encodeBase64(request.getImage()));
         }
-
-
         return HibernateUtils.merge(brand);
     }
 
@@ -74,23 +72,6 @@ public class BrandService implements  IBrandService{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Brand brand = session.find(Brand.class, entityId);
-        String cmd = "select productId from Product where brandId =:s1";
-        Query q = session.createQuery(cmd);
-        q.setParameter("s1", brand.getBrandId());
-        List<Integer> productIds = q.list();
-
-        Transaction tx = session.beginTransaction();
-        try {
-            productIds.forEach(id -> {
-                Product product = session.find(Product.class, id);
-                product.setBrandId(0);
-                session.merge(product);
-            });
-            tx.commit();
-        }catch(Exception e){
-            e.printStackTrace();
-            return false;
-        }
         session.close();
         return HibernateUtils.remove(brand);
     }
@@ -104,7 +85,8 @@ public class BrandService implements  IBrandService{
 
         Query q = session.createQuery("select sum(quantity) from Product where brandId=:s1");
         q.setParameter("s1",brand.getBrandId());
-        brandViewModel.setTotalProducts(((Long)q.getSingleResult()).intValue());
+        Object o = q.getSingleResult();
+        brandViewModel.setTotalProducts(o == null ? 0 : (long)o);
 
         return brandViewModel;
     }

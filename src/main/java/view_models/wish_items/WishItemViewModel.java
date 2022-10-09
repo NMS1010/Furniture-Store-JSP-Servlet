@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class WishItemViewModel {
-    private int wishListItemId;
+    private int wishItemId;
+    private int wishId;
     private int productId;
     private String productName;
     private String productImage;
@@ -14,12 +15,20 @@ public class WishItemViewModel {
     private BigDecimal unitPrice;
     private LocalDateTime dateAdded;
 
-    public int getWishListItemId() {
-        return wishListItemId;
+    public int getWishItemId() {
+        return wishItemId;
     }
 
-    public void setWishListItemId(int wishListItemId) {
-        this.wishListItemId = wishListItemId;
+    public void setWishItemId(int wishItemId) {
+        this.wishItemId = wishItemId;
+    }
+
+    public int getWishId() {
+        return wishId;
+    }
+
+    public void setWishId(int wishId) {
+        this.wishId = wishId;
     }
 
     public int getProductId() {

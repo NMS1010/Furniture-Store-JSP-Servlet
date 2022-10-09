@@ -21,6 +21,7 @@ public class UserViewModel {
     private int status;
     private String statusCode;
     private String username;
+    private String password;
     private String email;
     private LocalDateTime lastLogin;
     private String avatar;
@@ -29,6 +30,14 @@ public class UserViewModel {
     private long totalWishListItem;
     private ArrayList<UserRoleViewModel> roles;
     private ArrayList<Integer> roleIds;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public ArrayList<Integer> getRoleIds() {
         return roleIds;

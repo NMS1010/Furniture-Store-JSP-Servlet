@@ -39,26 +39,26 @@ public class User {
 
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String avatar;
-    @Column(nullable = false)
+    @Column
     private LocalDateTime lastLogin;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "userId")
     private List<Order> orders;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "userId")
     private List<UserRole> userRoles;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "userId")
     private Cart cart;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "userId")
     private WishList wishList;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "userId")
     private Review review;
 

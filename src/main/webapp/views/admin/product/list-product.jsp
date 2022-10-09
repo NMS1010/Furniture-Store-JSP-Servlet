@@ -27,6 +27,12 @@
                 <span><i class="mdi mdi-chevron-right"></i></span>Product</p>
             </div>
             <div>
+              <a href="<%=request.getContextPath()%>/admin/products?grid=true" class="btn btn-outline-info">
+                Grid
+              </a>
+              <a href="<%=request.getContextPath()%>/admin/products" class="btn btn-outline-success active">
+                List
+              </a>
               <a href="<%=request.getContextPath()%>/admin/product/add" class="btn btn-primary"> Add Product</a>
             </div>
           </div>

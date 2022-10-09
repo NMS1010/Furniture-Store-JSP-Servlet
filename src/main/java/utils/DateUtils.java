@@ -21,14 +21,17 @@ public class DateUtils {
         return dateFormat.format(date);
     }
 
-    public static LocalDate stringToLocalDate(String date, String format){
+    public static LocalDate changeFormat(LocalDate date, String format){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
-        LocalDate res = LocalDate.now();
+        String dateStr = date.format(dtf);
         try {
-            res = LocalDate.parse(date, dtf);
+            return LocalDate.parse(dateStr, dtf);
         }catch(Exception e){
-
+            return LocalDate.now();
         }
-        return res;
+    }
+    public static LocalDate stringToLocalDate(String dateStr, String format){
+        LocalDate date = LocalDate.parse(dateStr);
+        return changeFormat(date, format);
     }
 }

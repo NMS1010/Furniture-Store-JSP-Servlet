@@ -18,7 +18,7 @@ public class Brand {
     @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String image;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     @JoinColumn(name = "brandId")
     private List<Product> products;
 

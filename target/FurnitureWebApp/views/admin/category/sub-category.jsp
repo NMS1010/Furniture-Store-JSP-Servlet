@@ -19,7 +19,10 @@
         <div class="ec-content-wrapper">
             <div class="content">
                 <div class="breadcrumb-wrapper breadcrumb-wrapper-2 breadcrumb-contacts">
-                    <h1>Sub Category</h1>
+                    <div>
+                        <a class="btn btn-outline-info" href="<%=request.getContextPath()%>/admin/categories">Main Category</a>
+                        <a class="btn btn-outline-success active" href="<%=request.getContextPath()%>/admin/categories?sub-categories=true">Sub Category</a>
+                    </div>
                     <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
                         <span><i class="mdi mdi-chevron-right"></i></span>Sub Category</p>
                 </div>

@@ -1,9 +1,9 @@
 package controllers.admin.review;
 
-import models.services.review.ReviewService;
+import models.services.review_item.ReviewItemService;
 import utils.ServletUtils;
-import view_models.reviews.ReviewGetPagingRequest;
-import view_models.reviews.ReviewViewModel;
+import view_models.review_items.ReviewItemGetPagingRequest;
+import view_models.review_items.ReviewItemViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 public class GetReviews extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ReviewGetPagingRequest req = new ReviewGetPagingRequest();
+        ReviewItemGetPagingRequest req = new ReviewItemGetPagingRequest();
 
-        ArrayList<ReviewViewModel> reviews = ReviewService.getInstance().retrieveAll(req);
+        ArrayList<ReviewItemViewModel> reviews = ReviewItemService.getInstance().retrieveAll(req);
 
         request.setAttribute("reviews",reviews);
         ServletUtils.forward(request, response, "/views/admin/review/review.jsp");

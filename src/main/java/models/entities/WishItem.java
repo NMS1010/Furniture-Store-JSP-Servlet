@@ -20,20 +20,21 @@ public class WishItem {
     private int status;
     @Column(nullable = false)
     private LocalDateTime dateAdded;
-    public int getWishListItemId() {
+
+    public int getWishItemId() {
         return wishItemId;
     }
 
-    public void setWishListItemId(int wishListItemId) {
-        this.wishItemId = wishListItemId;
+    public void setWishItemId(int wishItemId) {
+        this.wishItemId = wishItemId;
     }
 
-    public int getUserId() {
+    public int getWishId() {
         return wishId;
     }
 
-    public void setUserId(int userId) {
-        this.wishId = userId;
+    public void setWishId(int wishId) {
+        this.wishId = wishId;
     }
 
     public int getProductId() {

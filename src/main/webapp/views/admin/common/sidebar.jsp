@@ -24,92 +24,35 @@
 
         <!-- Users -->
         <li class="has-sub">
-          <a class="sidenav-item-link" href="javascript:void(0)">
+          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/users">
             <i class="mdi mdi-account-group"></i>
-            <span class="nav-text">Users</span> <b class="caret"></b>
+            <span class="nav-text">Users</span>
           </a>
-          <div class="collapse">
-            <ul class="sub-menu" id="users" data-parent="#sidebar-menu">
-              <li>
-                <a class="sidenav-item-link" href="user-card.html">
-                  <span class="nav-text">User Grid</span>
-                </a>
-              </li>
-
-              <li class="">
-                <a class="sidenav-item-link" href="user-list.html">
-                  <span class="nav-text">User List</span>
-                </a>
-              </li>
-              <li class="">
-                <a class="sidenav-item-link" href="user-profile.html">
-                  <span class="nav-text">Users Profile</span>
-                </a>
-              </li>
-            </ul>
-          </div>
           <hr>
         </li>
 
         <!-- Category -->
         <li class="has-sub">
-          <a class="sidenav-item-link" href="javascript:void(0)">
+          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/categories">
             <i class="mdi mdi-dns-outline"></i>
-            <span class="nav-text">Categories</span> <b class="caret"></b>
+            <span class="nav-text">Categories</span>
           </a>
-          <div class="collapse">
-            <ul class="sub-menu" id="categorys" data-parent="#sidebar-menu">
-              <li class="">
-                <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/categories">
-                  <span class="nav-text">Main Category</span>
-                </a>
-              </li>
-              <li class="">
-                <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/categories?sub-categories=true">
-                  <span class="nav-text">Sub Category</span>
-                </a>
-              </li>
-            </ul>
-          </div>
         </li>
 
         <!-- Products -->
         <li class="has-sub">
-          <a class="sidenav-item-link" href="javascript:void(0)">
+          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/products">
             <i class="mdi mdi-palette-advanced"></i>
-            <span class="nav-text">Products</span> <b class="caret"></b>
+            <span class="nav-text">Products</span>
           </a>
-          <div class="collapse">
-            <ul class="sub-menu" id="products" data-parent="#sidebar-menu">
-              <li class="">
-                <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/products">
-                  <span class="nav-text">List Product</span>
-                </a>
-              </li>
-              <li class="">
-                <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/products?grid=true">
-                  <span class="nav-text">Grid Product</span>
-                </a>
-              </li>
-            </ul>
-          </div>
         </li>
 
         <!-- Orders -->
         <li class="has-sub">
-          <a class="sidenav-item-link" href="javascript:void(0)">
+          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/orders">
             <i class="mdi mdi-cart"></i>
-            <span class="nav-text">Orders</span> <b class="caret"></b>
+            <span class="nav-text">Orders</span>
           </a>
-          <div class="collapse">
-            <ul class="sub-menu" id="orders" data-parent="#sidebar-menu">
-              <li class="">
-                <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/orders">
-                  <span class="nav-text">View Order</span>
-                </a>
-              </li>
-            </ul>
-          </div>
         </li>
 
         <!-- Reviews -->

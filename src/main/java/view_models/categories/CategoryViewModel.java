@@ -13,8 +13,8 @@ public class CategoryViewModel {
     
     private List<String> subCategoryNames;
     private String image;
-    private int totalProduct;
-    private int totalSell;
+    private long totalProduct;
+    private long totalSell;
 
     public List<Integer> getSubCategoryIds() {
         return subCategoryIds;
@@ -81,19 +81,19 @@ public class CategoryViewModel {
     }
 
 
-    public int getTotalProduct() {
+    public long getTotalProduct() {
         return totalProduct;
     }
 
-    public void setTotalProduct(int totalProduct) {
+    public void setTotalProduct(long totalProduct) {
         this.totalProduct = totalProduct;
     }
 
-    public int getTotalSell() {
+    public long getTotalSell() {
         return totalSell;
     }
 
-    public void setTotalSell(int totalSell) {
+    public void setTotalSell(long totalSell) {
         this.totalSell = totalSell;
     }
 }
