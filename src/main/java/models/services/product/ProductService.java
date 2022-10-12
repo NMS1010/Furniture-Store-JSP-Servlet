@@ -168,7 +168,7 @@ public class ProductService implements IProductService {
         productViewModel.setName(product.getName());
         productViewModel.setDescription(product.getDescription());
         productViewModel.setOrigin(product.getOrigin());
-        productViewModel.setDateCreated(product.getDateCreated());
+        productViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(product.getDateCreated(),"yyyy-MM-dd HH:mm:ss"));
         productViewModel.setStatus(product.getStatus());
         productViewModel.setStatusCode(getStatus(product.getStatus()));
         productViewModel.setPrice(product.getPrice());

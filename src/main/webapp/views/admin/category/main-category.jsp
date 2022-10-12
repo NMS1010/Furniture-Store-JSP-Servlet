@@ -123,7 +123,7 @@
 
                         <tbody>
                           <c:if test="${categories != null}">
-                              <c:forEach var="category" items="${categories}">d
+                              <c:forEach var="category" items="${categories}">
                             <tr>
                               <td><img class="cat-thumb" src="data:image/png;base64,<c:out value="${category.image}"/>" alt="Product Image" /></td>
                               <td><c:out value="${category.name}"/></td>

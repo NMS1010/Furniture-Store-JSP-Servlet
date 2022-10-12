@@ -1,17 +1,23 @@
 package view_models.discounts;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class DiscountViewModel {
     private int discountId;
     private String discountCode;
     private double discountValue;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
     private int status;
+    private String statusCode;
     private int quantity;
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
 
     public int getQuantity() {
         return quantity;
@@ -45,19 +51,19 @@ public class DiscountViewModel {
         this.discountValue = discountValue;
     }
 
-    public LocalDateTime getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

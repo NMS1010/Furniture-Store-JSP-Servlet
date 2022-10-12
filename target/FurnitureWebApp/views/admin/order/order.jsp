@@ -1,7 +1,9 @@
 <%@ page import="utils.HtmlClassUtils" %>
+<%@ page import="utils.constants.ORDER_STATUS" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="orders" scope="request" type="java.util.ArrayList<view_models.orders.OrderViewModel>"/>
+<jsp:useBean id="currOrder" scope="request" class="view_models.orders.OrderViewModel"/>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -77,7 +79,18 @@
 
                             <div class="dropdown-menu">
                               <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/order/detail?orderId=${order.orderId}">Chi tiết đơn hàng</a>
-                              <a class="dropdown-item" href="#">Cập nhật trạng thái</a>
+                              <a class="dropdown-item"
+                                      <c:choose>
+                                        <c:when test="${currOrder == null}">
+                                          href="<%=request.getContextPath()%>/admin/order/editStatus?orderId=${order.orderId}"
+                                        </c:when>
+                                        <c:when test="${currOrder != null}">
+                                          data-bs-toggle="modal"
+                                          data-bs-target="#modal-change-order-status"
+                                          href="#modal-change-order-status"
+                                        </c:when>
+                                      </c:choose>
+                              >Cập nhật trạng thái</a>
                             </div>
                           </div>
                         </td>
@@ -90,14 +103,46 @@
             </div>
           </div>
         </div>
+        <div class="modal fade" id="modal-change-order-status" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+              <h3 class="modal-header border-bottom-0">Trạng thái đơn hàng</h3>
+              <div class="modal-body p-0" style="height:320px">
+                <form action="<%=request.getContextPath()%>/admin/order/editStatus" method="post">
+                  <input type="hidden" name="orderId" id="orderID" value="${currOrder.orderId}">
+                  <label for="orderStatus">Trạng thái đơn hàng</label>
+                    <select name="orderStatus" id="orderStatus" required>
+                      <c:forEach var="s" items="<%=ORDER_STATUS.Status%>">
+                        <option value="${s.value}">${s.key}</option>
+                      </c:forEach>
+                    </select>
+
+                    <div class="row mt-4">
+                      <div class="col col-6">
+                        <input type="button" class="btn btn-secondary btn-pill clear-form"
+                               data-bs-dismiss="modal" value="Huỷ">
+                      </div>
+                      <div class="col col-6">
+                        <input type="submit" class="btn btn-primary btn-pill" value="Xác nhận"/>
+                      </div>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <jsp:include page="/views/admin/common/footer.jsp"/>
   </div>
-  <jsp:include page="/views/admin/common/footer.jsp"/>
-</div>
 </div>
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
+  $(window).on('load', function() {
+    if(${currOrder != null}) {
+      $('#modal-change-order-status').modal('show');
+    }
+  });
 </script>
 </body>
 </html>

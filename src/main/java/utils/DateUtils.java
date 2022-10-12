@@ -15,13 +15,13 @@ public class DateUtils {
         return LocalDateTime.now();
     }
 
-    public static String toString(Date date, String format){
-        DateFormat dateFormat = new SimpleDateFormat(format);
+//    public static String toString(Date date, String format){
+//        DateFormat dateFormat = new SimpleDateFormat(format);
+//
+//        return dateFormat.format(date);
+//    }
 
-        return dateFormat.format(date);
-    }
-
-    public static LocalDate changeFormat(LocalDate date, String format){
+    public static LocalDate changeLocalDateFormat(LocalDate date, String format){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
         String dateStr = date.format(dtf);
         try {
@@ -32,6 +32,13 @@ public class DateUtils {
     }
     public static LocalDate stringToLocalDate(String dateStr, String format){
         LocalDate date = LocalDate.parse(dateStr);
-        return changeFormat(date, format);
+        return changeLocalDateFormat(date, format);
+    }
+    public static String dateTimeToStringWithFormat(LocalDateTime datetime, String format){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
+        return datetime.format(dtf);
+    }
+    public static LocalDateTime stringToLocalDateTime(String dateStr){
+        return LocalDateTime.parse(dateStr, DateTimeFormatter.ISO_DATE_TIME);
     }
 }

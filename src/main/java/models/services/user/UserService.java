@@ -155,13 +155,14 @@ public class UserService implements IUserService{
 
         userViewModel.setId(user.getUserId());
         userViewModel.setAddress(user.getAddress());
-        userViewModel.setDateCreated(user.getDateCreated());
+        userViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(user.getDateCreated(),"yyyy-MM-dd HH:mm:ss"));
         userViewModel.setStatus(user.getStatus());
-        userViewModel.setDateUpdated(user.getDateUpdated());
+        userViewModel.setDateUpdated(DateUtils.dateTimeToStringWithFormat(user.getDateUpdated(),"yyyy-MM-dd HH:mm:ss"));
         userViewModel.setFirstName(user.getFirstName());
         userViewModel.setLastName(user.getLastName());
         userViewModel.setGender(user.getGender());
-        userViewModel.setLastLogin(user.getLastLogin());
+        if(user.getLastLogin() != null)
+            userViewModel.setLastLogin(DateUtils.dateTimeToStringWithFormat(user.getLastLogin(),"yyyy-MM-dd HH:mm:ss"));
         userViewModel.setEmail(user.getEmail());
         userViewModel.setPhone(user.getPhone());
         userViewModel.setUsername(user.getUsername());
@@ -270,6 +271,17 @@ public class UserService implements IUserService{
             e.printStackTrace();
             return false;
         }
+        return true;
+    }
+
+    @Override
+    public boolean checkUsername(String username) {
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("select count(*) from User where username=:s1");
+        q.setParameter("s1", username);
+        Object o = q.getSingleResult();
+        if(o == null || (long)o == 0)
+            return false;
         return true;
     }
 

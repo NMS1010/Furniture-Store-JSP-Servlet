@@ -16,7 +16,7 @@ public class RemoveProduct extends HttpServlet {
         int productId = StringUtils.toInt(request.getParameter("productId"));
         boolean isSuccess = ProductService.getInstance().delete(productId);
 
-        ServletUtils.forward(request,response,"/admin/products");
+        ServletUtils.redirect(response,request.getContextPath() + "/admin/products");
     }
 
     @Override

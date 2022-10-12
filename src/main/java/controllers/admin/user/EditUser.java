@@ -31,7 +31,14 @@ public class EditUser extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
 
         UserUpdateRequest reqUpdate = new UserUpdateRequest();
+
         reqUpdate.setAvatar(request.getPart("avatar"));
+        if(UserService.getInstance().checkUsername(request.getParameter("username"))){
+            request.setAttribute("userExist","Tên người dùng đã tồn tại");
+
+            ServletUtils.forward(request, response, "/admin/user/detail?userId=" + reqUpdate.getUserId());
+            return;
+        }
         reqUpdate.setUserId(StringUtils.toInt(request.getParameter("userId")));
         reqUpdate.setFirstName(request.getParameter("firstName"));
         reqUpdate.setLastName(request.getParameter("lastName"));
@@ -41,7 +48,7 @@ public class EditUser extends HttpServlet {
         reqUpdate.setAddress(request.getParameter("address"));
         reqUpdate.setGender(StringUtils.toInt(request.getParameter("gender")));
         reqUpdate.setPassword(request.getParameter("password"));
-        reqUpdate.setStatus(USER_STATUS.ACTIVE);
+        reqUpdate.setStatus(StringUtils.toInt(request.getParameter("status")));
         reqUpdate.setUsername(request.getParameter("username"));
         String[] values = request.getParameterValues("roleCheckBox");
         ArrayList<Integer> roleIds = new ArrayList<>();

@@ -1,7 +1,6 @@
 package view_models.wish_items;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public class WishItemViewModel {
     private int wishItemId;
@@ -13,7 +12,7 @@ public class WishItemViewModel {
     private String userName;
     private int status;
     private BigDecimal unitPrice;
-    private LocalDateTime dateAdded;
+    private String dateAdded;
 
     public int getWishItemId() {
         return wishItemId;
@@ -87,11 +86,11 @@ public class WishItemViewModel {
         this.unitPrice = unitPrice;
     }
 
-    public LocalDateTime getDateAdded() {
+    public String getDateAdded() {
         return dateAdded;
     }
 
-    public void setDateAdded(LocalDateTime dateAdded) {
+    public void setDateAdded(String dateAdded) {
         this.dateAdded = dateAdded;
     }
 }

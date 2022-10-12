@@ -5,7 +5,10 @@ import models.entities.Discount;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import utils.DateUtils;
 import utils.HibernateUtils;
+import utils.constants.DISCOUNT_STATUS;
+import utils.constants.ORDER_STATUS;
 import view_models.discounts.DiscountViewModel;
 import view_models.discounts.DiscountCreateRequest;
 import view_models.discounts.DiscountGetPagingRequest;
@@ -73,11 +76,26 @@ public class DiscountService implements IDiscountService{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Discount discount = session.find(Discount.class, entityId);
-        String cmd = "update Order set discountId = null, totalPrice = totalItemPrice + shipping where discountId =:s1";
-        Query q = session.createQuery(cmd);
-        q.setParameter("s1", discount.getDiscountId());
-        q.executeUpdate();
+        session.close();
         return HibernateUtils.remove(discount);
+    }
+    private String getStatus(int i){
+        String status = "";
+        switch (i){
+            case DISCOUNT_STATUS.EXPIRED:
+                status = "Hết hạn";
+                break;
+            case DISCOUNT_STATUS.ACTIVE:
+                status = "Còn mã";
+                break;
+            case DISCOUNT_STATUS.IN_ACTIVE:
+                status = "Hết mã";
+                break;
+            default:
+                status = "Undefined";
+                break;
+        }
+        return status;
     }
     private DiscountViewModel getDiscountViewModel(Discount discount, Session session){
         DiscountViewModel discountViewModel = new DiscountViewModel();
@@ -85,10 +103,11 @@ public class DiscountService implements IDiscountService{
         discountViewModel.setDiscountId(discount.getDiscountId());
         discountViewModel.setDiscountCode(discount.getDiscountCode());
         discountViewModel.setDiscountValue(discount.getDiscountValue());
-        discountViewModel.setStartDate(discount.getDateStart());
-        discountViewModel.setEndDate(discount.getDateEnd());
+        discountViewModel.setStartDate(DateUtils.dateTimeToStringWithFormat(discount.getDateStart(),"yyyy-MM-dd HH:mm"));
+        discountViewModel.setEndDate(DateUtils.dateTimeToStringWithFormat(discount.getDateEnd(),"yyyy-MM-dd HH:mm"));
         discountViewModel.setStatus(discount.getStatus());
         discountViewModel.setQuantity(discount.getQuantity());
+        discountViewModel.setStatusCode(getStatus(discount.getStatus()));
 
         return discountViewModel;
     }

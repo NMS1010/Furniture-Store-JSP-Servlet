@@ -4,7 +4,6 @@ import view_models.roles.RoleViewModel;
 import view_models.user_roles.UserRoleViewModel;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class UserViewModel {
@@ -16,14 +15,14 @@ public class UserViewModel {
     private int gender;
     private String genderCode;
     private String phone;
-    private LocalDateTime dateCreated;
-    private LocalDateTime dateUpdated;
+    private String dateCreated;
+    private String dateUpdated;
     private int status;
     private String statusCode;
     private String username;
     private String password;
     private String email;
-    private LocalDateTime lastLogin;
+    private String lastLogin;
     private String avatar;
 
     private long totalBought;
@@ -95,11 +94,11 @@ public class UserViewModel {
         this.avatar = avatar;
     }
 
-    public LocalDateTime getDateUpdated() {
+    public String getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(LocalDateTime dateUpdated) {
+    public void setDateUpdated(String dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
 
@@ -159,11 +158,11 @@ public class UserViewModel {
         this.phone = phone;
     }
 
-    public LocalDateTime getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -191,11 +190,11 @@ public class UserViewModel {
         this.email = email;
     }
 
-    public LocalDateTime getLastLogin() {
+    public String getLastLogin() {
         return lastLogin;
     }
 
-    public void setLastLogin(LocalDateTime lastLogin) {
+    public void setLastLogin(String lastLogin) {
         this.lastLogin = lastLogin;
     }
 }

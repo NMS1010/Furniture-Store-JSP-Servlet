@@ -1,6 +1,7 @@
 <%@ page import="utils.HtmlClassUtils" %>
 <%@ page import="utils.constants.USER_GENDER" %>
 <%@ page import="utils.constants.USER_STATUS" %>
+<%@ page import="utils.FileUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="users" scope="request" type="java.util.ArrayList<view_models.users.UserViewModel>"/>
@@ -54,6 +55,7 @@
                       <th>Đã mua</th>
                       <th>Trạng thái</th>
                       <th>Ngày tham gia</th>
+                      <th>Lần đăng nhập cuối</th>
                       <th>Action</th>
                     </tr>
                     </thead>
@@ -72,6 +74,7 @@
                         <td>${user.totalBought}</td>
                         <td>${user.statusCode}</td>
                         <td>${user.dateCreated}</td>
+                        <td>${user.lastLogin}</td>
                         <td>
                           <div class="btn-group mb-1">
                             <button type="button"
@@ -104,7 +107,7 @@
              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
-              <form action="<%=request.getContextPath()%>/admin/user/add" method="post" enctype="multipart/form-data">
+              <form id="form-add" action="<%=request.getContextPath()%>/admin/user/add" method="post" enctype="multipart/form-data" >
                 <div class="modal-header px-4">
                   <h5 class="modal-title" id="exampleModalCenterTitle">Thêm tài khoản mới</h5>
                 </div>
@@ -120,7 +123,7 @@
                             <div class="thumb-edit">
                               <input type='file' id="avatar" name="avatar"
                                      class="ec-image-upload"
-                                     accept=".png, .jpg, .jpeg"/>
+                                     accept=".png, .jpg, .jpeg" required title="Vui lòng chọn ảnh"/>
                               <label for="avatar">
                                 <img src="<%=request.getContextPath()%>/assets/admin/img/icons/edit.svg"
                                       class="svg_img header_svg" alt="edit"/>
@@ -129,7 +132,7 @@
                             <div class="thumb-preview ec-preview">
                               <div class="image-thumb-preview">
                                 <img class="image-thumb-preview ec-image-preview clear-img"
-                                        src="<%=request.getContextPath()%>/assets/admin/img/products/vender-upload-thumb-preview.jpg"
+                                     src="<%=request.getContextPath()%>/assets/admin/img/products/vender-upload-thumb-preview.jpg"
                                      alt="edit" />
                               </div>
                             </div>
@@ -143,14 +146,14 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="firstName">Họ</label>
-                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                        <input type="text" class="form-control" id="firstName" name="firstName" required title="Vui lòng nhập họ">
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="lastName">Tên</label>
-                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required title="Vui lòng nhập tên">
                       </div>
                     </div>
 
@@ -158,27 +161,27 @@
                       <div class="form-group mb-4">
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email"
-                               name="email" required>
+                               name="email" required title="Vui lòng nhập đúng định dạng email">
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="phone">Phone</label>
-                        <input type="text" class="form-control" id="phone"
-                               name="phone" required>
+                        <input type="text" class="form-control" id="phone" pattern="[0-9]{10}"
+                               name="phone" required title="Vui lòng nhập số điện thoại gồm 10 chữ số">
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="dob">Birthday</label>
-                        <input type="date" class="form-control" id="dob" name="dob" required>
+                        <input type="date" class="form-control" id="dob" name="dob"  required title="Vui lòng chọn ngày sinh">
                       </div>
                     </div>
 
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="gender">Giới tính</label>
-                        <select id="gender" name="gender" class="form-select">
+                        <select id="gender" name="gender" class="form-select" required title="Vui lòng chọn giới tính">
                           <c:forEach var="g" items="<%=USER_GENDER.Gender%>">
                             <option value="${g.value}">${g.key}</option>
                           </c:forEach>
@@ -188,14 +191,15 @@
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="address">Địa chỉ</label>
-                        <textarea type="text" class="form-control" id="address" name="address"></textarea>
+                        <input type="text" class="form-control" id="address" name="address" required title="Vui lòng nhập địa chỉ" />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="username">User name</label>
                         <input type="text" class="form-control" id="username"
-                               name="username">
+                               name="username" required title="Vui lòng nhập tên tài khoản">
+                        <p class="mt-3 text-danger" id='userExist' ></p>
                       </div>
                     </div>
 
@@ -203,28 +207,28 @@
                       <div class="form-group mb-4">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" id="password"
-                               name="password">
+                               name="password" required title="Vui lòng nhập mật khẩu">
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="confirmPassword">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPassword"
-                               name="confirmPassword">
-                        <span id='message'></span>
+                               name="confirmPassword" required>
+                        <p class="mt-3" id='confirmPasswordNotMatch'></p>
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group mb-4">
                         <label for="status">Trạng thái</label>
-                        <select id="status" name="status" class="form-select">
+                        <select id="status" name="status" class="form-select" required>
                           <c:forEach var="s" items="<%=USER_STATUS.Status%>">
                             <option value="${s.value}">${s.key}</option>
                           </c:forEach>
                         </select>
                       </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="dropdown button-group">
                           <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-bs-toggle="dropdown">Roles</button>
                           <ul class="role dropdown-menu">
@@ -236,15 +240,16 @@
                               </li>
                             </c:forEach>
                           </ul>
+                          <p class="mt-3" id='roleEmpty'></p>
                         </div>
                     </div>
                   </div>
                 </div>
 
                 <div class="modal-footer px-4">
-                  <button type="button" class="btn btn-secondary btn-pill"
-                          data-bs-dismiss="modal">Cancel</button>
-                  <button type="submit" class="btn btn-primary btn-pill">Save Contact</button>
+                  <button type="button" class="btn btn-secondary btn-pill clear-form"
+                          data-bs-dismiss="modal">Huỷ</button>
+                  <button type="submit" class="btn btn-primary btn-pill">Xác nhận</button>
                 </div>
               </form>
             </div>
@@ -257,29 +262,51 @@
 </div>
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
-  var options = [];
-
-  $( '.role.dropdown-menu a' ).on( 'click', function( event ) {
-
-    var $target = $( event.currentTarget ),
-            val = $target.attr( 'data-value' ),
-            $inp = $target.find( 'input' ),
-            idx;
-
-    if ( ( idx = options.indexOf( val ) ) > -1 ) {
-      options.splice( idx, 1 );
-      setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
-    } else {
-      options.push( val );
-      setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
+  $('#form-add').submit(function (e){
+    let noError = true;
+    e.preventDefault()
+    let passMatch = $('#confirmPasswordNotMatch')
+    let roleEmpty = $('#roleEmpty')
+    if ($('#password').val() !== $('#confirmPassword').val()) {
+      passMatch.html('Mật khẩu không khớp').css('color', 'red');
+      noError = false;
+    }else{
+      passMatch.html('')
     }
-
-    $( event.target ).blur();
-
-    console.log( options );
-    return false;
-  });
-
+    if(options.length === 0){
+      roleEmpty.html('Vui lòng chọn role').css('color', 'red');
+      noError = false;
+    }else {
+      roleEmpty.html('')
+    }
+    $.ajax({
+      url: `<%=request.getContextPath()%>/admin/users/check`,
+      method: "GET",
+      data: {
+        'username': $('#username').val()
+      },
+      async: false,
+      success: function (data){
+        console.log(data)
+        let str = data.toString()
+        str = str.slice(0, str.length - 2);
+        console.log(str)
+        if (str === 'true') {
+          $('#userExist').html('Tên tài khoản đã tồn tại').css('color','red')
+          noError = false;
+        } else {
+          $('#userExist').html('')
+        }
+      },
+      error: function (error){
+        noError = false;
+      }
+    })
+    if(noError){
+      $('#form-add').unbind('submit').submit();
+    }
+  })
 </script>
+<script src="<%=request.getContextPath()%>/assets/admin/js/validate/admin/user/user-validation.js"></script>
 </body>
 </html>

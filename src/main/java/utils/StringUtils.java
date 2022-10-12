@@ -24,7 +24,15 @@ public class StringUtils {
         }
         return res;
     }
+    public static double toDouble(String s){
+        double res = 0;
+        try {
+            res = Double.parseDouble(s);
+        }catch(Exception e){
 
+        }
+        return res;
+    }
     public static long toLong(String s){
         long res = 0;
         try {

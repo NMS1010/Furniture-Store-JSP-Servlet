@@ -174,9 +174,8 @@
                 </div>
             </div>
         </div>
+        <jsp:include page="/views/admin/common/footer.jsp"/>
     </div>
-    <jsp:include page="/views/admin/common/footer.jsp"/>
-</div>
 </div>
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>

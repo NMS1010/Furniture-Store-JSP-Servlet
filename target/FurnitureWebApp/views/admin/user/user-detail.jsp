@@ -86,7 +86,7 @@
                                             <div class="tab-pane fade show active" id="profile" role="tabpanel"
                                                  aria-labelledby="profile-tab">
                                                 <div class="tab-widget mt-5">
-                                                    <form action="<%=request.getContextPath()%>/admin/user/edit" enctype="multipart/form-data" method="post">
+                                                    <form id="form-add" onsubmit="return validateForm()" action="<%=request.getContextPath()%>/admin/user/edit" enctype="multipart/form-data" method="post">
                                                         <input type="hidden" name="userId" id="userId" value="${user.id}"/>
                                                         <div class="row ec-vendor-uploads mb-4">
                                                             <label class="col-12 col-form-label" for="avatar">Avatar</label>
@@ -121,7 +121,7 @@
                                                                 <div class="form-group">
                                                                     <label for="firstName">Họ</label>
                                                                     <input type="text" class="form-control" id="firstName"
-                                                                           name="firstName" value="${user.firstName}">
+                                                                           name="firstName" value="${user.firstName}" required>
                                                                 </div>
                                                             </div>
 
@@ -129,13 +129,13 @@
                                                                 <div class="form-group">
                                                                     <label for="lastName">Tên</label>
                                                                     <input type="text" class="form-control" id="lastName"
-                                                                           name="lastName" value="${user.lastName}">
+                                                                           name="lastName" value="${user.lastName}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
                                                                     <label for="gender">Giới tính</label>
-                                                                    <select id="gender" name="gender" class="form-select">
+                                                                    <select id="gender" name="gender" class="form-select" required>
                                                                         <c:forEach var="g" items="<%=USER_GENDER.Gender%>">
                                                                             <option value="${g.value}" <c:if test="${g.value == user.gender}">selected</c:if>>${g.key}</option>
                                                                         </c:forEach>
@@ -146,16 +146,16 @@
                                                         <div class="row mb-2">
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
-                                                                    <label for="userName">User name</label>
+                                                                    <label for="username">User name</label>
                                                                     <input type="text" class="form-control" id="username"
-                                                                           name="username" value="${user.username}">
+                                                                           name="username" value="${user.username}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
                                                                     <label for="password">Password</label>
                                                                     <input type="password" class="form-control" id="password"
-                                                                           name="password" value="${user.password}">
+                                                                           name="password" value="${user.password}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
@@ -166,18 +166,19 @@
                                                                             <c:forEach var="role" items="${roles}">
                                                                                 <li>
                                                                                     <a href="#" class="small" data-value="${role.roleId}" tabIndex="-1">
-                                                                                        <input type="checkbox" id="roleCheckBox-${role.roleId}" name="roleCheckBox" value="${role.roleId}" data-roleId="${role.roleId}" <c:if test="${user.roleIds.contains(role.roleId)}">checked</c:if>/>&nbsp;${role.roleName}
+                                                                                        <input type="checkbox" id="roleCheckBox-${role.roleId}" name="roleCheckBox"  value="${role.roleId}" data-roleId="${role.roleId}" <c:if test="${user.roleIds.contains(role.roleId)}">checked</c:if>/>&nbsp;${role.roleName}
                                                                                     </a>
                                                                                 </li>
                                                                             </c:forEach>
                                                                         </ul>
+                                                                        <p id="roleEmpty" class="mt-3"></p>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-2">
                                                                 <div class="form-group mb-4">
                                                                     <label for="status">Trạng thái</label>
-                                                                    <select id="status" name="status" class="form-select">
+                                                                    <select id="status" name="status" class="form-select" required>
                                                                         <c:forEach var="s" items="<%=USER_STATUS.Status%>">
                                                                             <option value="${s.value}" <c:if test="${s.value == user.status}">selected</c:if>>${s.key}</option>
                                                                         </c:forEach>
@@ -190,14 +191,14 @@
                                                                 <div class="form-group mb-4">
                                                                     <label for="email">Email</label>
                                                                     <input type="email" class="form-control" id="email"
-                                                                           name="email" value="${user.email}">
+                                                                           name="email" value="${user.email}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group">
                                                                     <label for="phone">Điện thoại</label>
-                                                                    <input type="text" class="form-control" id="phone"
-                                                                           name="phone" value="${user.phone}">
+                                                                    <input type="text" class="form-control" id="phone" pattern="[0-9]{10}"
+                                                                           name="phone" value="${user.phone}" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -207,19 +208,19 @@
                                                                 <div class="form-group mb-4">
                                                                     <label for="dob">Ngày sinh</label>
                                                                     <input type="date" class="form-control" id="dob"
-                                                                           name="dob" value="${user.dateOfBirth}">
+                                                                           name="dob" value="${user.dateOfBirth}" required>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
                                                                 <div class="form-group mb-4">
                                                                     <label for="address">Địa chỉ</label>
-                                                                    <input type="text" class="form-control" id="address" name="address" value="${user.address}" />
+                                                                    <input type="text" class="form-control" id="address" name="address" value="${user.address}" required/>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="d-flex justify-content-end mt-5">
-                                                            <button type="submit"
-                                                                    class="btn btn-primary mb-2 btn-pill">Cập nhật</button>
+                                                            <a href="<%=request.getContextPath()%>/admin/users" class="btn btn-secondary btn-pill mr-3" >Huỷ</a>
+                                                            <button type="submit" class="btn btn-primary btn-pill">Xác nhận</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -236,33 +237,6 @@
             </div>
         </div>
         <jsp:include page="/views/admin/common/common_js.jsp"/>
-        <script>
-            var options = [];
-            let $boxes = $('input[name=roleCheckBox]:checked')
-            $boxes.each(s => {
-                options.push(s.val())
-            });
-
-            $( '.dropdown-menu a' ).on( 'click', function( event ) {
-
-                var $target = $( event.currentTarget ),
-                    val = $target.attr( 'data-value' ),
-                    $inp = $target.find( 'input' ),
-                    idx;
-
-                if ( ( idx = options.indexOf( val ) ) > -1 ) {
-                    options.splice( idx, 1 );
-                    setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
-                } else {
-                    options.push( val );
-                    setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
-                }
-
-                $( event.target ).blur();
-
-                console.log( options );
-                return false;
-            });
-    </script>
+        <script src="<%=request.getContextPath()%>/assets/admin/js/validate/admin/user/user-detail-validation.js"></script>
     </body>
 </html>

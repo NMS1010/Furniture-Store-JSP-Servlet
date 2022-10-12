@@ -17,7 +17,7 @@ public class RemoveUser extends HttpServlet {
 
         boolean isSuccess = UserService.getInstance().delete(userId);
 
-        ServletUtils.forward(request,response,"/admin/users");
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/users");
     }
 
     @Override

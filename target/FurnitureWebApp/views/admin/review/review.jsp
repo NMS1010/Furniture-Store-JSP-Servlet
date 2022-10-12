@@ -33,16 +33,16 @@
                                 <div class="table-responsive">
                                     <table id="responsive-data-table" class="table" style="width:100%">
                                         <thead>
-                                        <tr>
-                                            <th>Thumb</th>
-                                            <th>Tên sản phẩm</th>
-                                            <th>Tên người dùng</th>
-                                            <th>Ratings</th>
-                                            <th>Ngày đánh giá</th>
-                                            <th>Ngày cập nhật đánh giá</th>
-                                            <th>Trạng thái</th>
-                                            <th>Action</th>
-                                        </tr>
+                                            <tr>
+                                                <th>Thumb</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Tên người dùng</th>
+                                                <th>Ratings</th>
+                                                <th>Ngày đánh giá</th>
+                                                <th>Ngày cập nhật đánh giá</th>
+                                                <th>Trạng thái</th>
+                                                <th>Action</th>
+                                            </tr>
                                         </thead>
 
                                         <tbody>
@@ -96,9 +96,6 @@
                 <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                     <div class="modal-content">
                         <h3 class="modal-header border-bottom-0">Bạn có muốn thay đổi trạng thái đánh giá này</h3>
-                        <%--                  <div class="modal-body p-0" data-simplebar style="height:320px">--%>
-
-                        <%--                  </div>--%>
                         <div class="modal-footer px-4">
                             <button type="button" class="btn btn-secondary btn-pill"
                                     data-bs-dismiss="modal">Huỷ</button>
@@ -107,20 +104,13 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
         <jsp:include page="/views/admin/common/footer.jsp"/>
     </div>
 </div>
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
-    $(document).ready(function () {
-        $('#modal-change-review_item').on('show.bs.modal', function (event) {
-            let id = $(event.relatedTarget).attr('data-id');
-            let link = "<%=request.getContextPath()%>/admin/review_item/editStatus?reviewId=" + id;
-            document.getElementById('link-change').href = link
-        });
-    });
+
 </script>
 </body>
 </html>

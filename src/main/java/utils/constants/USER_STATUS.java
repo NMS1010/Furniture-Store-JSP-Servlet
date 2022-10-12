@@ -8,7 +8,7 @@ public class USER_STATUS {
 
     public static HashMap<String, Integer> Status = new HashMap<String, Integer>(){
         {
-            put("Cấm", IN_ACTIVE);
+            put("Ngưng hoạt động", IN_ACTIVE);
             put("Đang hoạt động", ACTIVE);
         }
     };

@@ -18,4 +18,6 @@ public interface IUserService  extends IModifyEntity<UserCreateRequest, UserUpda
 
     boolean updateUserRole(Session session, User user, ArrayList<Integer> roleIds);
 
+    boolean checkUsername(String username);
+
 }

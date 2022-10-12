@@ -1,6 +1,5 @@
 package view_models.review_items;
 
-import java.time.LocalDateTime;
 
 public class ReviewItemViewModel {
     private int reviewItemId;
@@ -11,11 +10,11 @@ public class ReviewItemViewModel {
     private int userId;
     private String userName;
     private String userAvatar;
-    private LocalDateTime dateCreated;
+    private String dateCreated;
     private String content;
     private int rating;
     private int status;
-    private LocalDateTime dateUpdated;
+    private String dateUpdated;
 
     public int getReviewItemId() {
         return reviewItemId;
@@ -81,11 +80,11 @@ public class ReviewItemViewModel {
         this.userAvatar = userAvatar;
     }
 
-    public LocalDateTime getDateCreated() {
+    public String getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(LocalDateTime dateCreated) {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
@@ -113,11 +112,11 @@ public class ReviewItemViewModel {
         this.status = status;
     }
 
-    public LocalDateTime getDateUpdated() {
+    public String getDateUpdated() {
         return dateUpdated;
     }
 
-    public void setDateUpdated(LocalDateTime dateUpdated) {
+    public void setDateUpdated(String dateUpdated) {
         this.dateUpdated = dateUpdated;
     }
 }

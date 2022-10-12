@@ -196,6 +196,9 @@
                                                         </div>
                                                     </div>
                                                     <div class="row mt-4">
+                                                        <div class="col col-6">
+                                                            <a class="btn btn-danger" href="<%=request.getContextPath()%>/admin/products">Huỷ</a>
+                                                        </div>
                                                         <div class="col-md-6">
                                                             <button type="submit" class="btn btn-primary w-100">Xác nhận</button>
                                                         </div>
@@ -247,14 +250,12 @@
                 node.innerHTML += html
             }else if(direction === 'down' && e.target.value >= min){
                 node.removeChild(node.lastElementChild)
-                if(${product != null}){
-
-                }
             }
         }
         function removeSubImage(e, id, index){
             let node = document.querySelector('.thumb-upload-set');
-            let n = document.querySelector(`.number-sub-image`).value
+            let subImageElement = document.querySelector(`.number-sub-image`);
+            let n = subImageElement.value
             if(n > 1){
                 $.ajax({
                         url: "<%=request.getContextPath()%>/admin/product/images/delete",
@@ -266,10 +267,10 @@
                             let isSuccess = JSON.parse(data)
                             console.log(isSuccess)
                             if(isSuccess === true){
-                                document.querySelector(`.number-sub-image`).setAttribute('min', (n - 1).toString())
-                                document.querySelector(`.number-sub-image`).value = n - 1
+                                subImageElement.setAttribute('min', (n - 1).toString())
+                                subImageElement.value = n - 1
                                 document.querySelector(`.min-number-sub-image`).value = n - 1
-                                document.querySelector(`.number-sub-image`).dataset.prevValue = (n - 1).toString()
+                                subImageElement.dataset.prevValue = (n - 1).toString()
                                 node.removeChild(node.children.item(index - 1))
                             }
                         },

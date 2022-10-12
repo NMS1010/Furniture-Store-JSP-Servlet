@@ -157,7 +157,7 @@ public class OrderService implements IOrderService{
 
         orderViewModel.setOrderId(order.getOrderId());
         orderViewModel.setAddress(order.getAddress());
-        orderViewModel.setDateCreated(order.getDateCreated());
+        orderViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(order.getDateCreated(),"yyyy-MM-dd HH:mm:ss"));
         orderViewModel.setStatus(order.getStatus());
         orderViewModel.setStatusCode(getStatus(order.getStatus()));
         orderViewModel.setEmail(order.getEmail());
@@ -167,7 +167,7 @@ public class OrderService implements IOrderService{
         orderViewModel.setDiscountCode(discount.getDiscountCode());
         orderViewModel.setDiscountValue(discount.getDiscountValue());
         orderViewModel.setUserId(order.getUserId());
-        orderViewModel.setDateDone(order.getDateDone());
+        orderViewModel.setDateDone(DateUtils.dateTimeToStringWithFormat(order.getDateDone(),"yyyy-MM-dd HH:mm:ss"));
         orderViewModel.setShipping(order.getShipping());
         orderViewModel.setTotalItemPrice(order.getTotalItemPrice());
         orderViewModel.setTotalPrice(order.getTotalPrice());

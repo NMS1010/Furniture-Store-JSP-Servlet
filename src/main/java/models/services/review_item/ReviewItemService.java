@@ -85,7 +85,7 @@ public class ReviewItemService implements IReviewItemService {
         reviewItemViewModel.setReviewId(reviewItem.getReviewId());
         reviewItemViewModel.setContent(reviewItem.getContent());
         reviewItemViewModel.setProductId(reviewItem.getProductId());
-        reviewItemViewModel.setDateCreated(reviewItem.getCreatedAt());
+        reviewItemViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(reviewItem.getCreatedAt(),"yyyy-MM-dd HH:mm:ss"));
         reviewItemViewModel.setRating(reviewItem.getRating());
         Query q = session.createQuery("select r.user.userId from Review r where reviewId=:s1");
         int userId = (int)q.getSingleResult();
@@ -93,7 +93,7 @@ public class ReviewItemService implements IReviewItemService {
         reviewItemViewModel.setStatus(reviewItem.getStatus());
         reviewItemViewModel.setProductImage(product.getImage());
         reviewItemViewModel.setProductName(product.getName());
-        reviewItemViewModel.setDateUpdated(reviewItem.getUpdatedAt());
+        reviewItemViewModel.setDateUpdated(DateUtils.dateTimeToStringWithFormat(reviewItem.getUpdatedAt(),"yyyy-MM-dd HH:mm:ss"));
 
         Query q1 = session.createQuery("select username from User where id = :s1");
         q1.setParameter("s1",userId);

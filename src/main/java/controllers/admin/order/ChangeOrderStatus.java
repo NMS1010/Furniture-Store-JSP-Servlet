@@ -1,9 +1,12 @@
 package controllers.admin.order;
 
 import models.services.order.OrderService;
+import models.services.order.OrderService;
 import utils.ServletUtils;
 import utils.StringUtils;
+import view_models.orders.OrderViewModel;
 import view_models.orders.OrderUpdateRequest;
+import view_models.orders.OrderViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,7 +17,11 @@ import java.io.IOException;
 public class ChangeOrderStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String orderId = request.getParameter("orderId");
 
+        OrderViewModel order = OrderService.getInstance().retrieveById(Integer.parseInt(orderId));
+        request.setAttribute("currOrder", order);
+        ServletUtils.forward(request, response, "/admin/orders");
     }
 
     @Override
@@ -25,7 +32,7 @@ public class ChangeOrderStatus extends HttpServlet {
         req.setOrderId(orderId);
         req.setStatus(status);
 
-        OrderService.getInstance().update(req);
+        boolean isSuccess = OrderService.getInstance().update(req);
 
         ServletUtils.redirect(response, request.getContextPath() + "/admin/orders");
     }

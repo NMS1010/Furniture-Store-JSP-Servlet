@@ -69,6 +69,14 @@
             <i class="mdi mdi-tag-faces"></i>
             <span class="nav-text">Brands</span>
           </a>
+        </li>
+
+        <!-- Discounts -->
+        <li>
+          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/discounts">
+            <i class="mdi mdi-sale"></i>
+            <span class="nav-text">Discount</span>
+          </a>
           <hr>
         </li>
 
