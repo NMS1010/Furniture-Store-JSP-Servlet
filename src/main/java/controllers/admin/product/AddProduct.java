@@ -76,14 +76,22 @@ public class AddProduct extends HttpServlet {
         req.setBrandId(brandId);
         req.setStatus(status);
         int productId = ProductService.getInstance().insert(req);
-
+        if(productId < 1){
+            request.setAttribute("error", "true");
+            doGet(request, response);
+            return;
+        }
         ProductImageCreateRequest productImageCreateRequest = new ProductImageCreateRequest();
         productImageCreateRequest.setProductId(productId);
 
         productImageCreateRequest.setImages(subImages);
 
-        ProductImageService.getInstance().insert(productImageCreateRequest);
-
+        int id = ProductImageService.getInstance().insert(productImageCreateRequest);
+        if(id < 1){
+            request.setAttribute("error", "true");
+            doGet(request, response);
+            return;
+        }
         ServletUtils.redirect(response, request.getContextPath() + "/admin/products");
 
     }

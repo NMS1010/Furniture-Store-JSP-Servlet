@@ -33,12 +33,7 @@ public class EditUser extends HttpServlet {
         UserUpdateRequest reqUpdate = new UserUpdateRequest();
 
         reqUpdate.setAvatar(request.getPart("avatar"));
-        if(UserService.getInstance().checkUsername(request.getParameter("username"))){
-            request.setAttribute("userExist","Tên người dùng đã tồn tại");
 
-            ServletUtils.forward(request, response, "/admin/user/detail?userId=" + reqUpdate.getUserId());
-            return;
-        }
         reqUpdate.setUserId(StringUtils.toInt(request.getParameter("userId")));
         reqUpdate.setFirstName(request.getParameter("firstName"));
         reqUpdate.setLastName(request.getParameter("lastName"));
@@ -47,7 +42,7 @@ public class EditUser extends HttpServlet {
         reqUpdate.setDateOfBirth(DateUtils.stringToLocalDate(request.getParameter("dob"), "MM/dd/yyyy"));
         reqUpdate.setAddress(request.getParameter("address"));
         reqUpdate.setGender(StringUtils.toInt(request.getParameter("gender")));
-        reqUpdate.setPassword(request.getParameter("password"));
+        reqUpdate.setPassword(request.getParameter("newPassword"));
         reqUpdate.setStatus(StringUtils.toInt(request.getParameter("status")));
         reqUpdate.setUsername(request.getParameter("username"));
         String[] values = request.getParameterValues("roleCheckBox");
@@ -58,7 +53,10 @@ public class EditUser extends HttpServlet {
         reqUpdate.setRoleIds(roleIds);
 
         boolean isSuccess = UserService.getInstance().update(reqUpdate);
-
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/user/detail?userId=" + reqUpdate.getUserId());
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/user/detail?userId=" + reqUpdate.getUserId() + error);
     }
 }

@@ -56,7 +56,7 @@
                                                         <div class="avatar-upload">
                                                             <div class="avatar-edit">
                                                                 <input type='file' id="imageUpload" class="ec-image-upload" name="main-image"
-                                                                       accept=".png, .jpg, .jpeg" />
+                                                                       accept=".png, .jpg, .jpeg" <c:if test="${product == null}">required</c:if>>/>
                                                                 <label for="imageUpload"><img
                                                                         src="<%=request.getContextPath()%>/assets/admin/img/icons/edit.svg"
                                                                         class="svg_img header_svg" alt="edit" /></label>
@@ -218,7 +218,7 @@
     </div>
     <jsp:include page="/views/admin/common/common_js.jsp"/>
     <script>
-        $('.number-sub-image').on('change', (e) => {
+        $('.number-sub-image').on('input', (e) => {
             changeNumberSubImage(e)
         })
         function changeNumberSubImage(e) {

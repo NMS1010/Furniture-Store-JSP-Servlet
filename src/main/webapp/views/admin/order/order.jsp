@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="orders" scope="request" type="java.util.ArrayList<view_models.orders.OrderViewModel>"/>
-<jsp:useBean id="currOrder" scope="request" class="view_models.orders.OrderViewModel"/>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -106,12 +105,12 @@
         <div class="modal fade" id="modal-change-order-status" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
-              <h3 class="modal-header border-bottom-0">Trạng thái đơn hàng</h3>
-              <div class="modal-body p-0" style="height:320px">
+              <h3 class="modal-header border-bottom-0 d-flex justify-content-center">Trạng thái đơn hàng</h3>
+              <div class="modal-body p-4 d-flex justify-content-center" >
                 <form action="<%=request.getContextPath()%>/admin/order/editStatus" method="post">
                   <input type="hidden" name="orderId" id="orderID" value="${currOrder.orderId}">
                   <label for="orderStatus">Trạng thái đơn hàng</label>
-                    <select name="orderStatus" id="orderStatus" required>
+                    <select name="orderStatus" id="orderStatus" class="form-select" required>
                       <c:forEach var="s" items="<%=ORDER_STATUS.Status%>">
                         <option value="${s.value}">${s.key}</option>
                       </c:forEach>

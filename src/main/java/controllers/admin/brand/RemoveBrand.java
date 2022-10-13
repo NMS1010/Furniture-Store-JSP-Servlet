@@ -16,7 +16,11 @@ public class RemoveBrand extends HttpServlet {
         String brandId = request.getParameter("brandId");
 
         boolean isSuccess = BrandService.getInstance().delete(StringUtils.toInt(brandId));
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/brands");
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/brands" + error);
     }
 
     @Override

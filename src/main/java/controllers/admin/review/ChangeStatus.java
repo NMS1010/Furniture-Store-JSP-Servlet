@@ -15,9 +15,12 @@ public class ChangeStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String reviewItemId = request.getParameter("reviewItemId");
 
-        ReviewItemService.getInstance().ChangeStatus(StringUtils.toInt(reviewItemId));
-
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/reviews");
+        boolean isSuccess = ReviewItemService.getInstance().ChangeStatus(StringUtils.toInt(reviewItemId));
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/reviews" + error);
     }
 
     @Override

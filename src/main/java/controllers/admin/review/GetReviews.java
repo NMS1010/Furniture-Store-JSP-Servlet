@@ -20,6 +20,10 @@ public class GetReviews extends HttpServlet {
         ArrayList<ReviewItemViewModel> reviews = ReviewItemService.getInstance().retrieveAll(req);
 
         request.setAttribute("reviews",reviews);
+        String error = request.getParameter("error");
+        if(error != null && !error.equals("")){
+            request.setAttribute("error",error);
+        }
         ServletUtils.forward(request, response, "/views/admin/review/review.jsp");
 
     }

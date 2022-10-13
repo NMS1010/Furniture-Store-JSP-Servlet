@@ -182,7 +182,8 @@
                 </div>
               </div>
             </div>
-          </div> <!-- End Content -->
+
+          </div>
         </div>
         <jsp:include page="/views/admin/common/footer.jsp"/>
       </div>

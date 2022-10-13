@@ -39,7 +39,6 @@
                             </c:when>
                           </c:choose>
                         method="post"
-                        onsubmit="return validateForm()"
                   >
                     <input type="hidden" id="discountId" name="discountId" value="${discount.discountId}"/>
                     <div class="row">

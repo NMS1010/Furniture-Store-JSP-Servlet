@@ -42,7 +42,10 @@ public class EditDiscount extends HttpServlet {
         updateReq.setQuantity(StringUtils.toInt(request.getParameter("quantity")));
 
         boolean isSuccess = DiscountService.getInstance().update(updateReq);
-
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/discounts");
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/discounts" + error);
     }
 }

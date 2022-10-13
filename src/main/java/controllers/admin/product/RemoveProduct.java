@@ -15,8 +15,11 @@ public class RemoveProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
         boolean isSuccess = ProductService.getInstance().delete(productId);
-
-        ServletUtils.redirect(response,request.getContextPath() + "/admin/products");
+        String error = "";
+        if(!isSuccess){
+            error = "?error = true";
+        }
+        ServletUtils.redirect(response,request.getContextPath() + "/admin/products" + error);
     }
 
     @Override

@@ -26,7 +26,10 @@ public class GetUsers extends HttpServlet {
         RoleGetPagingRequest reqRole = new RoleGetPagingRequest();
         ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAll(reqRole);
         request.setAttribute("roles",roles);
-
+        String error = request.getParameter("error");
+        if(error != null && !error.equals("")){
+            request.setAttribute("error",error);
+        }
 
         ServletUtils.forward(request, response, "/views/admin/user/list-user.jsp");
     }

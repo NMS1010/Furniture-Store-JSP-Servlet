@@ -36,7 +36,11 @@ public class AddBrand extends HttpServlet {
         brandReq.setImage(filePart);
 
         int brandId = BrandService.getInstance().insert(brandReq);
+        String error = "";
+        if(brandId < 1){
+            error = "?error=true";
+        }
 
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/brands");
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/brands" + error);
     }
 }

@@ -38,7 +38,12 @@ public class GetProducts extends HttpServlet {
         ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAll(req);
 
         request.setAttribute("products", products);
+        String error = request.getParameter("error");
+        if(error != null && !error.equals("")){
+            request.setAttribute("error",error);
+        }
         String grid = request.getParameter("grid");
+
         if(grid == null || grid.equals(""))
             ServletUtils.forward(request, response, "/views/admin/product/list-product.jsp");
         else {

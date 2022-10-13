@@ -26,7 +26,10 @@ public class GetBrands extends HttpServlet {
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAll(req);
 
         request.setAttribute("brands", brands);
-
+        String error = request.getParameter("error");
+        if(error != null && !error.equals("")){
+            request.setAttribute("error",error);
+        }
         ServletUtils.forward(request, response, "/views/admin/brand/brand.jsp");
     }
 

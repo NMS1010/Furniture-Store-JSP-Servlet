@@ -162,6 +162,7 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" id="email"
                                name="email" required title="Vui lòng nhập đúng định dạng email">
+                        <p class="mt-3" id='emailValidateMessage'></p>
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -169,6 +170,7 @@
                         <label for="phone">Phone</label>
                         <input type="text" class="form-control" id="phone" pattern="[0-9]{10}"
                                name="phone" required title="Vui lòng nhập số điện thoại gồm 10 chữ số">
+                        <p class="mt-3" id='phoneValidateMessage'></p>
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -199,7 +201,7 @@
                         <label for="username">User name</label>
                         <input type="text" class="form-control" id="username"
                                name="username" required title="Vui lòng nhập tên tài khoản">
-                        <p class="mt-3 text-danger" id='userExist' ></p>
+                        <p class="mt-3 text-danger" id="userValidateMessage" ></p>
                       </div>
                     </div>
 
@@ -235,7 +237,7 @@
                             <c:forEach var="role" items="${roles}">
                               <li>
                                 <a href="#" class="small" data-value="${role.roleId}" tabIndex="-1">
-                                  <input type="checkbox" id="roleCheckBox-${role.roleId}" name="roleCheckBox" value="${role.roleId}"/>&nbsp;${role.roleName}
+                                  <input type="checkbox" class="roleCheckBox" id="roleCheckBox-${role.roleId}" name="roleCheckBox" value="${role.roleId}"/>&nbsp;${role.roleName}
                                 </a>
                               </li>
                             </c:forEach>
@@ -263,48 +265,7 @@
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
   $('#form-add').submit(function (e){
-    let noError = true;
-    e.preventDefault()
-    let passMatch = $('#confirmPasswordNotMatch')
-    let roleEmpty = $('#roleEmpty')
-    if ($('#password').val() !== $('#confirmPassword').val()) {
-      passMatch.html('Mật khẩu không khớp').css('color', 'red');
-      noError = false;
-    }else{
-      passMatch.html('')
-    }
-    if(options.length === 0){
-      roleEmpty.html('Vui lòng chọn role').css('color', 'red');
-      noError = false;
-    }else {
-      roleEmpty.html('')
-    }
-    $.ajax({
-      url: `<%=request.getContextPath()%>/admin/users/check`,
-      method: "GET",
-      data: {
-        'username': $('#username').val()
-      },
-      async: false,
-      success: function (data){
-        console.log(data)
-        let str = data.toString()
-        str = str.slice(0, str.length - 2);
-        console.log(str)
-        if (str === 'true') {
-          $('#userExist').html('Tên tài khoản đã tồn tại').css('color','red')
-          noError = false;
-        } else {
-          $('#userExist').html('')
-        }
-      },
-      error: function (error){
-        noError = false;
-      }
-    })
-    if(noError){
-      $('#form-add').unbind('submit').submit();
-    }
+    validateForm(e, `<%=request.getContextPath()%>`)
   })
 </script>
 <script src="<%=request.getContextPath()%>/assets/admin/js/validate/admin/user/user-validation.js"></script>

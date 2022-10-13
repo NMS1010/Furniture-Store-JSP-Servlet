@@ -22,7 +22,7 @@ public class User {
     private String address;
     @Column(nullable = false)
     private int gender;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
     @Column(nullable = false)
     private LocalDateTime dateCreated;
@@ -34,7 +34,7 @@ public class User {
     private String username;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, columnDefinition = "LONGTEXT")

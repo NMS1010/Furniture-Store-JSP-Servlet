@@ -30,7 +30,7 @@ public class AddUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        boolean error = false;
+
         UserCreateRequest reqCreate = new UserCreateRequest();
         reqCreate.setAvatar(request.getPart("avatar"));
         reqCreate.setUsername(request.getParameter("username"));
@@ -51,7 +51,11 @@ public class AddUser extends HttpServlet {
         reqCreate.setRoleIds(roleIds);
 
         int userId = UserService.getInstance().insert(reqCreate);
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/users");
+        String error = "";
+        if(userId < 1){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/users" + error);
 
     }
 }

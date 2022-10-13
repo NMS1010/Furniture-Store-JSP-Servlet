@@ -32,7 +32,10 @@ public class AddDiscount extends HttpServlet {
         createReq.setQuantity(StringUtils.toInt(request.getParameter("status")));
 
         int discountId = DiscountService.getInstance().insert(createReq);
-
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/discounts");
+        String error = "";
+        if(discountId < 1){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/discounts" + error);
     }
 }

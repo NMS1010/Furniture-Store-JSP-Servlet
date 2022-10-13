@@ -92,8 +92,8 @@ public class ProductService implements IProductService {
 
             if(request.getImage() != null && !request.getImage().getSubmittedFileName().equals("")){
 
-                Query q = session.createQuery("select ProductImage from ProductImage where productId=:s1 and isDefault = true");
-                q.setParameter("s1", request.getProductId());
+                Query q = session.createQuery("from ProductImage where productId=:s1 and isDefault = true");
+                q.setParameter("s1", product.getProductId());
 
                 ProductImage image = (ProductImage)q.getSingleResult();
                 image.setImage(FileUtil.encodeBase64(request.getImage()));

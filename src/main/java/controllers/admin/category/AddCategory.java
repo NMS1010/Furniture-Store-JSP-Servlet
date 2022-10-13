@@ -41,9 +41,13 @@ public class AddCategory extends HttpServlet {
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
 
         int categoryId = CategoryService.getInstance().insert(req);
+        String error = "";
+        if(categoryId < 1){
+            error = "?error=true";
+        }
         if(parentCategoryId == null || parentCategoryId.equals(""))
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories" + error);
         else
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true" + error);
     }
 }

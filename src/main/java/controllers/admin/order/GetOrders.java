@@ -20,6 +20,10 @@ public class GetOrders extends HttpServlet {
         String newOrder = request.getParameter("new");
         String delivered = request.getParameter("delivered");
         ArrayList<OrderViewModel> orders;
+        String error = request.getParameter("error");
+        if(error != null && !error.equals("")){
+            request.setAttribute("error",error);
+        }
         if(newOrder != null){
             orders = OrderService.getInstance().retrieveNewOrder(req);
         }else if(delivered != null){

@@ -54,10 +54,13 @@ public class EditCategory extends HttpServlet {
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
 
         boolean isSuccess = CategoryService.getInstance().update(req);
-
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
         if(parentCategoryId == null || parentCategoryId.equals(""))
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories" + error);
         else
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true" + error);
     }
 }

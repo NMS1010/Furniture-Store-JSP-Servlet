@@ -33,9 +33,9 @@ public class Product{
 
     @Column(nullable = false)
     private int status;
-    @Column
+    @Column(nullable = false)
     private int brandId;
-    @Column
+    @Column(nullable = false)
     private int categoryId;
     @OneToMany
     @JoinColumn(name = "productId")

@@ -16,7 +16,11 @@ public class RemoveDiscount extends HttpServlet {
         int discountId = StringUtils.toInt(request.getParameter("discountId"));
 
         boolean isSuccess = DiscountService.getInstance().delete(discountId);
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/discounts");
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/discounts" +error);
     }
 
     @Override

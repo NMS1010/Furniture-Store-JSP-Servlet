@@ -17,11 +17,14 @@ public class RemoveCategory extends HttpServlet {
         String sub = request.getParameter("sub-categories");
 
         boolean isSuccess = CategoryService.getInstance().delete(StringUtils.toInt(categoryId));
-
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
         if(sub == null || sub.equals(""))
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories" + error);
         else {
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true");
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true" + error);
         }
     }
 

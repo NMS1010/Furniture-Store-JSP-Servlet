@@ -41,8 +41,11 @@ public class EditBrand extends HttpServlet {
         brandReq.setImage(filePart);
 
         boolean isSuccess = BrandService.getInstance().update(brandReq);
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
 
-
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/brands");
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/brands" + error);
     }
 }

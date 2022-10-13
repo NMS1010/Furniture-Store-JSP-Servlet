@@ -82,13 +82,22 @@ public class EditProduct extends HttpServlet {
         req.setStatus(status);
 
         boolean isSuccess = ProductService.getInstance().update(req);
-
+        if(!isSuccess){
+            request.setAttribute("error", "true");
+            doGet(request, response);
+            return;
+        }
         if(subImages.size() > 0) {
             ProductImageCreateRequest productImageCreateRequest = new ProductImageCreateRequest();
             productImageCreateRequest.setProductId(productId);
             productImageCreateRequest.setImages(subImages);
 
-            ProductImageService.getInstance().insert(productImageCreateRequest);
+            int id = ProductImageService.getInstance().insert(productImageCreateRequest);
+            if(id < 1){
+                request.setAttribute("error", "true");
+                doGet(request, response);
+                return;
+            }
         }
         ServletUtils.redirect(response, request.getContextPath() + "/admin/products");
     }

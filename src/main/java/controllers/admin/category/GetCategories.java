@@ -24,6 +24,10 @@ public class GetCategories extends HttpServlet {
 
         req.setTypeSort("brandName");
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAll(req);
+        String error = request.getParameter("error");
+        if(error != null && !error.equals("")){
+            request.setAttribute("error",error);
+        }
         if(sub == null || sub.equals("")) {
             categories.removeIf(s -> s.getParentCategoryId() > 0);
             request.setAttribute("categories", categories);

@@ -24,6 +24,7 @@ public class UserUpdateRequest {
     private Part avatar;
     private ArrayList<Integer> roleIds;
     private String password;
+    
 
     public ArrayList<Integer> getRoleIds() {
         return roleIds;

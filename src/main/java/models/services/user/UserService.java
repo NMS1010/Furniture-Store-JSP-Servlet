@@ -27,6 +27,7 @@ import view_models.users.UserViewModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class UserService implements IUserService{
     private static UserService instance = null;
@@ -97,7 +98,8 @@ public class UserService implements IUserService{
         user.setStatus(request.getStatus());
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword());
+        if(request.getPassword() != null && !Objects.equals(request.getPassword(), ""))
+            user.setPassword(request.getPassword());
         if(request.getAvatar()!= null && !request.getAvatar().getSubmittedFileName().equals("")){
             user.setAvatar(FileUtil.encodeBase64(request.getAvatar()));
         }
@@ -193,7 +195,10 @@ public class UserService implements IUserService{
     public UserViewModel retrieveById(Integer entityId) {
         Session session = HibernateUtils.getSession();
         User user = session.find(User.class, entityId);
-
+        if(user == null){
+            session.close();
+            return null;
+        }
         UserViewModel userViewModel = getUserViewModel(user, session);
         session.close();
 
@@ -273,16 +278,33 @@ public class UserService implements IUserService{
         }
         return true;
     }
-
-    @Override
-    public boolean checkUsername(String username) {
+    private boolean checkContain(String query, String param){
         Session session = HibernateUtils.getSession();
-        Query q = session.createQuery("select count(*) from User where username=:s1");
-        q.setParameter("s1", username);
+        Query q = session.createQuery(query);
+        q.setParameter("s1", param);
         Object o = q.getSingleResult();
         if(o == null || (long)o == 0)
             return false;
         return true;
+    }
+    @Override
+    public boolean checkUsername(String username) {
+        return checkContain("select count(*) from User where username=:s1", username);
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return checkContain("select count(*) from User where email=:s1", email);
+    }
+
+    @Override
+    public boolean checkPhone(String phone) {
+        return checkContain("select count(*) from User where phone=:s1", phone);
+    }
+
+    @Override
+    public boolean checkPassword(int userId, String password) {
+        return checkContain("select count(*) from User where userId=" + userId +" password=:s1", password);
     }
 
 }

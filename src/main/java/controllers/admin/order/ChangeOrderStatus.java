@@ -33,7 +33,10 @@ public class ChangeOrderStatus extends HttpServlet {
         req.setStatus(status);
 
         boolean isSuccess = OrderService.getInstance().update(req);
-
-        ServletUtils.redirect(response, request.getContextPath() + "/admin/orders");
+        String error = "";
+        if(!isSuccess){
+            error = "?error=true";
+        }
+        ServletUtils.redirect(response, request.getContextPath() + "/admin/orders" + error);
     }
 }

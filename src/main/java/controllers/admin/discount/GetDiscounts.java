@@ -19,7 +19,10 @@ public class GetDiscounts extends HttpServlet {
         ArrayList<DiscountViewModel> discounts = DiscountService.getInstance().retrieveAll(req);
 
         request.setAttribute("discounts",discounts);
-
+        String error = request.getParameter("error");
+        if(error != null && !error.equals("")){
+            request.setAttribute("error",error);
+        }
         ServletUtils.forward(request,response,"/views/admin/discount/discount.jsp");
     }
 
