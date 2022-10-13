@@ -12,7 +12,6 @@ $('#form-add').submit(function (e) {
     let discountValueValidate = $('#discountValueValidate')
     let endDateValidate = $('#endDateValidate')
 
-
     let endDateValue = $('#endDate')
     let startDateValue = $('#startDate')
     let value = parseFloat($('#discountValue').val())

@@ -15,7 +15,7 @@ public class RemoveUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userId = StringUtils.toInt(request.getParameter("userId"));
 
-        boolean isSuccess = UserService.getInstance().delete(userId);
+        boolean isSuccess = UserService.getInstance().deleteUser(userId);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

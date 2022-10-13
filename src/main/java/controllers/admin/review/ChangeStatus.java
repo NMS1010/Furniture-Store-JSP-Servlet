@@ -15,7 +15,7 @@ public class ChangeStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String reviewItemId = request.getParameter("reviewItemId");
 
-        boolean isSuccess = ReviewItemService.getInstance().ChangeStatus(StringUtils.toInt(reviewItemId));
+        boolean isSuccess = ReviewItemService.getInstance().ChangeReviewItemStatus(StringUtils.toInt(reviewItemId));
         String error = "";
         if(!isSuccess){
             error = "?error=true";

@@ -2,7 +2,7 @@ package controllers.admin.user;
 
 import models.services.user.UserService;
 import utils.StringUtils;
-import view_models.users.UserViewModel;
+import models.view_models.users.UserViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -20,7 +20,7 @@ public class CheckEditUser extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         int userId = StringUtils.toInt(request.getParameter("userId"));
-        UserViewModel user = UserService.getInstance().retrieveById(userId);
+        UserViewModel user = UserService.getInstance().retrieveUserById(userId);
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");

@@ -2,11 +2,17 @@ package models.services.wish_item;
 
 import common.interfaces.IModifyEntity;
 import common.interfaces.IRetrieveEntity;
-import view_models.wish_items.WishItemCreateRequest;
-import view_models.wish_items.WishItemGetPagingRequest;
-import view_models.wish_items.WishItemUpdateRequest;
-import view_models.wish_items.WishItemViewModel;
+import models.view_models.wish_items.WishItemCreateRequest;
+import models.view_models.wish_items.WishItemGetPagingRequest;
+import models.view_models.wish_items.WishItemUpdateRequest;
+import models.view_models.wish_items.WishItemViewModel;
 
-public interface IWishItemService extends IModifyEntity<WishItemCreateRequest, WishItemUpdateRequest, Integer>,
-        IRetrieveEntity<WishItemViewModel, WishItemGetPagingRequest, Integer> {
+import java.util.ArrayList;
+
+public interface IWishItemService  {
+    int insertWishItem(WishItemCreateRequest request);
+    boolean updateWishItem(WishItemUpdateRequest request);
+    boolean deleteWishItem(Integer wishItemId);
+    WishItemViewModel retrieveWishItemById(Integer wishItemId);
+    ArrayList<WishItemViewModel> retrieveAllWishItem(WishItemGetPagingRequest request);
 }

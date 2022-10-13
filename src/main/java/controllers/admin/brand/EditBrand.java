@@ -3,9 +3,8 @@ package controllers.admin.brand;
 import models.services.brand.BrandService;
 import utils.ServletUtils;
 import utils.StringUtils;
-import view_models.brands.BrandCreateRequest;
-import view_models.brands.BrandUpdateRequest;
-import view_models.brands.BrandViewModel;
+import models.view_models.brands.BrandUpdateRequest;
+import models.view_models.brands.BrandViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -23,7 +22,7 @@ public class EditBrand extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String brandId = request.getParameter("brandId");
 
-        BrandViewModel brand = BrandService.getInstance().retrieveById(Integer.parseInt(brandId));
+        BrandViewModel brand = BrandService.getInstance().retrieveBrandById(Integer.parseInt(brandId));
         request.setAttribute("brand", brand);
         ServletUtils.forward(request, response, "/admin/brands");
     }
@@ -40,7 +39,7 @@ public class EditBrand extends HttpServlet {
         brandReq.setOrigin(request.getParameter("brandOrigin"));
         brandReq.setImage(filePart);
 
-        boolean isSuccess = BrandService.getInstance().update(brandReq);
+        boolean isSuccess = BrandService.getInstance().updateBrand(brandReq);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

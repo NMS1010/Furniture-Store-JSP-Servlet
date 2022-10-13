@@ -2,8 +2,8 @@
 <%@ page import="utils.constants.ORDER_STATUS" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<jsp:useBean id="order" scope="request" class="view_models.orders.OrderViewModel"/>
-<jsp:useBean id="orderItems" scope="request" type="java.util.ArrayList<view_models.order_items.OrderItemViewModel>"/>
+<jsp:useBean id="order" scope="request" class="models.view_models.orders.OrderViewModel"/>
+<jsp:useBean id="orderItems" scope="request" type="java.util.ArrayList<models.view_models.order_items.OrderItemViewModel>"/>
 <html>
 <head>
     <meta charset="utf-8" />

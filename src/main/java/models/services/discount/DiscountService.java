@@ -1,19 +1,17 @@
 package models.services.discount;
 
 import models.entities.Discount;
-import models.entities.Discount;
+import models.repositories.discount.DiscountRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.DateUtils;
 import utils.HibernateUtils;
 import utils.constants.DISCOUNT_STATUS;
-import utils.constants.ORDER_STATUS;
-import view_models.discounts.DiscountViewModel;
-import view_models.discounts.DiscountCreateRequest;
-import view_models.discounts.DiscountGetPagingRequest;
-import view_models.discounts.DiscountUpdateRequest;
-import view_models.discounts.DiscountViewModel;
+import models.view_models.discounts.DiscountViewModel;
+import models.view_models.discounts.DiscountCreateRequest;
+import models.view_models.discounts.DiscountGetPagingRequest;
+import models.view_models.discounts.DiscountUpdateRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,117 +25,27 @@ public class DiscountService implements IDiscountService{
         return instance;
     }
     @Override
-    public int insert(DiscountCreateRequest request) {
-        Session session = HibernateUtils.getSession();
-        Transaction tx = null;
-
-        Discount discount = new Discount();
-        discount.setDiscountCode(request.getDiscountCode());
-        discount.setDiscountValue(request.getDiscountValue());
-        discount.setStatus(request.getStatus());
-        discount.setDateStart(request.getStartDate());
-        discount.setDateEnd(request.getEndDate());
-        discount.setQuantity(request.getQuantity());
-
-        int discountId = -1;
-        try {
-            tx = session.beginTransaction();
-            session.persist(discount);
-            discountId = discount.getDiscountId();
-            tx.commit();
-        }catch(Exception e){
-            if(tx != null)
-                tx.rollback();
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
-
-        return discountId;
+    public int insertDiscount(DiscountCreateRequest request) {
+        return DiscountRepository.getInstance().insert(request);
     }
 
     @Override
-    public boolean update(DiscountUpdateRequest request) {
-        Session session = HibernateUtils.getSession();
-        Transaction tx = null;
-        Discount discount = session.find(Discount.class, request.getDiscountId());
-
-        discount.setDiscountCode(request.getDiscountCode());
-        discount.setDiscountValue(request.getDiscountValue());
-        discount.setStatus(request.getStatus());
-        discount.setDateStart(request.getStartDate());
-        discount.setDateEnd(request.getEndDate());
-        discount.setQuantity(request.getQuantity());
-        return HibernateUtils.merge(discount);
+    public boolean updateDiscount(DiscountUpdateRequest request) {
+        return DiscountRepository.getInstance().update(request);
     }
 
     @Override
-    public boolean delete(Integer entityId) {
-        Session session = HibernateUtils.getSession();
-        Discount discount = session.find(Discount.class, entityId);
-        session.close();
-        return HibernateUtils.remove(discount);
-    }
-    private String getStatus(int i){
-        String status = "";
-        switch (i){
-            case DISCOUNT_STATUS.EXPIRED:
-                status = "Hết hạn";
-                break;
-            case DISCOUNT_STATUS.ACTIVE:
-                status = "Còn mã";
-                break;
-            case DISCOUNT_STATUS.IN_ACTIVE:
-                status = "Hết mã";
-                break;
-            default:
-                status = "Undefined";
-                break;
-        }
-        return status;
-    }
-    private DiscountViewModel getDiscountViewModel(Discount discount, Session session){
-        DiscountViewModel discountViewModel = new DiscountViewModel();
-
-        discountViewModel.setDiscountId(discount.getDiscountId());
-        discountViewModel.setDiscountCode(discount.getDiscountCode());
-        discountViewModel.setDiscountValue(discount.getDiscountValue());
-        discountViewModel.setStartDate(DateUtils.dateTimeToStringWithFormat(discount.getDateStart(),"yyyy-MM-dd HH:mm"));
-        discountViewModel.setEndDate(DateUtils.dateTimeToStringWithFormat(discount.getDateEnd(),"yyyy-MM-dd HH:mm"));
-        discountViewModel.setStatus(discount.getStatus());
-        discountViewModel.setQuantity(discount.getQuantity());
-        discountViewModel.setStatusCode(getStatus(discount.getStatus()));
-
-        return discountViewModel;
-    }
-    @Override
-    public DiscountViewModel retrieveById(Integer entityId) {
-        Session session = HibernateUtils.getSession();
-        Discount discount = session.find(Discount.class, entityId);
-
-        DiscountViewModel discountViewModel = getDiscountViewModel(discount, session);
-        session.close();
-
-        return discountViewModel;
+    public boolean deleteDiscount(Integer discountId) {
+        return DiscountRepository.getInstance().delete(discountId);
     }
 
     @Override
-    public ArrayList<DiscountViewModel> retrieveAll(DiscountGetPagingRequest request) {
-        ArrayList<DiscountViewModel> list = new ArrayList<>();
-        Session session = HibernateUtils.getSession();
-        int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("Discount", request.getColumnName(),request.getSortBy(), request.getKeyword(), request.getTypeSort());
-        Query q = session.createQuery(cmd);
-        q.setFirstResult(offset);
-        q.setMaxResults(request.getPageSize());
-        List<Discount> discounts = q.list();
+    public DiscountViewModel retrieveDiscountById(Integer discountId) {
+        return DiscountRepository.getInstance().retrieveById(discountId);
+    }
 
-        for(Discount discount:discounts){
-            DiscountViewModel v = getDiscountViewModel(discount, session);
-            list.add(v);
-        }
-        session.close();
-        return list;
+    @Override
+    public ArrayList<DiscountViewModel> retrieveAllDiscount(DiscountGetPagingRequest request) {
+        return DiscountRepository.getInstance().retrieveAll(request);
     }
 }

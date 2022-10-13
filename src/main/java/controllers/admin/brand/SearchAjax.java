@@ -1,18 +1,15 @@
 package controllers.admin.brand;
 
 import com.google.gson.Gson;
-import models.entities.Brand;
-import models.entities.Category;
 import models.services.brand.BrandService;
-import view_models.brands.BrandGetPagingRequest;
-import view_models.brands.BrandViewModel;
+import models.view_models.brands.BrandGetPagingRequest;
+import models.view_models.brands.BrandViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class SearchAjax extends HttpServlet {
         req.setColumnName(columName);
         req.setKeyword(keyword);
 
-        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAll(req);
+        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req);
         PrintWriter out = response.getWriter();
         out.println(new Gson().toJson(brands));
     }

@@ -3,8 +3,8 @@
 <%@ page import="utils.constants.USER_STATUS" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<jsp:useBean id="user" scope="request" class="view_models.users.UserViewModel"/>
-<jsp:useBean id="roles" scope="request" type="java.util.ArrayList<view_models.roles.RoleViewModel>"/>
+<jsp:useBean id="user" scope="request" class="models.view_models.users.UserViewModel"/>
+<jsp:useBean id="roles" scope="request" type="java.util.ArrayList<models.view_models.roles.RoleViewModel>"/>
 <html>
     <head>
         <meta charset="utf-8" />

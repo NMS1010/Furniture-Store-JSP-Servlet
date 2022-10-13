@@ -4,7 +4,7 @@ import models.services.discount.DiscountService;
 import utils.DateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
-import view_models.discounts.DiscountCreateRequest;
+import models.view_models.discounts.DiscountCreateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,9 +29,9 @@ public class AddDiscount extends HttpServlet {
         createReq.setQuantity(StringUtils.toInt(request.getParameter("quantity")));
         createReq.setStartDate(DateUtils.stringToLocalDateTime(request.getParameter("startDate")));
         createReq.setEndDate(DateUtils.stringToLocalDateTime(request.getParameter("endDate")));
-        createReq.setQuantity(StringUtils.toInt(request.getParameter("status")));
+        createReq.setStatus(StringUtils.toInt(request.getParameter("status")));
 
-        int discountId = DiscountService.getInstance().insert(createReq);
+        int discountId = DiscountService.getInstance().insertDiscount(createReq);
         String error = "";
         if(discountId < 1){
             error = "?error=true";

@@ -1,12 +1,10 @@
 package controllers.admin.order;
 
 import models.services.order.OrderService;
-import models.services.order.OrderService;
 import utils.ServletUtils;
 import utils.StringUtils;
-import view_models.orders.OrderViewModel;
-import view_models.orders.OrderUpdateRequest;
-import view_models.orders.OrderViewModel;
+import models.view_models.orders.OrderViewModel;
+import models.view_models.orders.OrderUpdateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,7 +17,7 @@ public class ChangeOrderStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String orderId = request.getParameter("orderId");
 
-        OrderViewModel order = OrderService.getInstance().retrieveById(Integer.parseInt(orderId));
+        OrderViewModel order = OrderService.getInstance().retrieveOrderById(Integer.parseInt(orderId));
         request.setAttribute("currOrder", order);
         ServletUtils.forward(request, response, "/admin/orders");
     }
@@ -32,7 +30,7 @@ public class ChangeOrderStatus extends HttpServlet {
         req.setOrderId(orderId);
         req.setStatus(status);
 
-        boolean isSuccess = OrderService.getInstance().update(req);
+        boolean isSuccess = OrderService.getInstance().updateOrder(req);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

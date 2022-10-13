@@ -1,8 +1,6 @@
 package controllers.admin.user;
 
 import models.services.user.UserService;
-import utils.StringUtils;
-import view_models.users.UserViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

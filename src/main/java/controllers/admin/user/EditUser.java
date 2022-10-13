@@ -4,9 +4,7 @@ import models.services.user.UserService;
 import utils.DateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
-import utils.constants.USER_STATUS;
-import view_models.users.UserUpdateRequest;
-import view_models.users.UserViewModel;
+import models.view_models.users.UserUpdateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -52,7 +50,7 @@ public class EditUser extends HttpServlet {
         }
         reqUpdate.setRoleIds(roleIds);
 
-        boolean isSuccess = UserService.getInstance().update(reqUpdate);
+        boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

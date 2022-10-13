@@ -3,15 +3,13 @@ package controllers.admin.category;
 import models.services.category.CategoryService;
 import utils.ServletUtils;
 import utils.StringUtils;
-import view_models.categories.CategoryCreateRequest;
-import view_models.categories.CategoryUpdateRequest;
-import view_models.categories.CategoryViewModel;
+import models.view_models.categories.CategoryUpdateRequest;
+import models.view_models.categories.CategoryViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.HashMap;
 
 @WebServlet(name = "EditCategory", value = "/admin/category/edit")
 @MultipartConfig(
@@ -24,7 +22,7 @@ public class EditCategory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String categoryId = request.getParameter("categoryId");
         String sub = request.getParameter("sub-categories");
-        CategoryViewModel category = CategoryService.getInstance().retrieveById(StringUtils.toInt(categoryId));
+        CategoryViewModel category = CategoryService.getInstance().retrieveCategoryById(StringUtils.toInt(categoryId));
 
         request.setAttribute("category", category);
 
@@ -53,7 +51,7 @@ public class EditCategory extends HttpServlet {
         if(parentCategoryId != null && !parentCategoryId.equals(""))
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
 
-        boolean isSuccess = CategoryService.getInstance().update(req);
+        boolean isSuccess = CategoryService.getInstance().updateCategory(req);
         String error = "";
         if(!isSuccess){
             error = "?error=true";

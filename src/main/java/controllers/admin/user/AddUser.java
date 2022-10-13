@@ -1,13 +1,10 @@
 package controllers.admin.user;
 
-import models.entities.Role;
 import models.services.user.UserService;
 import utils.DateUtils;
-import utils.FileUtil;
 import utils.ServletUtils;
 import utils.StringUtils;
-import utils.constants.USER_STATUS;
-import view_models.users.UserCreateRequest;
+import models.view_models.users.UserCreateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -50,7 +47,7 @@ public class AddUser extends HttpServlet {
         }
         reqCreate.setRoleIds(roleIds);
 
-        int userId = UserService.getInstance().insert(reqCreate);
+        int userId = UserService.getInstance().insertUser(reqCreate);
         String error = "";
         if(userId < 1){
             error = "?error=true";

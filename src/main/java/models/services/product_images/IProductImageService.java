@@ -2,12 +2,17 @@ package models.services.product_images;
 
 import common.interfaces.IModifyEntity;
 import common.interfaces.IRetrieveEntity;
-import view_models.product_images.ProductImageCreateRequest;
-import view_models.product_images.ProductImageGetPagingRequest;
-import view_models.product_images.ProductImageUpdateRequest;
-import view_models.product_images.ProductImageViewModel;
-import view_models.products.ProductGetPagingRequest;
-import view_models.products.ProductViewModel;
+import models.view_models.product_images.ProductImageCreateRequest;
+import models.view_models.product_images.ProductImageGetPagingRequest;
+import models.view_models.product_images.ProductImageUpdateRequest;
+import models.view_models.product_images.ProductImageViewModel;
 
-public interface IProductImageService extends IModifyEntity<ProductImageCreateRequest, ProductImageUpdateRequest, Integer>, IRetrieveEntity<ProductImageViewModel, ProductImageGetPagingRequest, Integer> {
+import java.util.ArrayList;
+
+public interface IProductImageService {
+    int insertProductImage(ProductImageCreateRequest request);
+    boolean updateProductImage(ProductImageUpdateRequest request);
+    boolean deleteProductImage(Integer productImageId);
+    ProductImageViewModel retrieveProductImageById(Integer productImageId);
+    ArrayList<ProductImageViewModel> retrieveAllProductImage(ProductImageGetPagingRequest request);
 }

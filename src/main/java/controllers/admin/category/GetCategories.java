@@ -1,19 +1,16 @@
 package controllers.admin.category;
 
-import models.entities.Category;
 import models.services.category.CategoryService;
 import utils.ServletUtils;
-import view_models.categories.CategoryGetPagingRequest;
-import view_models.categories.CategoryViewModel;
+import models.view_models.categories.CategoryGetPagingRequest;
+import models.view_models.categories.CategoryViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 @WebServlet(name = "GetCategories", value = "/admin/categories")
 public class GetCategories extends HttpServlet {
@@ -23,7 +20,7 @@ public class GetCategories extends HttpServlet {
         String sub = request.getParameter("sub-categories");
 
         req.setTypeSort("brandName");
-        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAll(req);
+        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req);
         String error = request.getParameter("error");
         if(error != null && !error.equals("")){
             request.setAttribute("error",error);

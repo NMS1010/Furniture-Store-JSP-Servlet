@@ -2,8 +2,8 @@ package controllers.admin.discount;
 
 import models.services.discount.DiscountService;
 import utils.ServletUtils;
-import view_models.discounts.DiscountGetPagingRequest;
-import view_models.discounts.DiscountViewModel;
+import models.view_models.discounts.DiscountGetPagingRequest;
+import models.view_models.discounts.DiscountViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,7 +16,7 @@ public class GetDiscounts extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DiscountGetPagingRequest req = new DiscountGetPagingRequest();
-        ArrayList<DiscountViewModel> discounts = DiscountService.getInstance().retrieveAll(req);
+        ArrayList<DiscountViewModel> discounts = DiscountService.getInstance().retrieveAllDiscount(req);
 
         request.setAttribute("discounts",discounts);
         String error = request.getParameter("error");

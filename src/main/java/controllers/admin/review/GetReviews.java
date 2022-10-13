@@ -2,8 +2,8 @@ package controllers.admin.review;
 
 import models.services.review_item.ReviewItemService;
 import utils.ServletUtils;
-import view_models.review_items.ReviewItemGetPagingRequest;
-import view_models.review_items.ReviewItemViewModel;
+import models.view_models.review_items.ReviewItemGetPagingRequest;
+import models.view_models.review_items.ReviewItemViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -17,7 +17,7 @@ public class GetReviews extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ReviewItemGetPagingRequest req = new ReviewItemGetPagingRequest();
 
-        ArrayList<ReviewItemViewModel> reviews = ReviewItemService.getInstance().retrieveAll(req);
+        ArrayList<ReviewItemViewModel> reviews = ReviewItemService.getInstance().retrieveAllReviewItem(req);
 
         request.setAttribute("reviews",reviews);
         String error = request.getParameter("error");

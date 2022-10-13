@@ -1,9 +1,9 @@
 <%@ page import="utils.constants.PRODUCT_STATUS" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<jsp:useBean id="products" scope="request" type="java.util.ArrayList<view_models.products.ProductViewModel>"/>
-<jsp:useBean id="categories" scope="request" type="java.util.ArrayList<view_models.categories.CategoryViewModel>"/>
-<jsp:useBean id="brands" scope="request" type="java.util.ArrayList<view_models.brands.BrandViewModel>"/>
+<jsp:useBean id="products" scope="request" type="java.util.ArrayList<models.view_models.products.ProductViewModel>"/>
+<jsp:useBean id="categories" scope="request" type="java.util.ArrayList<models.view_models.categories.CategoryViewModel>"/>
+<jsp:useBean id="brands" scope="request" type="java.util.ArrayList<models.view_models.brands.BrandViewModel>"/>
 <html>
 <head>
   <meta charset="utf-8" />

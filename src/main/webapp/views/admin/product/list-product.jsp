@@ -2,7 +2,7 @@
 <%@ page import="utils.HtmlClassUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<jsp:useBean id="products" scope="request" type="java.util.ArrayList<view_models.products.ProductViewModel>"/>
+<jsp:useBean id="products" scope="request" type="java.util.ArrayList<models.view_models.products.ProductViewModel>"/>
 <html>
   <head>
     <meta charset="utf-8" />

@@ -16,7 +16,7 @@ public class RemoveProductImage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productImageId = StringUtils.toInt(request.getParameter("productImageId"));
-        boolean isSuccess = ProductImageService.getInstance().delete(productImageId);
+        boolean isSuccess = ProductImageService.getInstance().deleteProductImage(productImageId);
 
         PrintWriter out = response.getWriter();
         out.println(new Gson().toJson(isSuccess));

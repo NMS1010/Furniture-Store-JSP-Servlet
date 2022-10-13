@@ -4,8 +4,8 @@ import models.services.product.ProductService;
 import models.services.review_item.ReviewItemService;
 import utils.ServletUtils;
 import utils.StringUtils;
-import view_models.products.ProductViewModel;
-import view_models.review_items.ReviewItemViewModel;
+import models.view_models.products.ProductViewModel;
+import models.view_models.review_items.ReviewItemViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,10 +19,10 @@ public class ProductDetails extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
 
-        ProductViewModel product = ProductService.getInstance().retrieveById(productId);
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
         request.setAttribute("product", product);
 
-        ArrayList<ReviewItemViewModel> productReviews = ReviewItemService.getInstance().retrieveByProductId(productId);
+        ArrayList<ReviewItemViewModel> productReviews = ReviewItemService.getInstance().retrieveReviewItemByProductId(productId);
         request.setAttribute("productReviews", productReviews);
         int totalRating = productReviews.stream().mapToInt(ReviewItemViewModel::getRating).sum();
         long avgRating = Math.round((totalRating * 1.0)/productReviews.size());

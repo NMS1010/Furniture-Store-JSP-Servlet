@@ -1,23 +1,12 @@
 package controllers.admin.product;
 
-import models.entities.Product;
-import models.services.brand.BrandService;
-import models.services.category.CategoryService;
 import models.services.product.ProductService;
 import models.services.product_images.ProductImageService;
-import utils.DateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
-import utils.constants.PRODUCT_STATUS;
-import view_models.brands.BrandGetPagingRequest;
-import view_models.brands.BrandViewModel;
-import view_models.categories.CategoryGetPagingRequest;
-import view_models.categories.CategoryViewModel;
-import view_models.product_images.ProductImageCreateRequest;
-import view_models.product_images.ProductImageUpdateRequest;
-import view_models.products.ProductCreateRequest;
-import view_models.products.ProductUpdateRequest;
-import view_models.products.ProductViewModel;
+import models.view_models.product_images.ProductImageCreateRequest;
+import models.view_models.products.ProductUpdateRequest;
+import models.view_models.products.ProductViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,8 +14,6 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 @WebServlet(name = "EditProduct", value = "/admin/product/edit")
@@ -40,7 +27,7 @@ public class EditProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
 
-        ProductViewModel product = ProductService.getInstance().retrieveById(productId);
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
 
         request.setAttribute("product", product);
 
@@ -81,7 +68,7 @@ public class EditProduct extends HttpServlet {
         req.setBrandId(brandId);
         req.setStatus(status);
 
-        boolean isSuccess = ProductService.getInstance().update(req);
+        boolean isSuccess = ProductService.getInstance().updateProduct(req);
         if(!isSuccess){
             request.setAttribute("error", "true");
             doGet(request, response);
@@ -92,7 +79,7 @@ public class EditProduct extends HttpServlet {
             productImageCreateRequest.setProductId(productId);
             productImageCreateRequest.setImages(subImages);
 
-            int id = ProductImageService.getInstance().insert(productImageCreateRequest);
+            int id = ProductImageService.getInstance().insertProductImage(productImageCreateRequest);
             if(id < 1){
                 request.setAttribute("error", "true");
                 doGet(request, response);

@@ -2,15 +2,12 @@ package controllers.admin.brand;
 
 import models.services.brand.BrandService;
 import utils.ServletUtils;
-import view_models.brands.BrandCreateRequest;
-import view_models.brands.BrandGetPagingRequest;
-import view_models.brands.BrandViewModel;
+import models.view_models.brands.BrandCreateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "AddBrand", value = "/admin/brand/add")
 @MultipartConfig(
@@ -35,7 +32,7 @@ public class AddBrand extends HttpServlet {
         brandReq.setOrigin(request.getParameter("brandOrigin"));
         brandReq.setImage(filePart);
 
-        int brandId = BrandService.getInstance().insert(brandReq);
+        int brandId = BrandService.getInstance().insertBrand(brandReq);
         String error = "";
         if(brandId < 1){
             error = "?error=true";

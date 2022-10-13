@@ -2,14 +2,18 @@ package models.services.role;
 
 import common.interfaces.IModifyEntity;
 import common.interfaces.IRetrieveEntity;
-import view_models.roles.RoleCreateRequest;
-import view_models.roles.RoleGetPagingRequest;
-import view_models.roles.RoleUpdateRequest;
-import view_models.roles.RoleViewModel;
+import models.view_models.roles.RoleCreateRequest;
+import models.view_models.roles.RoleGetPagingRequest;
+import models.view_models.roles.RoleUpdateRequest;
+import models.view_models.roles.RoleViewModel;
 
 import java.util.ArrayList;
 
-public interface IRoleService  extends IModifyEntity<RoleCreateRequest, RoleUpdateRequest, Integer>,
-        IRetrieveEntity<RoleViewModel, RoleGetPagingRequest, Integer> {
+public interface IRoleService {
+    int insertRole(RoleCreateRequest request);
+    boolean updateRole(RoleUpdateRequest request);
+    boolean deleteRole(Integer roleId);
+    RoleViewModel retrieveRoleById(Integer roleId);
+    ArrayList<RoleViewModel> retrieveAllRole(RoleGetPagingRequest request);
 
 }

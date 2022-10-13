@@ -4,16 +4,14 @@ import models.services.brand.BrandService;
 import models.services.category.CategoryService;
 import models.services.product.ProductService;
 import models.services.product_images.ProductImageService;
-import utils.DateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
-import utils.constants.PRODUCT_STATUS;
-import view_models.brands.BrandGetPagingRequest;
-import view_models.brands.BrandViewModel;
-import view_models.categories.CategoryGetPagingRequest;
-import view_models.categories.CategoryViewModel;
-import view_models.product_images.ProductImageCreateRequest;
-import view_models.products.ProductCreateRequest;
+import models.view_models.brands.BrandGetPagingRequest;
+import models.view_models.brands.BrandViewModel;
+import models.view_models.categories.CategoryGetPagingRequest;
+import models.view_models.categories.CategoryViewModel;
+import models.view_models.product_images.ProductImageCreateRequest;
+import models.view_models.products.ProductCreateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -33,10 +31,10 @@ public class AddProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CategoryGetPagingRequest req1 = new CategoryGetPagingRequest();
 
-        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAll(req1);
+        ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req1);
         BrandGetPagingRequest req2 = new BrandGetPagingRequest();
 
-        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAll(req2);
+        ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req2);
         request.setAttribute("categories",categories);
         request.setAttribute("brands",brands);
         ServletUtils.forward(request, response, "/views/admin/product/add-product.jsp");
@@ -75,7 +73,7 @@ public class AddProduct extends HttpServlet {
         req.setCategoryId(categoryId);
         req.setBrandId(brandId);
         req.setStatus(status);
-        int productId = ProductService.getInstance().insert(req);
+        int productId = ProductService.getInstance().insertProduct(req);
         if(productId < 1){
             request.setAttribute("error", "true");
             doGet(request, response);
@@ -86,7 +84,7 @@ public class AddProduct extends HttpServlet {
 
         productImageCreateRequest.setImages(subImages);
 
-        int id = ProductImageService.getInstance().insert(productImageCreateRequest);
+        int id = ProductImageService.getInstance().insertProductImage(productImageCreateRequest);
         if(id < 1){
             request.setAttribute("error", "true");
             doGet(request, response);

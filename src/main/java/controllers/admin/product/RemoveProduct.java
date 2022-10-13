@@ -14,7 +14,7 @@ public class RemoveProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int productId = StringUtils.toInt(request.getParameter("productId"));
-        boolean isSuccess = ProductService.getInstance().delete(productId);
+        boolean isSuccess = ProductService.getInstance().deleteProduct(productId);
         String error = "";
         if(!isSuccess){
             error = "?error = true";

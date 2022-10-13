@@ -3,16 +3,13 @@ package controllers.admin.category;
 import models.services.category.CategoryService;
 import utils.ServletUtils;
 import utils.StringUtils;
-import view_models.categories.CategoryCreateRequest;
-import view_models.categories.CategoryGetPagingRequest;
-import view_models.categories.CategoryViewModel;
+import models.view_models.categories.CategoryCreateRequest;
 
 import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "AddCategory", value = "/admin/category/add")
 @MultipartConfig(
@@ -40,7 +37,7 @@ public class AddCategory extends HttpServlet {
         if(parentCategoryId != null && !parentCategoryId.equals(""))
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
 
-        int categoryId = CategoryService.getInstance().insert(req);
+        int categoryId = CategoryService.getInstance().insertCategory(req);
         String error = "";
         if(categoryId < 1){
             error = "?error=true";

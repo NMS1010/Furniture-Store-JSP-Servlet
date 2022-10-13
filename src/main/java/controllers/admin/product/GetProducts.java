@@ -7,12 +7,12 @@ import utils.HibernateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
 import utils.constants.PAGING_PARAM;
-import view_models.brands.BrandGetPagingRequest;
-import view_models.brands.BrandViewModel;
-import view_models.categories.CategoryGetPagingRequest;
-import view_models.categories.CategoryViewModel;
-import view_models.products.ProductGetPagingRequest;
-import view_models.products.ProductViewModel;
+import models.view_models.brands.BrandGetPagingRequest;
+import models.view_models.brands.BrandViewModel;
+import models.view_models.categories.CategoryGetPagingRequest;
+import models.view_models.categories.CategoryViewModel;
+import models.view_models.products.ProductGetPagingRequest;
+import models.view_models.products.ProductViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -35,7 +35,7 @@ public class GetProducts extends HttpServlet {
         long totalPage = (long)Math.ceil((HibernateUtils.count("Product","") *1.0 / (pageSize > 0 ? req.getPageSize() : PAGING_PARAM.PAGE_SIZE)));
         request.setAttribute("totalPage",totalPage);
         request.setAttribute("pageIndex",req.getPageIndex());
-        ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAll(req);
+        ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req);
 
         request.setAttribute("products", products);
         String error = request.getParameter("error");
@@ -50,10 +50,10 @@ public class GetProducts extends HttpServlet {
 
             BrandGetPagingRequest req2 = new BrandGetPagingRequest();
 
-            ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAll(req2);
+            ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req2);
             CategoryGetPagingRequest req1 = new CategoryGetPagingRequest();
 
-            ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAll(req1);
+            ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req1);
             request.setAttribute("categories",categories);
             request.setAttribute("brands",brands);
 
