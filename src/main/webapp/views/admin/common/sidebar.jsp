@@ -15,7 +15,7 @@
       <ul class="nav sidebar-inner" id="sidebar-menu">
         <!-- Dashboard -->
         <li class="active">
-          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/views/admin/index.jsp">
+          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/home">
             <i class="mdi mdi-view-dashboard-outline"></i>
             <span class="nav-text">Dashboard</span>
           </a>

@@ -4,10 +4,7 @@ import models.entities.User;
 import models.entities.UserRole;
 import models.services.user.UserService;
 import models.services.user_role.UserRoleService;
-import models.view_models.users.UserCreateRequest;
-import models.view_models.users.UserGetPagingRequest;
-import models.view_models.users.UserUpdateRequest;
-import models.view_models.users.UserViewModel;
+import models.view_models.users.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -272,9 +269,14 @@ public class UserRepository implements IUserRepository{
         Session session = HibernateUtils.getSession();
         Query q = session.createQuery(query);
         q.setParameter("s1", param);
-        Object o = q.getSingleResult();
-        if(o == null || (long)o == 0)
+        try {
+            Object o = q.getSingleResult();
+            if(o == null || (long)o == 0)
+                return false;
+        }
+        catch (Exception e){
             return false;
+        }
         return true;
     }
     @Override
@@ -294,6 +296,39 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public boolean checkPassword(int userId, String password) {
-        return checkContain("select count(*) from User where userId=" + userId +" password=:s1", password);
+        return checkContain("select count(*) from User where userId=" + userId +" and password=:s1", password);
+    }
+    @Override
+    public boolean login(UserLoginRequest request) {
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("select count(*) from User where username=:s1 and password=:s2");
+        q.setParameter("s1", request.getUsername());
+        q.setParameter("s2", request.getPassword());
+        try {
+            Object o = q.getSingleResult();
+            if(o == null || (long)o == 0)
+                return false;
+        }
+        catch (Exception e){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public UserViewModel getUserByUserName(String username) {
+        Session session = HibernateUtils.getSession();
+
+        Query q = session.createQuery("from User where username=:s1");
+        q.setParameter("s1",username);
+        Object o = q.getSingleResult();
+        User user = null;
+        if(o != null){
+            user = (User)o;
+        }
+        if(user != null){
+            return getUserViewModel(user, session);
+        }
+        return null;
     }
 }

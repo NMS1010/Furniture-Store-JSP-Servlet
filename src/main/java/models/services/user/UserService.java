@@ -4,6 +4,7 @@ import models.entities.*;
 import models.entities.User;
 import models.repositories.user.UserRepository;
 import models.services.user_role.UserRoleService;
+import models.view_models.users.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -12,10 +13,6 @@ import utils.FileUtil;
 import utils.HibernateUtils;
 import utils.constants.USER_GENDER;
 import utils.constants.USER_STATUS;
-import models.view_models.users.UserViewModel;
-import models.view_models.users.UserCreateRequest;
-import models.view_models.users.UserGetPagingRequest;
-import models.view_models.users.UserUpdateRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +67,15 @@ public class UserService implements IUserService{
     @Override
     public boolean checkPassword(int userId, String password) {
         return UserRepository.getInstance().checkPassword(userId, password);
+    }
+
+    @Override
+    public boolean login(UserLoginRequest request) {
+        return UserRepository.getInstance().login(request);
+    }
+    @Override
+    public UserViewModel getUserByUserName(String username) {
+        return UserRepository.getInstance().getUserByUserName(username);
     }
 
 }

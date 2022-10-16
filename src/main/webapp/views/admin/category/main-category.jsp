@@ -171,9 +171,6 @@
               <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                 <div class="modal-content">
                   <h3 class="modal-header border-bottom-0">Bạn có muốn xoá danh mục sản phẩm này</h3>
-<%--                  <div class="modal-body p-0" data-simplebar style="height:320px">--%>
-
-<%--                  </div>--%>
                   <div class="modal-footer px-4">
                     <button type="button" class="btn btn-secondary btn-pill"
                             data-bs-dismiss="modal">Huỷ</button>
@@ -182,7 +179,17 @@
                 </div>
               </div>
             </div>
-
+              <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                      <div class="modal-content">
+                          <h3 class="modal-header border-bottom-0 d-flex justify-content-center">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
+                          <div class="modal-footer px-4">
+                              <button type="button" class="btn btn-secondary btn-pill d-flex justify-content-center"
+                                      data-bs-dismiss="modal">Thoát</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
         </div>
         <jsp:include page="/views/admin/common/footer.jsp"/>
@@ -197,7 +204,11 @@
             document.getElementById('link-delete').href = link
           });
         });
-
+        $(window).on('load', function() {
+            if(${error != null}){
+                $('#modal-error').modal('show');
+            }
+        });
         $(".clear-form").on("click", function(e) {
           e.preventDefault();
           document.getElementById('form-add').reset();

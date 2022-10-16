@@ -7,10 +7,7 @@ import models.view_models.user_roles.UserRoleCreateRequest;
 import models.view_models.user_roles.UserRoleGetPagingRequest;
 import models.view_models.user_roles.UserRoleUpdateRequest;
 import models.view_models.user_roles.UserRoleViewModel;
-import models.view_models.users.UserCreateRequest;
-import models.view_models.users.UserGetPagingRequest;
-import models.view_models.users.UserUpdateRequest;
-import models.view_models.users.UserViewModel;
+import models.view_models.users.*;
 import org.hibernate.Session;
 
 import java.util.ArrayList;
@@ -22,4 +19,8 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     boolean checkEmail(String email);
     boolean checkPhone(String phone);
     boolean checkPassword(int userId, String password);
+
+    boolean login(UserLoginRequest request);
+
+    UserViewModel getUserByUserName(String username);
 }

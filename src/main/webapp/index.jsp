@@ -1,2 +1,2 @@
-<%@ page import="utils.FileUtil" %>
-<jsp:forward page="views/admin/index.jsp"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:redirect url="/admin/home"/>

@@ -23,7 +23,6 @@ public class UserViewModel {
     private String email;
     private String lastLogin;
     private String avatar;
-
     private long totalBought;
     private long totalWishListItem;
     private ArrayList<UserRoleViewModel> roles;
