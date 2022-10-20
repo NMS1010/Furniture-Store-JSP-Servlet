@@ -22,12 +22,6 @@ public class ProductDetails extends HttpServlet {
         ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
         request.setAttribute("product", product);
 
-        ArrayList<ReviewItemViewModel> productReviews = ReviewItemService.getInstance().retrieveReviewItemByProductId(productId);
-        request.setAttribute("productReviews", productReviews);
-        int totalRating = productReviews.stream().mapToInt(ReviewItemViewModel::getRating).sum();
-        long avgRating = Math.round((totalRating * 1.0)/productReviews.size());
-
-        request.setAttribute("avgRating",avgRating);
         ServletUtils.forward(request, response, "/views/admin/product/product-detail.jsp");
     }
 

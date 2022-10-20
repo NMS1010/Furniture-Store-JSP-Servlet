@@ -1,8 +1,10 @@
 package models.view_models.products;
 
 import models.view_models.product_images.ProductImageViewModel;
+import models.view_models.review_items.ReviewItemViewModel;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductViewModel {
@@ -28,6 +30,25 @@ public class ProductViewModel {
     private String brandName;
 
     private long totalPurchased;
+
+    private long avgRating;
+    private ArrayList<ReviewItemViewModel> productReviews;
+
+    public long getAvgRating() {
+        return avgRating;
+    }
+
+    public void setAvgRating(long avgRating) {
+        this.avgRating = avgRating;
+    }
+
+    public ArrayList<ReviewItemViewModel> getProductReviews() {
+        return productReviews;
+    }
+
+    public void setProductReviews(ArrayList<ReviewItemViewModel> productReviews) {
+        this.productReviews = productReviews;
+    }
 
     public String getStatusClass() {
         return statusClass;

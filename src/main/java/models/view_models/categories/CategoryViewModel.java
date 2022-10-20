@@ -8,27 +8,17 @@ public class CategoryViewModel {
     private String description;
     private int parentCategoryId;
     private String parentCategoryName;
-    private List<Integer> subCategoryIds;
-    
-    private List<String> subCategoryNames;
+    private List<CategoryViewModel> subCategories;
     private String image;
     private long totalProduct;
     private long totalSell;
 
-    public List<Integer> getSubCategoryIds() {
-        return subCategoryIds;
+    public List<CategoryViewModel> getSubCategories() {
+        return subCategories;
     }
 
-    public void setSubCategoryIds(List<Integer> subCategoryIds) {
-        this.subCategoryIds = subCategoryIds;
-    }
-
-    public List<String> getSubCategoryNames() {
-        return subCategoryNames;
-    }
-
-    public void setSubCategoryNames(List<String> subCategoryNames) {
-        this.subCategoryNames = subCategoryNames;
+    public void setSubCategories(List<CategoryViewModel> subCategories) {
+        this.subCategories = subCategories;
     }
 
     public int getCategoryId() {

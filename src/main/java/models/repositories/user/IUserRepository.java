@@ -19,7 +19,6 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     boolean checkEmail(String email);
     boolean checkPhone(String phone);
     boolean checkPassword(int userId, String password);
-
     boolean login(UserLoginRequest request);
 
     UserViewModel getUserByUserName(String username);

@@ -28,9 +28,15 @@
             <i class="mdi mdi-account-group"></i>
             <span class="nav-text">Users</span>
           </a>
+        </li>
+        <!-- Roles -->
+        <li class="has-sub">
+          <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/roles">
+            <i class="mdi mdi-account-group"></i>
+            <span class="nav-text">Roles</span>
+          </a>
           <hr>
         </li>
-
         <!-- Category -->
         <li class="has-sub">
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/categories">

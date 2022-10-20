@@ -155,7 +155,7 @@
                                                             <div class="col-lg-4">
                                                                 <div class="form-group mb-4">
                                                                     <label for="password">Password</label>
-                                                                    <input type="password" class="form-control" id="password"
+                                                                    <input type="password" class="form-control" id="password" value="${user.password}"
                                                                            name="password" >
                                                                     <p class="mt-3" id='passwordValidateMessage'></p>
                                                                 </div>
@@ -271,7 +271,7 @@
         <jsp:include page="/views/admin/common/common_js.jsp"/>
         <script>
             $(window).on('load', function() {
-                if(${error != null}){
+                if((new URLSearchParams(window.location.search)).has("error")){
                     $('#modal-error').modal('show');
                 }
             });

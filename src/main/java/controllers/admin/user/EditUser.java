@@ -1,6 +1,8 @@
 package controllers.admin.user;
 
 import models.services.user.UserService;
+import models.view_models.user_roles.UserRoleViewModel;
+import models.view_models.users.UserViewModel;
 import utils.DateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
@@ -11,6 +13,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @WebServlet(name = "EditUser", value = "/admin/user/edit")
 @MultipartConfig(
@@ -53,7 +56,14 @@ public class EditUser extends HttpServlet {
         boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);
         String error = "";
         if(!isSuccess){
-            error = "?error=true";
+            error = "&error=true";
+        }else{
+            UserViewModel user = UserService.getInstance().getUserByUserName(request.getParameter("username"));
+            HttpSession session = request.getSession();
+            UserViewModel currUser = (UserViewModel) session.getAttribute("admin");
+            if(Objects.equals(currUser.getUsername(), user.getUsername())){
+                session.setAttribute("admin",user);
+            }
         }
         ServletUtils.redirect(response, request.getContextPath() + "/admin/user/detail?userId=" + reqUpdate.getUserId() + error);
     }

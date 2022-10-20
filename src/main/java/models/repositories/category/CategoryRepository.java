@@ -111,14 +111,18 @@ public class CategoryRepository implements ICategoryRepository{
         categoryViewModel.setTotalSell(o3 == null ? 0 : (long)o3);
 
 
-        Query q4 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
+        Query q4 = session.createQuery("from Category where parentCategoryId=:s1");
         q4.setParameter("s1",category.getCategoryId());
-        categoryViewModel.setSubCategoryIds(q4.list());
-
-        Query q5 = session.createQuery("select categoryName from Category where parentCategoryId=:s4");
-        q5.setParameter("s4",category.getCategoryId());
-        categoryViewModel.setSubCategoryNames(q5.list());
-
+        List<Category> categories = q4.list();
+        if(categories.size() == 0){
+            return categoryViewModel;
+        }
+        List<CategoryViewModel> subCategories = new ArrayList<>();
+        for (Category c:categories){
+            CategoryViewModel cate = getCategoryViewModel(c, session);
+            subCategories.add(cate);
+        }
+        categoryViewModel.setSubCategories(subCategories);
         return categoryViewModel;
     }
     @Override

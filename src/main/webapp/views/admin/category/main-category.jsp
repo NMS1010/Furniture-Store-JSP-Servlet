@@ -129,12 +129,12 @@
                               <td><c:out value="${category.name}"/></td>
                               <td><c:out value="${category.description}"/></td>
                               <td>
-                                        <span class="ec-sub-cat-list">
-                                            <span class="ec-sub-cat-count" title="Total Sub Categories"><c:out value="${category.subCategoryNames.size()}"/></span>
-                                            <c:forEach var="sub_category" items="${category.subCategoryNames}">
-                                              <span class="ec-sub-cat-tag"><c:out value="${sub_category}"/></span>
-                                            </c:forEach>
-                                        </span>
+                                  <span class="ec-sub-cat-list">
+                                      <span class="ec-sub-cat-count" title="Total Sub Categories"><c:out value="${category.subCategories.size()}"/></span>
+                                      <c:forEach var="sub_category" items="${category.subCategories}">
+                                        <span class="ec-sub-cat-tag"><c:out value="${sub_category.name}"/></span>
+                                      </c:forEach>
+                                  </span>
                               </td>
                               <td><c:out value="${category.totalProduct}"/></td>
                               <td><c:out value="${category.totalSell}"/></td>

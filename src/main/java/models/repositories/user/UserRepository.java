@@ -1,7 +1,6 @@
 package models.repositories.user;
 
-import models.entities.User;
-import models.entities.UserRole;
+import models.entities.*;
 import models.services.user.UserService;
 import models.services.user_role.UserRoleService;
 import models.view_models.users.*;
@@ -60,6 +59,18 @@ public class UserRepository implements IUserRepository{
                     ur.setRoleId(roleId);
                     session.persist(ur);
                 }
+                Cart cart = new Cart();
+                cart.setUser(user);
+
+                WishList wishList = new WishList();
+                wishList.setUser(user);
+
+                Review review = new Review();
+                review.setUser(user);
+
+                session.persist(cart);
+                session.persist(wishList);
+                session.persist(review);
             }
             tx.commit();
         }catch(Exception e){
@@ -100,7 +111,7 @@ public class UserRepository implements IUserRepository{
         }
 
         session.close();
-        return HibernateUtils.merge(user);
+        return true;
     }
     private String getUserStatus(int i){
         String status = "";
@@ -248,7 +259,7 @@ public class UserRepository implements IUserRepository{
             }
 
             removeRoleIds.forEach((userRoleId, roleId) -> {
-                session.remove(session.find(UserRole.class, userRoleId));
+                session.delete(session.find(UserRole.class, userRoleId));
             });
             addRoleIds.forEach(id -> {
                 UserRole userRole = new UserRole();
@@ -256,6 +267,8 @@ public class UserRepository implements IUserRepository{
                 userRole.setUserId(user.getUserId());
                 session.persist(userRole);
             });
+            if(removeRoleIds.size() == 0)
+                session.merge(user);
             tx.commit();
         }catch(Exception e){
             if(tx != null)

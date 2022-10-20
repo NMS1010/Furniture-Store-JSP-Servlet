@@ -15,7 +15,7 @@ public class Role {
     private String roleName;
 
     @OneToMany
-    @JoinColumn(name = "roleId")
+    @JoinColumn(name = "roleId", updatable = false)
     private List<UserRole> userRoles;
 
     public List<UserRole> getUserRoles() {

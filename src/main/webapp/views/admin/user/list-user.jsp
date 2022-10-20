@@ -276,7 +276,7 @@
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
   $(window).on('load', function() {
-    if(${error != null}){
+    if((new URLSearchParams(window.location.search)).has("error")){
       $('#modal-error').modal('show');
     }
   });

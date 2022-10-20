@@ -4,11 +4,13 @@ import models.entities.Product;
 import models.entities.ProductImage;
 import models.services.product.ProductService;
 import models.services.product_images.ProductImageService;
+import models.services.review_item.ReviewItemService;
 import models.view_models.product_images.ProductImageViewModel;
 import models.view_models.products.ProductCreateRequest;
 import models.view_models.products.ProductGetPagingRequest;
 import models.view_models.products.ProductUpdateRequest;
 import models.view_models.products.ProductViewModel;
+import models.view_models.review_items.ReviewItemViewModel;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -180,6 +182,12 @@ public class ProductRepository implements IProductRepository{
             productImageViewModels.add(ProductImageService.getInstance().retrieveProductImageById(id));
         });
         productViewModel.setProductImages(productImageViewModels);
+        ArrayList<ReviewItemViewModel> productReviews = ReviewItemService.getInstance().retrieveReviewItemByProductId(product.getProductId());
+        int totalRating = productReviews.stream().mapToInt(ReviewItemViewModel::getRating).sum();
+        long avgRating = Math.round((totalRating * 1.0)/productReviews.size());
+
+        productViewModel.setProductReviews(productReviews);
+        productViewModel.setAvgRating(avgRating);
         return productViewModel;
     }
     @Override

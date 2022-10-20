@@ -4,20 +4,6 @@
     <nav class="navbar navbar-static-top navbar-expand-lg d-flex justify-content-between">
         <!-- Sidebar toggle button -->
         <button id="sidebar-toggler" class="sidebar-toggle"></button>
-        <!-- search form -->
-<%--        <div class="search-form d-lg-inline-block">--%>
-<%--            <div class="input-group">--%>
-<%--                <input type="text" name="query" id="search-input" class="form-control"--%>
-<%--                       placeholder="search.." autofocus autocomplete="off" />--%>
-<%--                <button type="button" name="search" id="search-btn" class="btn btn-flat">--%>
-<%--                    <i class="mdi mdi-magnify"></i>--%>
-<%--                </button>--%>
-<%--            </div>--%>
-<%--            <div id="search-results-container">--%>
-<%--                <ul id="search-results"></ul>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
         <!-- navbar right -->
         <div class="navbar-right">
             <ul class="nav navbar-nav">

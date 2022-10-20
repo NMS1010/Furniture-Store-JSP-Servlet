@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="product" scope="request" class="models.view_models.products.ProductViewModel"/>
-<jsp:useBean id="productReviews" scope="request" type="java.util.ArrayList<models.view_models.review_items.ReviewItemViewModel>"/>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -78,10 +77,10 @@
                       <div class="col-12">
                         <h5 class="product-title">${product.name}</h5>
                         <p class="product-rate">
-                          <c:forEach var="r" begin="1" end="${avgRating}">
+                          <c:forEach var="r" begin="1" end="${product.avgRating}">
                             <i class="mdi mdi-star is-rated"></i>
                           </c:forEach>
-                          <c:forEach var="r" begin="${avgRating}" end="5">
+                          <c:forEach var="r" begin="${product.avgRating}" end="5">
                             <i class="mdi mdi-star"></i>
                           </c:forEach>
                         </p>
@@ -118,7 +117,7 @@
                     <div class="tab-content" id="myTabContent2">
                       <div class="tab-pane pt-3 fade" id="productreviews" role="tabpanel">
                         <div class="ec-t-review-wrapper">
-                          <c:forEach var="r" items="${productReviews}">
+                          <c:forEach var="r" items="${product.productReviews}">
                             <div class="ec-t-review-item">
                               <div class="ec-t-review-avtar">
                                 <img src="data:image/png;base64, ${r.userAvatar}" alt="">

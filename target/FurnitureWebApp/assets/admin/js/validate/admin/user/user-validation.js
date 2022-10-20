@@ -43,14 +43,14 @@ function validateForm(e, context){
     let confirmPassword = $('#confirmPassword')
     let newPassword = $('#newPassword')
     let userId = $('#userId');
-    if(newPassword.length === 0) {
+    if(userId.length === 0) {
         if (password.val() !== confirmPassword.val()) {
             passMatch.html('Mật khẩu không khớp').css('color', 'red');
             noError = false;
         } else {
             passMatch.html('')
         }
-    }else{
+    }else if(newPassword.length !== 0){
         if (confirmPassword != null && newPassword.val() !== confirmPassword.val()) {
             passMatch.html('Mật khẩu không khớp').css('color', 'red');
             noError = false;
@@ -77,7 +77,7 @@ function validateForm(e, context){
             'username': $('#username').val(),
             'email': $('#email').val(),
             'phone': $('#phone').val(),
-            'password': $('#password').val(),
+            'password': password.val(),
             'userId': userId.length === 0  ? 0 : userId.val()
         },
         async: false,

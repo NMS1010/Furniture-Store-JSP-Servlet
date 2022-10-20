@@ -57,6 +57,7 @@ public class RoleRepository implements IRoleRepository{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Role role = session.find(Role.class, entityId);
+        session.close();
         return HibernateUtils.remove(role);
     }
     private RoleViewModel getRoleViewModel(Role role, Session session){

@@ -47,7 +47,7 @@ public class User {
     private List<Order> orders;
 
     @OneToMany
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "userId", updatable = false)
     private List<UserRole> userRoles;
 
     @OneToOne
