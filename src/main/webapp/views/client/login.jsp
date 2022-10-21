@@ -1,16 +1,70 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: nguye
-  Date: 9/25/2022
-  Time: 9:52 AM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html>
 <head>
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title>Furea - Furniture Shop</title>
+    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/client/img/favicon.ico">
+    <jsp:include page="/views/client/common/common_css.jsp"/>
 </head>
 <body>
+<jsp:include page="/views/client/common/header.jsp"/>
+<main class="main__content_wrapper">
+    <!-- Start breadcrumb section -->
+    <section class="breadcrumb__section breadcrumb__bg">
+        <div class="container">
+            <div class="row row-cols-1">
+                <div class="col">
+                    <div class="breadcrumb__content">
+                        <h1 class="breadcrumb__content--title text-white mb-10">Login</h1>
+                        <ul class="breadcrumb__content--menu d-flex">
+                            <li class="breadcrumb__content--menu__items"><a class="text-white" href="<%=request.getContextPath()%>/home">Home</a></li>
+                            <li class="breadcrumb__content--menu__items"><span class="text-white">Login</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End breadcrumb section -->
+    <!-- Start login section  -->
+    <div class="login__section section--padding">
+        <div class="container">
+            <form action="<%=request.getContextPath()%>/signin" method="post">
+                <div class="login__section--inner">
+                    <div class="row justify-content-center">
+                        <div class="col col-8">
+                            <div class="account__login">
+                                <div class="account__login--header mb-25">
+                                    <h3 class="account__login--header__title mb-10">Đăng nhập</h3>
+                                    <p class="account__login--header__desc">Đăng nhập nếu ban đã có tài khoản</p>
+                                </div>
+                                <div class="account__login--inner">
+                                    <label>
+                                        <input class="account__login--input" placeholder="Username" type="text" name="username" required>
+                                    </label>
+                                    <label>
+                                        <input class="account__login--input" placeholder="Password" type="password" name="password" required>
+                                    </label>
+                                    <button class="account__login--btn primary__btn" type="submit">Đăng nhập</button>
+                                    <div class="account__login--divide">
+                                        <span class="account__login--divide__text">Hoặc</span>
+                                    </div>
+                                    <p class="account__login--signup__text">Bạn chưa có tài khoản <a href="<%=request.getContextPath()%>/register">Đăng ký ngay</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- End login section  -->
+</main>
 
+<jsp:include page="/views/client/common/footer.jsp" />
+<jsp:include page="/views/client/common/common_js.jsp"/>
 </body>
 </html>

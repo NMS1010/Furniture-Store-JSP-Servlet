@@ -10,22 +10,19 @@
           </a>
         </div>
         <div class="main__logo">
-          <a class="main__logo--link" href="index.html"><img class="main__logo--img" src="<%=request.getContextPath()%>/assets/client/img/logo/nav-log.webp" alt="logo-img"></a>
+          <a class="main__logo--link" href="<%=request.getContextPath()%>/home"><img class="main__logo--img" src="<%=request.getContextPath()%>/assets/client/img/logo/nav-log.webp" alt="logo-img"></a>
         </div>
         <div class="header__menu d-none d-lg-block">
           <nav class="header__menu--navigation">
             <ul class="d-flex">
               <li class="header__menu--items">
-                <a class="header__menu--link" href="index.html">Home</a>
+                <a class="header__menu--link" href="<%=request.getContextPath()%>/home">Home</a>
               </li>
               <li class="header__menu--items mega__menu--items">
-                <a class="header__menu--link" href="shop.html">Shop</a>
+                <a class="header__menu--link" href="<%=request.getContextPath()%>/products">Shop</a>
               </li>
               <li class="header__menu--items">
-                <a class="header__menu--link" href="about.html">About US </a>
-              </li>
-              <li class="header__menu--items">
-                <a class="header__menu--link" href="contact.html">Contact </a>
+                <a class="header__menu--link" href="<%=request.getContextPath()%>/about">About US </a>
               </li>
             </ul>
           </nav>
@@ -99,7 +96,7 @@
   </div>
   <!-- End Offcanvas header menu -->
 
-  <!-- Start Offcanvas stikcy toolbar -->
+  <!-- Start Offcanvas sticky toolbar -->
   <div class="offcanvas__stikcy--toolbar" tabindex="-1">
     <ul class="d-flex justify-content-between">
       <li class="offcanvas__stikcy--toolbar__list">
@@ -150,9 +147,9 @@
       </li>
     </ul>
   </div>
-  <!-- End Offcanvas stikcy toolbar -->
+  <!-- End Offcanvas sticky toolbar -->
 
-  <!-- Start offCanvas minicart -->
+  <!-- Start offCanvas mini-cart -->
   <div class="offCanvas__minicart" tabindex="-1">
     <div class="minicart__header ">
       <div class="minicart__header--top d-flex justify-content-between align-items-center">
@@ -226,9 +223,9 @@
       <a class="primary__btn minicart__button--link" href="checkout.html">Checkout</a>
     </div>
   </div>
-  <!-- End offCanvas minicart -->
+  <!-- End offCanvas mini-cart -->
 
-  <!-- Start serch box area -->
+  <!-- Start search box area -->
   <div class="predictive__search--box " tabindex="-1">
     <div class="predictive__search--box__inner">
       <h2 class="predictive__search--title">Search Products</h2>
@@ -243,5 +240,5 @@
       <svg class="predictive__search--close__icon" xmlns="http://www.w3.org/2000/svg" width="40.51" height="30.443"  viewBox="0 0 512 512"><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"></path></svg>
     </button>
   </div>
-  <!-- End serch box area -->
+  <!-- End search box area -->
 </header>

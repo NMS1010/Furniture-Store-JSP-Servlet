@@ -9,10 +9,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-@WebServlet(name = "CheckAddUser", value = "/admin/users/check-add")
+@WebServlet(name = "CheckAddUser", value = "/users/check-add")
 public class CheckAddUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
 
@@ -28,10 +33,5 @@ public class CheckAddUser extends HttpServlet {
         }
         PrintWriter out = response.getWriter();
         out.println(exists);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

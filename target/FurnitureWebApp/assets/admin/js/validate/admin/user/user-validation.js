@@ -66,13 +66,13 @@ function validateForm(e, context){
     }
     let url = context;
     if(userId.length === 0){
-        url += `/admin/users/check-add`
+        url += `/users/check-add`
     }else{
-        url += `/admin/users/check-edit`
+        url += `/users/check-edit`
     }
     $.ajax({
         url: url,
-        method: "GET",
+        method: "POST",
         data: {
             'username': $('#username').val(),
             'email': $('#email').val(),

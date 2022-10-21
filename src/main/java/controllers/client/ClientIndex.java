@@ -23,7 +23,7 @@ public class ClientIndex extends HttpServlet {
 
         CategoryGetPagingRequest req2 = new CategoryGetPagingRequest();
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req2);
-
+        categories.removeIf(x -> x.getParentCategoryId() != 0);
         request.setAttribute("products", products);
         request.setAttribute("categories", categories);
         ServletUtils.forward(request,response,"/views/client/index.jsp");

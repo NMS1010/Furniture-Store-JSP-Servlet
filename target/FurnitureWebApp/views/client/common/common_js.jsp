@@ -5,6 +5,7 @@
 <!-- All Script JS Plugins here  -->
 <!-- <script src="assets/js/vendor/popper.js" defer="defer"></script> -->
 <!-- <script src="assets/js/vendor/bootstrap.min.js" defer="defer"></script> -->
+<script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
 
 <script src="<%=request.getContextPath()%>/assets/client/js/plugins/swiper-bundle.min.js" defer="defer"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/plugins/glightbox.min.js" defer="defer"></script>

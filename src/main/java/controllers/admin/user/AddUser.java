@@ -1,5 +1,6 @@
 package controllers.admin.user;
 
+import common.authentication.AuthenticationUtils;
 import models.services.user.UserService;
 import utils.DateUtils;
 import utils.ServletUtils;
@@ -26,26 +27,7 @@ public class AddUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
-        UserCreateRequest reqCreate = new UserCreateRequest();
-        reqCreate.setAvatar(request.getPart("avatar"));
-        reqCreate.setUsername(request.getParameter("username"));
-        reqCreate.setFirstName(request.getParameter("firstName"));
-        reqCreate.setLastName(request.getParameter("lastName"));
-        reqCreate.setEmail(request.getParameter("email"));
-        reqCreate.setPhone(request.getParameter("phone"));
-        reqCreate.setDateOfBirth(DateUtils.stringToLocalDate(request.getParameter("dob"), "MM/dd/yyyy"));
-        reqCreate.setAddress(request.getParameter("address"));
-        reqCreate.setGender(StringUtils.toInt(request.getParameter("gender")));
-        reqCreate.setPassword(request.getParameter("password"));
-        reqCreate.setStatus(StringUtils.toInt(request.getParameter("status")));
-        String[] values = request.getParameterValues("roleCheckBox");
-        ArrayList<Integer> roleIds = new ArrayList<>();
-        for (String v : values) {
-            roleIds.add(StringUtils.toInt(v));
-        }
-        reqCreate.setRoleIds(roleIds);
+        UserCreateRequest reqCreate = AuthenticationUtils.CreateRegisterRequest(request);
 
         int userId = UserService.getInstance().insertUser(reqCreate);
         String error = "";

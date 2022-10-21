@@ -257,6 +257,6 @@
 
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/product/product-js.js"> </script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/product/product-handler.js"> </script>
 </body>
 </html>

@@ -26,7 +26,7 @@ public class RetrieveAllProduct extends HttpServlet {
 
         CategoryGetPagingRequest req2 = new CategoryGetPagingRequest();
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req2);
-
+        categories.removeIf(x -> x.getParentCategoryId() != 0);
         ProductGetPagingRequest req1 = new ProductGetPagingRequest();
         ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebFilter(filterName = "AdminFilter", urlPatterns = {"/admin/*"})
 public class AdminFilter implements Filter {
@@ -29,6 +30,7 @@ public class AdminFilter implements Filter {
         if(user != null){
             chain.doFilter(request, response);
         }else{
+            httpReq.setAttribute("error","error");
             ServletUtils.forward(httpReq, httpResp, "/admin/login");
         }
     }
