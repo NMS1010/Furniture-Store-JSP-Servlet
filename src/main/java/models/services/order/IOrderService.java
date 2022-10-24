@@ -15,8 +15,7 @@ public interface IOrderService {
     boolean deleteOrder(Integer orderId);
     OrderViewModel retrieveOrderById(Integer orderId);
     ArrayList<OrderViewModel> retrieveAllOrder(OrderGetPagingRequest request);
-
-
+    ArrayList<OrderViewModel> retrieveOrderByUserId(int userId);
     ArrayList<OrderViewModel> retrieveDeliveredOrder(OrderGetPagingRequest request);
     ArrayList<OrderViewModel> retrieveNewOrder(OrderGetPagingRequest request);
 }

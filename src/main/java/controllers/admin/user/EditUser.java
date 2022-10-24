@@ -1,5 +1,6 @@
 package controllers.admin.user;
 
+import common.user.UserUtils;
 import models.services.user.UserService;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.UserViewModel;
@@ -29,29 +30,8 @@ public class EditUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
 
-        UserUpdateRequest reqUpdate = new UserUpdateRequest();
-
-        reqUpdate.setAvatar(request.getPart("avatar"));
-
-        reqUpdate.setUserId(StringUtils.toInt(request.getParameter("userId")));
-        reqUpdate.setFirstName(request.getParameter("firstName"));
-        reqUpdate.setLastName(request.getParameter("lastName"));
-        reqUpdate.setEmail(request.getParameter("email"));
-        reqUpdate.setPhone(request.getParameter("phone"));
-        reqUpdate.setDateOfBirth(DateUtils.stringToLocalDate(request.getParameter("dob"), "MM/dd/yyyy"));
-        reqUpdate.setAddress(request.getParameter("address"));
-        reqUpdate.setGender(StringUtils.toInt(request.getParameter("gender")));
-        reqUpdate.setPassword(request.getParameter("newPassword"));
-        reqUpdate.setStatus(StringUtils.toInt(request.getParameter("status")));
-        reqUpdate.setUsername(request.getParameter("username"));
-        String[] values = request.getParameterValues("roleCheckBox");
-        ArrayList<Integer> roleIds = new ArrayList<>();
-        for(String v:values){
-            roleIds.add(StringUtils.toInt(v));
-        }
-        reqUpdate.setRoleIds(roleIds);
+        UserUpdateRequest reqUpdate = UserUtils.CreateUserUpdateRequest(request);
 
         boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);
         String error = "";

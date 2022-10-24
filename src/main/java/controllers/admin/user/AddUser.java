@@ -1,17 +1,14 @@
 package controllers.admin.user;
 
-import common.authentication.AuthenticationUtils;
+import common.user.UserUtils;
 import models.services.user.UserService;
-import utils.DateUtils;
 import utils.ServletUtils;
-import utils.StringUtils;
 import models.view_models.users.UserCreateRequest;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "AddUser", value = "/admin/user/add")
 @MultipartConfig(
@@ -27,7 +24,7 @@ public class AddUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserCreateRequest reqCreate = AuthenticationUtils.CreateRegisterRequest(request);
+        UserCreateRequest reqCreate = UserUtils.CreateRegisterRequest(request);
 
         int userId = UserService.getInstance().insertUser(reqCreate);
         String error = "";

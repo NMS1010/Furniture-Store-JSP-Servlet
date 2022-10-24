@@ -1,8 +1,7 @@
 package controllers.client.authentication;
 
-import common.authentication.AuthenticationUtils;
+import common.user.UserUtils;
 import models.services.user.UserService;
-import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.UserLoginRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
@@ -23,7 +22,7 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        UserLoginRequest loginRequest = AuthenticationUtils.CreateLoginRequest(request);
+        UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
 
         if(UserService.getInstance().login(loginRequest)){
             UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());

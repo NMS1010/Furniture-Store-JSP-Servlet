@@ -108,8 +108,10 @@ public class UserRepository implements IUserRepository{
             boolean res = updateUserRole(session, user, request.getRoleIds());
             if(!res)
                 return false;
+        }else{
+            session.close();
+            return HibernateUtils.merge(user);
         }
-
         session.close();
         return true;
     }

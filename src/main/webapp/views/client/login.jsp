@@ -32,7 +32,7 @@
     <!-- Start login section  -->
     <div class="login__section section--padding">
         <div class="container">
-            <form action="<%=request.getContextPath()%>/signin" method="post">
+            <form id="form-login" action="<%=request.getContextPath()%>/signin" method="post">
                 <div class="login__section--inner">
                     <div class="row justify-content-center">
                         <div class="col col-8">
@@ -43,11 +43,13 @@
                                 </div>
                                 <div class="account__login--inner">
                                     <label>
-                                        <input class="account__login--input" placeholder="Username" type="text" name="username" required>
+                                        <input class="account__login--input" placeholder="Username" type="text" id="username" name="username" required>
                                     </label>
                                     <label>
-                                        <input class="account__login--input" placeholder="Password" type="password" name="password" required>
+                                        <input class="account__login--input" placeholder="Password" type="password" id="password" name="password" required>
                                     </label>
+
+                                    <p id="authenticationValidateMessage" class="mt-3 mb-3"></p>
                                     <button class="account__login--btn primary__btn" type="submit">Đăng nhập</button>
                                     <div class="account__login--divide">
                                         <span class="account__login--divide__text">Hoặc</span>
@@ -62,9 +64,44 @@
         </div>
     </div>
     <!-- End login section  -->
+
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
+<script>
+    $('#form-login').submit(function (e){
+        validateForm(e)
+    })
+    function validateForm(e){
+        let noError = true;
+        e.preventDefault()
+        let url = `<%=request.getContextPath()%>` + `/signin`
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: {
+                'username': $('#username').val(),
+                'password': $('#password').val()
+            },
+            async: false,
+            success: function (data){
+                console.log(data)
+                let str = data.toString()
+                let notify = str.slice(0, str.length - 2);
+                if(notify === 'error'){
+                    $('#authenticationValidateMessage').html('Username/password không chính xác').css('color','red')
+                    noError = false;
+                }
+            },
+            error: function (error){
+                noError = false;
+            }
+        })
+        if(noError){
+            $('#form-login').unbind('submit').submit();
+        }
+    }
+</script>
 </body>
 </html>

@@ -86,7 +86,7 @@
                         </div>
                     </div>
 
-                    <!-- Add Brand Model  -->
+                    <!-- Add Brand Modal  -->
                     <div class="modal fade" id="modal-add-brand" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                             <div class="modal-content">

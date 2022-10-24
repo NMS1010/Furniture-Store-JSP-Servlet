@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="true" contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <header class="header__section header__others border-bottom header__transparent mb-30">
   <div class="main__header header__sticky">
     <div class="container-fluid">
@@ -36,7 +37,7 @@
               </a>
             </li>
             <li class="header__account--items">
-              <a class="header__account--btn" href="my-account.html">
+              <a class="header__account--btn" href="<%=request.getContextPath()%>/my-account">
                 <svg xmlns="http://www.w3.org/2000/svg"  width="26.51" height="23.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path></svg>
                 <span class="visually-hidden">My Account</span>
               </a>
@@ -60,6 +61,11 @@
             </li>
           </ul>
         </div>
+        <c:if  test="${sessionScope.user != null}">
+          <div>
+            <a href="<%=request.getContextPath()%>/signout">Logout</a>
+          </div>
+        </c:if>
       </div>
     </div>
   </div>
@@ -75,7 +81,7 @@
       <nav class="offcanvas__menu">
         <ul class="offcanvas__menu_ul">
           <li class="offcanvas__menu_li">
-            <a class="offcanvas__menu_item" href="index.html">Home</a>
+            <a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/home">Home</a>
           </li>
           <li class="offcanvas__menu_li">
             <a class="offcanvas__menu_item" href="#">Shop</a>

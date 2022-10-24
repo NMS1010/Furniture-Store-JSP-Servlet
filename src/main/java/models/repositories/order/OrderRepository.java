@@ -224,4 +224,19 @@ public class OrderRepository implements IOrderRepository{
 
         return all;
     }
+
+    @Override
+    public ArrayList<OrderViewModel> retrieveOrderByUserId(int userId) {
+        Session session = HibernateUtils.getSession();
+        Query q1 = session.createQuery("from Order where userId=:s1");
+        q1.setParameter("s1",userId);
+        ArrayList<OrderViewModel> list = new ArrayList<>();
+        List<Order> orders = q1.list();
+
+        for(Order order:orders){
+            OrderViewModel v = getOrderViewModel(order, session);
+            list.add(v);
+        }
+        return list;
+    }
 }

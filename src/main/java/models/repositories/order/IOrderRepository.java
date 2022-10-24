@@ -13,4 +13,5 @@ public interface IOrderRepository  extends IModifyEntity<OrderCreateRequest, Ord
         IRetrieveEntity<OrderViewModel, OrderGetPagingRequest, Integer> {
     ArrayList<OrderViewModel> retrieveDeliveredOrder(OrderGetPagingRequest request);
     ArrayList<OrderViewModel> retrieveNewOrder(OrderGetPagingRequest request);
+    ArrayList<OrderViewModel> retrieveOrderByUserId(int userId);
 }

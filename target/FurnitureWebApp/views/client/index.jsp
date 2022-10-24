@@ -33,7 +33,7 @@
                                             With Moon Sofa</h2>
                                         <p class="slider__content3--desc mb-35">Great furniture can bring beauty at your home, <br>
                                             So buy our popular and stylish furniture. </p>
-                                        <a class="slider__content3--btn primary__btn btn__style3" href="shop.html" rel="nofollow">Order Now</a>
+                                        <a class="slider__content3--btn primary__btn btn__style3" href="<%=request.getContextPath()%>/products" rel="nofollow">Order Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                             With Moon Sofa</h2>
                                         <p class="slider__content3--desc color-black mb-35">Great furniture can bring beauty at your home, <br>
                                             So buy our popular and stylish furniture. </p>
-                                        <a class="slider__content3--btn primary__btn btn__style3" href="shop.html" rel="nofollow">Order Now</a>
+                                        <a class="slider__content3--btn primary__btn btn__style3" href="<%=request.getContextPath()%>/products" rel="nofollow">Order Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                                             With Moon Sofa</h2>
                                         <p class="slider__content3--desc mb-35">Great furniture can bring beauty at your home, <br>
                                             So buy our popular and stylish furniture. </p>
-                                        <a class="slider__content3--btn primary__btn btn__style3" href="shop.html" rel="nofollow">Order Now</a>
+                                        <a class="slider__content3--btn primary__btn btn__style3" href="<%=request.getContextPath()%>/products" rel="nofollow">Order Now</a>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                     <c:forEach var="c" items="${categories}">
                         <div class="col mb-30">
                             <div class="categories__product--items border border-radius-5 text-center">
-                                <a class="categories__product--items__link" href="shop.html">
+                                <a class="categories__product--items__link" href="<%=request.getContextPath()%>/products">
                                     <img class="categories__product--thumbnail__img display-block" src="data:image/png;base64, ${c.image}" alt="categories-product">
                                     <h3 class="categories__product--title h4">${c.name}</h3>
                                 </a>
@@ -99,8 +99,8 @@
             <div class="row align-items-center">
                 <div class="col-lg-7 col-md-7">
                     <div class="choiceus__banner position__relative d-flex">
-                        <a class="choiceus__banner--thumbnail one display-block" href="shop.html" rel="nofollow"><img class="choiceus__banner--thumbnail__img display-block" src="<%=request.getContextPath()%>/assets/client/img/banner/banner23.webp" alt="banner-img"></a>
-                        <a class="choiceus__banner--thumbnail two display-block" href="shop.html" rel="nofollow"><img class="choiceus__banner--thumbnail__img two display-block" src="<%=request.getContextPath()%>/assets/client/img/banner/banner24.webp" alt="banner-img"></a>
+                        <a class="choiceus__banner--thumbnail one display-block" href="<%=request.getContextPath()%>/products" rel="nofollow"><img class="choiceus__banner--thumbnail__img display-block" src="<%=request.getContextPath()%>/assets/client/img/banner/banner23.webp" alt="banner-img"></a>
+                        <a class="choiceus__banner--thumbnail two display-block" href="<%=request.getContextPath()%>/products" rel="nofollow"><img class="choiceus__banner--thumbnail__img two display-block" src="<%=request.getContextPath()%>/assets/client/img/banner/banner24.webp" alt="banner-img"></a>
                         <div class="bideo__play style3">
                             <a class="bideo__play--icon style3 glightbox" href="https://vimeo.com/115041822" data-gallery="video">
                                 <svg id="play" xmlns="http://www.w3.org/2000/svg" width="46.302" height="46.302" viewBox="0 0 46.302 46.302">

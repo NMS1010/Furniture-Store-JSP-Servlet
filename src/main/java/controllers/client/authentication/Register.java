@@ -1,6 +1,6 @@
 package controllers.client.authentication;
 
-import common.authentication.AuthenticationUtils;
+import common.user.UserUtils;
 import models.services.role.RoleService;
 import models.services.user.UserService;
 import models.view_models.roles.RoleGetPagingRequest;
@@ -28,7 +28,7 @@ public class Register extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserCreateRequest createReq = AuthenticationUtils.CreateRegisterRequest(request);
+        UserCreateRequest createReq = UserUtils.CreateRegisterRequest(request);
 
         RoleGetPagingRequest reqRole = new RoleGetPagingRequest();
         ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(reqRole);

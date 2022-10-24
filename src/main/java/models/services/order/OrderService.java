@@ -55,6 +55,11 @@ public class OrderService implements IOrderService{
     }
 
     @Override
+    public ArrayList<OrderViewModel> retrieveOrderByUserId(int userId) {
+        return OrderRepository.getInstance().retrieveOrderByUserId(userId);
+    }
+
+    @Override
     public ArrayList<OrderViewModel> retrieveDeliveredOrder(OrderGetPagingRequest request) {
         return OrderRepository.getInstance().retrieveDeliveredOrder(request);
     }

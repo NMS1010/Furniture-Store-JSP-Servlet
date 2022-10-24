@@ -15,7 +15,9 @@ public class Logout extends HttpServlet {
         c.setMaxAge(0);
         response.addCookie(c);
         HttpSession session = request.getSession();
-        session.invalidate();
+        if(session.getAttribute("admin") != null){
+            session.removeAttribute("admin");
+        }
         ServletUtils.forward(request, response, "/admin/login");
     }
 
