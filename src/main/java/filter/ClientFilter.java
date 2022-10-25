@@ -9,8 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 
-@WebFilter(filterName = "ClientFilter", urlPatterns = {"/my-account/*", "/my-account?*", "/my-account"})
+@WebFilter(filterName = "ClientFilter",
+        urlPatterns = {
+            "/my-account/*", "/my-account?*", "/my-account",
+            "/wish-list",  "/wish-list/*",  "/wish-list?*",
+            "/add-wish","/add-wish/*", "/add-wish?*",
+            "/remove-wish", "/remove-wish?*", "/remove-wish/"
+    }
+)
 public class ClientFilter implements Filter {
     public void init(FilterConfig config) throws ServletException {
     }
@@ -23,6 +31,8 @@ public class ClientFilter implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
         HttpSession session = httpReq.getSession(false);
+
+        PrintWriter out = httpResp.getWriter();
         UserViewModel user = null;
         if(session != null)
             user = (UserViewModel) session.getAttribute("user");
@@ -31,8 +41,12 @@ public class ClientFilter implements Filter {
         if(user != null){
             chain.doFilter(request, response);
         }else{
-            httpReq.setAttribute("error","error");
-            ServletUtils.forward(httpReq, httpResp, "/signin");
+            if(httpReq.getRequestURL().toString().contains("add-wish")){
+                out.println("must-login");
+            }
+            else {
+                ServletUtils.redirect(httpResp, httpReq.getContextPath() + "/signin");
+            }
         }
     }
 }

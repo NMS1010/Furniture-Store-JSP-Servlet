@@ -27,7 +27,7 @@
                         <h1 class="breadcrumb__content--title text-white mb-10">${product.name}</h1>
                         <ul class="breadcrumb__content--menu d-flex">
                             <li class="breadcrumb__content--menu__items"><a class="text-white" href="<%=request.getContextPath()%>/home">Home</a></li>
-                            <li class="breadcrumb__content--menu__items"><a class="text-white" href="<%=request.getContextPath()%>/home">Shop</a></li>
+                            <li class="breadcrumb__content--menu__items"><a class="text-white" href="<%=request.getContextPath()%>/products">Shop</a></li>
                             <li class="breadcrumb__content--menu__items"><span class="text-white">${product.name}</span></li>
                         </ul>
                     </div>
@@ -125,7 +125,7 @@
                                     <button class="quickview__cart--btn primary__btn" type="submit">Thêm vào giỏ hàng</button>
                                 </div>
                                 <div class="product__variant--list mb-15">
-                                    <a class="variant__wishlist--icon mb-15" href="wishlist.html" title="Add to wishlist">
+                                    <a class="variant__wishlist--icon mb-15" id="add-wishlist" onclick="addWish(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalWishListItem})" data-productId="${product.productId}" title="Add to wishlist">
                                         <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path></svg>
                                         Thêm vào Wish List
                                     </a>
@@ -250,13 +250,18 @@
         </div>
     </section>
     <!-- End product details tab section -->
-
+    <div class="modal" id="modal-error" style="z-index: 100;" data-animation="slideInUp">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal- border-bottom-0">Sản phẩm đã có trong Danh sách yêu thích của bạn</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/product/product-handler.js"> </script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/product/productHandler.js"> </script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist-handler.js"></script>
 </body>
 </html>

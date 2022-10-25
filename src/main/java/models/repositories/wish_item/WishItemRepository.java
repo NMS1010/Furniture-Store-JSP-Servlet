@@ -1,7 +1,9 @@
 package models.repositories.wish_item;
 
 import models.entities.WishItem;
+import models.services.product.ProductService;
 import models.services.wish_item.WishItemService;
+import models.view_models.products.ProductViewModel;
 import models.view_models.wish_items.WishItemCreateRequest;
 import models.view_models.wish_items.WishItemGetPagingRequest;
 import models.view_models.wish_items.WishItemUpdateRequest;
@@ -11,6 +13,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.DateUtils;
 import utils.HibernateUtils;
+import utils.constants.PRODUCT_STATUS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,23 +70,36 @@ public class WishItemRepository implements IWishItemRepository{
         WishItem wishItem = session.find(WishItem.class, entityId);
         return HibernateUtils.remove(wishItem);
     }
+    private String getProductStatus(int i){
+        String status = "";
+        switch (i){
+            case PRODUCT_STATUS.IN_STOCK:
+                status = "Còn hàng";
+                break;
+            case PRODUCT_STATUS.OUT_STOCK:
+                status = "Hết hàng";
+                break;
+            case PRODUCT_STATUS.SUSPENDED:
+                status = "Ngưng kinh doanh";
+                break;
+            default:
+                status = "Không xác định";
+                break;
+        }
+        return status;
+    }
     private WishItemViewModel getWishListItemViewModel(WishItem wishItem, Session session){
         WishItemViewModel wishListItemViewModel = new WishItemViewModel();
-//        ProductViewModel product = ProductService.getInstance().retrieveById(wishItem.getProductId());
-//
-//        wishListItemViewModel.setWishListItemId(wishItem.getWishListItemId());
-//        wishListItemViewModel.setProductId(wishItem.getProductId());
-//        wishListItemViewModel.setUserId(wishItem.getUserId());
-//        wishListItemViewModel.setStatus(wishItem.getStatus());
-//        wishListItemViewModel.setProductImage(product.getImage());
-//        wishListItemViewModel.setProductName(product.getName());
-//        wishListItemViewModel.setDateAdded(wishItem.getDateAdded());
-//        wishListItemViewModel.setUnitPrice(product.getPrice());
-//        Query q = session.createQuery("select username from User where id = :s1");
-//        q.setParameter("s1", wishItem.getUserId());
-//
-//        wishListItemViewModel.setUserName(q.getSingleResult().toString());
-
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(wishItem.getProductId());
+        wishListItemViewModel.setWishItemId(wishItem.getWishItemId());
+        wishListItemViewModel.setWishId(wishItem.getWishId());
+        wishListItemViewModel.setProductImage(product.getImage());
+        wishListItemViewModel.setProductName(product.getName());
+        wishListItemViewModel.setUnitPrice(product.getPrice());
+        wishListItemViewModel.setStatus(wishItem.getStatus());
+        wishListItemViewModel.setDateAdded(wishItem.getDateAdded());
+        wishListItemViewModel.setProductId(product.getProductId());
+        wishListItemViewModel.setProductStatus(getProductStatus(product.getStatus()));
         return wishListItemViewModel;
     }
     @Override
@@ -108,6 +124,33 @@ public class WishItemRepository implements IWishItemRepository{
         q.setMaxResults(request.getPageSize());
         List<WishItem> wishItems = q.list();
 
+        for(WishItem wishItem : wishItems){
+            WishItemViewModel v = getWishListItemViewModel(wishItem, session);
+            list.add(v);
+        }
+        session.close();
+        return list;
+    }
+
+    @Override
+    public int getWishIdFromUserId(int userId) {
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("select wishListId from WishList where user.userId =:s1");
+        q.setParameter("s1",userId);
+        Object o = q.getSingleResult();
+        if(o == null)
+            return -1;
+        return (int)o;
+    }
+
+    @Override
+    public ArrayList<WishItemViewModel> retrieveWishListByUserId(int userId) {
+        ArrayList<WishItemViewModel> list = new ArrayList<>();
+        Session session = HibernateUtils.getSession();
+        int wishId = getWishIdFromUserId(userId);
+        Query q = session.createQuery("from WishItem where wishId=:s1");
+        q.setParameter("s1", wishId);
+        List<WishItem> wishItems = q.list();
         for(WishItem wishItem : wishItems){
             WishItemViewModel v = getWishListItemViewModel(wishItem, session);
             list.add(v);

@@ -45,4 +45,14 @@ public class WishItemService implements IWishItemService {
     public ArrayList<WishItemViewModel> retrieveAllWishItem(WishItemGetPagingRequest request) {
         return WishItemRepository.getInstance().retrieveAll(request);
     }
+
+    @Override
+    public int getWishIdFromUserId(int userId) {
+        return WishItemRepository.getInstance().getWishIdFromUserId(userId);
+    }
+
+    @Override
+    public ArrayList<WishItemViewModel> retrieveWishListByUserId(int userId) {
+        return WishItemRepository.getInstance().retrieveWishListByUserId(userId);
+    }
 }
