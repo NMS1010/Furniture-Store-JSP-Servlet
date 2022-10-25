@@ -23,6 +23,8 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
+        httpReq.setCharacterEncoding("UTF-8");
+        httpResp.setCharacterEncoding("UTF-8");
         HttpSession session = httpReq.getSession(false);
         UserViewModel user = null;
         if(session != null)

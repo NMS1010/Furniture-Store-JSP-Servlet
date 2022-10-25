@@ -31,7 +31,8 @@ public class ClientFilter implements Filter {
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
         HttpSession session = httpReq.getSession(false);
-
+        httpReq.setCharacterEncoding("UTF-8");
+        httpResp.setCharacterEncoding("UTF-8");
         PrintWriter out = httpResp.getWriter();
         UserViewModel user = null;
         if(session != null)
