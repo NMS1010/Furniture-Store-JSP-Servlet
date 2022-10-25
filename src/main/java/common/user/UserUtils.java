@@ -18,7 +18,6 @@ import java.util.ArrayList;
 )
 public class UserUtils {
     public static UserCreateRequest CreateRegisterRequest(HttpServletRequest request) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         UserCreateRequest reqCreate = new UserCreateRequest();
         reqCreate.setAvatar(request.getPart("avatar"));
         reqCreate.setUsername(request.getParameter("username"));
@@ -44,7 +43,6 @@ public class UserUtils {
     }
 
     public static UserLoginRequest CreateLoginRequest(HttpServletRequest request) throws ServletException, IOException{
-        request.setCharacterEncoding("UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserLoginRequest loginRequest = new UserLoginRequest();
@@ -55,7 +53,6 @@ public class UserUtils {
     }
 
     public static UserUpdateRequest CreateUserUpdateRequest(HttpServletRequest request) throws ServletException, IOException{
-        request.setCharacterEncoding("UTF-8");
         UserUpdateRequest reqUpdate = new UserUpdateRequest();
 
         reqUpdate.setAvatar(request.getPart("avatar"));

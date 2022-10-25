@@ -3,7 +3,7 @@
 <jsp:useBean id="orders" type="java.util.ArrayList<models.view_models.orders.OrderViewModel>" scope="request"/>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" >
     <title>Furea - Furniture Shop</title>
     <meta name="description" content="Morden Bootstrap HTML5 Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +41,7 @@
                     <ul class="account__menu">
                         <li class="account__menu--list active"><a href="#">Đơn hàng của tôi</a></li>
                         <li class="account__menu--list"><a href="<%=request.getContextPath()%>/my-account?info=true">Cập nhật thông tin</a></li>
-                        <li class="account__menu--list"><a href="wishlist.html">Danh sách yêu thích</a></li>
+                        <li class="account__menu--list"><a href="<%=request.getContextPath()%>/wish-list">Danh sách yêu thích</a></li>
                         <li class="account__menu--list"><a href="<%=request.getContextPath()%>/signout">Đăng xuất</a></li>
                     </ul>
                 </div>

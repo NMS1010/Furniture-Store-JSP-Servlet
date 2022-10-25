@@ -4,7 +4,7 @@
 <jsp:useBean id="brands" type="java.util.ArrayList<models.view_models.brands.BrandViewModel>" scope="request"/>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" >
     <title>Furea - Furniture Shop</title>
     <meta name="description" content="Morden Bootstrap HTML5 Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -124,6 +124,6 @@
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist-handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlistHandler.js"></script>
 </body>
 </html>

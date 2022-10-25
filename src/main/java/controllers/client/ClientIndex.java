@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ClientIndex extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         ProductGetPagingRequest req1 = new ProductGetPagingRequest();
         ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
 

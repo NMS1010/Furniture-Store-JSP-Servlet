@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 public class RemoveWish extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         int wishItemId = StringUtils.toInt(request.getParameter("wishItemId"));
         boolean success = WishItemService.getInstance().deleteWishItem(wishItemId);
         PrintWriter out = response.getWriter();

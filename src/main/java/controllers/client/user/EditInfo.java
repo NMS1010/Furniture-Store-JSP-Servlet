@@ -5,6 +5,7 @@ import models.services.user.UserService;
 import models.view_models.users.UserUpdateRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
+import utils.constants.USER_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -26,7 +27,9 @@ public class EditInfo extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         UserUpdateRequest reqUpdate = UserUtils.CreateUserUpdateRequest(request);
+        reqUpdate.setStatus(USER_STATUS.ACTIVE);
         boolean isSuccess = UserService.getInstance().updateUser(reqUpdate);
         if(!isSuccess){
             request.setAttribute("error", "error");

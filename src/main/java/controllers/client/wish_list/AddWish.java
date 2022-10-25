@@ -17,6 +17,7 @@ public class AddWish extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
+        request.setCharacterEncoding("UTF-8");
         int productId = StringUtils.toInt(request.getParameter("productId"));
 
         HttpSession session = request.getSession();

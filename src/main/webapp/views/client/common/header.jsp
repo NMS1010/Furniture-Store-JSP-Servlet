@@ -42,7 +42,7 @@
                 <span class="visually-hidden">My Account</span>
               </a>
             </li>
-            <li class="header__account--items d-sm-none">
+            <li class="header__account--items">
               <a class="header__account--btn" href="<%=request.getContextPath()%>/wish-list">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24.526" height="21.82" viewBox="0 0 24.526 21.82">
                   <path  d="M12.263,21.82a1.438,1.438,0,0,1-.948-.356c-.991-.866-1.946-1.681-2.789-2.4l0,0a51.865,51.865,0,0,1-6.089-5.715A9.129,9.129,0,0,1,0,7.371,7.666,7.666,0,0,1,1.946,2.135,6.6,6.6,0,0,1,6.852,0a6.169,6.169,0,0,1,3.854,1.33,7.884,7.884,0,0,1,1.558,1.627A7.885,7.885,0,0,1,13.821,1.33,6.169,6.169,0,0,1,17.675,0,6.6,6.6,0,0,1,22.58,2.135a7.665,7.665,0,0,1,1.945,5.235,9.128,9.128,0,0,1-2.432,5.975,51.86,51.86,0,0,1-6.089,5.715c-.844.719-1.8,1.535-2.794,2.4a1.439,1.439,0,0,1-.948.356ZM6.852,1.437A5.174,5.174,0,0,0,3,3.109,6.236,6.236,0,0,0,1.437,7.371a7.681,7.681,0,0,0,2.1,5.059,51.039,51.039,0,0,0,5.915,5.539l0,0c.846.721,1.8,1.538,2.8,2.411,1-.874,1.965-1.693,2.812-2.415a51.052,51.052,0,0,0,5.914-5.538,7.682,7.682,0,0,0,2.1-5.059,6.236,6.236,0,0,0-1.565-4.262,5.174,5.174,0,0,0-3.85-1.672A4.765,4.765,0,0,0,14.7,2.467a6.971,6.971,0,0,0-1.658,1.918.907.907,0,0,1-1.558,0A6.965,6.965,0,0,0,9.826,2.467a4.765,4.765,0,0,0-2.975-1.03Zm0,0" transform="translate(0 0)" fill="currentColor"></path>
@@ -73,7 +73,7 @@
   <div class="offcanvas-header" tabindex="-1">
     <div class="offcanvas__inner">
       <div class="offcanvas__logo">
-        <a class="offcanvas__logo_link" href="index.html">
+        <a class="offcanvas__logo_link" href="<%=request.getContextPath()%>/home">
           <img src="<%=request.getContextPath()%>/assets/client/img/logo/nav-log.webp" alt="Furea Logo">
         </a>
         <button class="offcanvas__close--btn" aria-label="offcanvas close btn">close</button>
@@ -84,13 +84,13 @@
             <a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/home">Home</a>
           </li>
           <li class="offcanvas__menu_li">
-            <a class="offcanvas__menu_item" href="#">Shop</a>
+            <a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/products">Shop</a>
           </li>
-          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">About</a></li>
+          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="<%=request.getContextPath()%>/about">About</a></li>
           <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="contact.html">Contact</a></li>
         </ul>
         <div class="offcanvas__account--items">
-          <a class="offcanvas__account--items__btn d-flex align-items-center" href="login.html">
+          <a class="offcanvas__account--items__btn d-flex align-items-center" href="<%=request.getContextPath()%>/signin">
                         <span class="offcanvas__account--items__icon">
                           <svg xmlns="http://www.w3.org/2000/svg"  width="20.51" height="19.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path></svg>
                             </span>
@@ -106,7 +106,7 @@
   <div class="offcanvas__stikcy--toolbar" tabindex="-1">
     <ul class="d-flex justify-content-between">
       <li class="offcanvas__stikcy--toolbar__list">
-        <a class="offcanvas__stikcy--toolbar__btn" href="index.html">
+        <a class="offcanvas__stikcy--toolbar__btn" href="<%=request.getContextPath()%>/home">
                     <span class="offcanvas__stikcy--toolbar__icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="21.51" height="21.443" viewBox="0 0 22 17"><path fill="currentColor" d="M20.9141 7.93359c.1406.11719.2109.26953.2109.45703 0 .14063-.0469.25782-.1406.35157l-.3516.42187c-.1172.14063-.2578.21094-.4219.21094-.1406 0-.2578-.04688-.3515-.14062l-.9844-.77344V15c0 .3047-.1172.5625-.3516.7734-.2109.2344-.4687.3516-.7734.3516h-4.5c-.3047 0-.5742-.1172-.8086-.3516-.2109-.2109-.3164-.4687-.3164-.7734v-3.6562h-2.25V15c0 .3047-.11719.5625-.35156.7734-.21094.2344-.46875.3516-.77344.3516h-4.5c-.30469 0-.57422-.1172-.80859-.3516-.21094-.2109-.31641-.4687-.31641-.7734V8.46094l-.94922.77344c-.11719.09374-.24609.14062-.38672.14062-.16406 0-.30468-.07031-.42187-.21094l-.35157-.42187C.921875 8.625.875 8.50781.875 8.39062c0-.1875.070312-.33984.21094-.45703L9.73438.832031C10.1094.527344 10.5312.375 11 .375s.8906.152344 1.2656.457031l8.6485 7.101559zm-3.7266 6.50391V7.05469L11 1.99219l-6.1875 5.0625v7.38281h3.375v-3.6563c0-.3046.10547-.5624.31641-.7734.23437-.23436.5039-.35155.80859-.35155h3.375c.3047 0 .5625.11719.7734.35155.2344.211.3516.4688.3516.7734v3.6563h3.375z"></path></svg>
                         </span>
@@ -114,7 +114,7 @@
         </a>
       </li>
       <li class="offcanvas__stikcy--toolbar__list">
-        <a class="offcanvas__stikcy--toolbar__btn" href="shop.html">
+        <a class="offcanvas__stikcy--toolbar__btn" href="<%=request.getContextPath()%>/products">
                     <span class="offcanvas__stikcy--toolbar__icon">
                         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="18.51" height="17.443" viewBox="0 0 448 512"><path d="M416 32H32A32 32 0 0 0 0 64v384a32 32 0 0 0 32 32h384a32 32 0 0 0 32-32V64a32 32 0 0 0-32-32zm-16 48v152H248V80zm-200 0v152H48V80zM48 432V280h152v152zm200 0V280h152v152z"></path></svg>
                         </span>
@@ -141,14 +141,14 @@
         </a>
       </li>
       <li class="offcanvas__stikcy--toolbar__list">
-        <a class="offcanvas__stikcy--toolbar__btn" href="wishlist.html">
+        <a class="offcanvas__stikcy--toolbar__btn" href="<%=request.getContextPath()%>/wish-list">
                         <span class="offcanvas__stikcy--toolbar__icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18.541" height="15.557" viewBox="0 0 18.541 15.557">
                               <path  d="M71.775,135.51a5.153,5.153,0,0,1,1.267-1.524,4.986,4.986,0,0,1,6.584.358,4.728,4.728,0,0,1,1.174,4.914,10.458,10.458,0,0,1-2.132,3.808,22.591,22.591,0,0,1-5.4,4.558c-.445.282-.9.549-1.356.812a.306.306,0,0,1-.254.013,25.491,25.491,0,0,1-6.279-4.8,11.648,11.648,0,0,1-2.52-4.009,4.957,4.957,0,0,1,.028-3.787,4.629,4.629,0,0,1,3.744-2.863,4.782,4.782,0,0,1,5.086,2.447c.013.019.025.034.057.076Z" transform="translate(-62.498 -132.915)" fill="currentColor"></path>
                             </svg>
                         </span>
           <span class="offcanvas__stikcy--toolbar__label">Wishlist</span>
-          <span class="items__count wishlist__count">3</span>
+          <span class="items__count wishlist__count">${sessionScope.user != null ? sessionScope.user.totalWishListItem : 0}</span>
         </a>
       </li>
     </ul>
