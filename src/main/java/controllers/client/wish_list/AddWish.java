@@ -39,7 +39,7 @@ public class AddWish extends HttpServlet {
         }else{
             user.setTotalWishListItem(user.getTotalWishListItem() + 1);
             session.setAttribute("user", user);
-            out.println("success");
+            out.println(user.getTotalWishListItem() + "success");
         }
     }
 

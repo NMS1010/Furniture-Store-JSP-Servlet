@@ -54,7 +54,7 @@
                                     <td class="cart__table--body__list">
                                         <div class="cart__product d-flex align-items-center">
                                             <a class="cart__remove--btn" aria-label="search button"
-                                               data-open="modal-delete-wishitem" onclick="openModal(this)" data-id="${w.wishItemId}"
+                                               data-open="modal-delete-wishitem" onclick="openWishModal(this)" data-wishItemId="${w.wishItemId}"
                                             ><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px"><path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path></svg></a>
                                             <div class="cart__thumbnail">
                                                 <a href="<%=request.getContextPath()%>/product/details?productId=${w.productId}"><img class="border-radius-5" src="data:image/png;base64, ${w.productImage}" alt="cart-product"></a>
@@ -71,7 +71,7 @@
                                         <span class="in__stock text__secondary">${w.productStatus}</span>
                                     </td>
                                     <td class="cart__table--body__list text-right">
-                                        <a class="wishlist__cart--btn primary__btn" href="cart.html">Add To Cart</a>
+                                        <a class="wishlist__cart--btn primary__btn" id="add-cartitem" onclick="addCartItem(this,'<%=request.getContextPath()%>')" data-productId="${w.productId}">Add To Cart</a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -124,6 +124,7 @@
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlistHandler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist-handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 </body>
 </html>

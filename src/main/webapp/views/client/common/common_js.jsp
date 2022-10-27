@@ -9,5 +9,5 @@
 <script src="<%=request.getContextPath()%>/assets/client/js/plugins/swiper-bundle.min.js" defer="defer"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/plugins/glightbox.min.js" defer="defer"></script>
 <!-- Customscript js -->
-<script src="<%=request.getContextPath()%>/assets/client/js/script.js" defer="defer"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/scriptjs.js" defer="defer"></script>
 

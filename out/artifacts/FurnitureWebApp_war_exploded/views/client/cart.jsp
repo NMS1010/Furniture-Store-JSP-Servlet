@@ -56,8 +56,8 @@
                                         <tr class="cart__table--body__items">
                                             <td class="cart__table--body__list">
                                                 <div class="cart__product d-flex align-items-center">
-                                                    <a class="cart__remove--btn" aria-label="search button"
-                                                       data-open="modal-delete-cart" onclick="openModal(this)" data-cartItemId="${c.cartItemId}"
+                                                    <a id="cart-remove-${c.cartItemId}" class="cart__remove--btn" aria-label="search button"
+                                                       data-open="modal-delete-cart" onclick="openCartItemModal(this)" data-cartItemId="${c.cartItemId}"
                                                     >
                                                         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="16px" height="16px">
                                                             <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z">
@@ -79,7 +79,7 @@
                                                 <div class="quantity__box">
                                                     <button data-cartItemId="${c.cartItemId}" onclick="updateCartItemQuantity(this, '<%=request.getContextPath()%>')"  type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
                                                     <label>
-                                                        <input data-cartItemId="${c.cartItemId}" oninput="updateCartItemQuantity(this, '<%=request.getContextPath()%>')" type="number" class="quantity__number quickview__value--number" id="cart-item-quantity-${c.cartItemId}" value="${c.quantity}" />
+                                                        <input data-cartItemId="${c.cartItemId}" oninput="updateCartItemQuantity(this, '<%=request.getContextPath()%>')" min="1" type="number" class="quantity__number quickview__value--number" id="cart-item-quantity-${c.cartItemId}" value="${c.quantity}" />
                                                     </label>
                                                     <button data-cartItemId="${c.cartItemId}" onclick="updateCartItemQuantity(this, '<%=request.getContextPath()%>')" type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                                 </div>
@@ -89,7 +89,7 @@
                                                 <span class="cart__price end">${c.productStatus}</span>
                                             </td>
                                             <td class="cart__table--body__list">
-                                                <span class="cart__price end total-price" id="cart-item-${c.cartItemId}-totalPrice">${c.totalPrice}</span>
+                                                <span class="cart__price end total-price" id="cart-item-${c.cartItemId}-totalPrice">${c.totalPrice}</span><span> VND</span>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -106,10 +106,10 @@
                                 <div class="cart__summary--total mb-20">
                                     <table class="cart__summary--total__table">
                                         <tbody>
-                                        <tr class="cart__summary--total__list">
-                                            <td class="cart__summary--total__title text-left">Tổng tiền</td>
-                                            <td id="total-item-price" class="cart__summary--amount text-right">${total}</td>
-                                        </tr>
+                                            <tr class="cart__summary--total__list">
+                                                <td class="cart__summary--total__title text-left">Tổng tiền</td>
+                                                <td id="total-item-price" class="cart__summary--amount text-right">${total} VND</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

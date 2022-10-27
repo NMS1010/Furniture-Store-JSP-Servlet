@@ -278,7 +278,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="product__items--action__list">
-                                                                <a class="product__items--action__btn" onclick="addWish(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalWishListItem})" data-productId="${products[p].productId}">
+                                                                <a class="product__items--action__btn" onclick="addWish(this,'<%=request.getContextPath()%>')" data-productId="${products[p].productId}">
                                                                     <svg class="product__items--action__btn--svg"  xmlns="http://www.w3.org/2000/svg" width="17.51" height="15.443" viewBox="0 0 24.526 21.82">
                                                                         <path  d="M12.263,21.82a1.438,1.438,0,0,1-.948-.356c-.991-.866-1.946-1.681-2.789-2.4l0,0a51.865,51.865,0,0,1-6.089-5.715A9.129,9.129,0,0,1,0,7.371,7.666,7.666,0,0,1,1.946,2.135,6.6,6.6,0,0,1,6.852,0a6.169,6.169,0,0,1,3.854,1.33,7.884,7.884,0,0,1,1.558,1.627A7.885,7.885,0,0,1,13.821,1.33,6.169,6.169,0,0,1,17.675,0,6.6,6.6,0,0,1,22.58,2.135a7.665,7.665,0,0,1,1.945,5.235,9.128,9.128,0,0,1-2.432,5.975,51.86,51.86,0,0,1-6.089,5.715c-.844.719-1.8,1.535-2.794,2.4a1.439,1.439,0,0,1-.948.356ZM6.852,1.437A5.174,5.174,0,0,0,3,3.109,6.236,6.236,0,0,0,1.437,7.371a7.681,7.681,0,0,0,2.1,5.059,51.039,51.039,0,0,0,5.915,5.539l0,0c.846.721,1.8,1.538,2.8,2.411,1-.874,1.965-1.693,2.812-2.415a51.052,51.052,0,0,0,5.914-5.538,7.682,7.682,0,0,0,2.1-5.059,6.236,6.236,0,0,0-1.565-4.262,5.174,5.174,0,0,0-3.85-1.672A4.765,4.765,0,0,0,14.7,2.467a6.971,6.971,0,0,0-1.658,1.918.907.907,0,0,1-1.558,0A6.965,6.965,0,0,0,9.826,2.467a4.765,4.765,0,0,0-2.975-1.03Zm0,0" transform="translate(0 0)" fill="currentColor"></path>
                                                                     </svg>
@@ -292,7 +292,7 @@
                                                         <div class="product__items--price">
                                                             <span class="current__price">${products[p].price}</span>
                                                         </div>
-                                                        <a class="product__items--action__cart--btn primary__btn" onclick="addCartItem(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalCartItem})" data-productId="${products[p].productId}">
+                                                        <a class="product__items--action__cart--btn primary__btn" onclick="addCartItem(this,'<%=request.getContextPath()%>')" data-productId="${products[p].productId}">
                                                             <svg class="product__items--action__cart--btn__icon" xmlns="http://www.w3.org/2000/svg" width="13.897" height="14.565" viewBox="0 0 18.897 21.565">
                                                                 <path  d="M16.84,8.082V6.091a4.725,4.725,0,1,0-9.449,0v4.725a.675.675,0,0,0,1.35,0V9.432h5.4V8.082h-5.4V6.091a3.375,3.375,0,0,1,6.75,0v4.691a.675.675,0,1,0,1.35,0V9.433h3.374V21.581H4.017V9.432H6.041V8.082H2.667V21.641a1.289,1.289,0,0,0,1.289,1.29h16.32a1.289,1.289,0,0,0,1.289-1.29V8.082Z" transform="translate(-2.667 -1.366)" fill="currentColor"></path>
                                                             </svg>
@@ -339,7 +339,7 @@
                                                             <li class="rating__list"><span class="rating__list--text">( ${products[p].avgRating}.0)</span></li>
                                                         </ul>
                                                         <div class="product__list--action">
-                                                            <a class="product__list--action__cart--btn primary__btn" onclick="addCartItem(this, '<%=request.getContextPath()%>', ${sessionScope.user.totalCartItem})" data-productId="${products[p].productId}">
+                                                            <a class="product__list--action__cart--btn primary__btn" onclick="addCartItem(this, '<%=request.getContextPath()%>')" data-productId="${products[p].productId}">
                                                                 <svg class="product__list--action__cart--btn__icon" xmlns="http://www.w3.org/2000/svg" width="16.897" height="17.565" viewBox="0 0 18.897 21.565">
                                                                     <path  d="M16.84,8.082V6.091a4.725,4.725,0,1,0-9.449,0v4.725a.675.675,0,0,0,1.35,0V9.432h5.4V8.082h-5.4V6.091a3.375,3.375,0,0,1,6.75,0v4.691a.675.675,0,1,0,1.35,0V9.433h3.374V21.581H4.017V9.432H6.041V8.082H2.667V21.641a1.289,1.289,0,0,0,1.289,1.29h16.32a1.289,1.289,0,0,0,1.289-1.29V8.082Z" transform="translate(-2.667 -1.366)" fill="currentColor"></path>
                                                                 </svg>
@@ -354,7 +354,7 @@
                                                                     </a>
                                                                 </li>
                                                                 <li class="product__list--action__child">
-                                                                    <a class="product__list--action__btn" onclick="addWish(this, '<%=request.getContextPath()%>', ${sessionScope.user.totalWishListItem})" data-productId="${products[p].productId}">
+                                                                    <a class="product__list--action__btn" onclick="addWish(this, '<%=request.getContextPath()%>')" data-productId="${products[p].productId}">
                                                                         <svg class="product__list--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="24.403" height="20.204" viewBox="0 0 24.403 20.204">
                                                                             <g  transform="translate(0)">
                                                                                 <g  data-name="Group 473" transform="translate(0 0)">
@@ -427,10 +427,10 @@
                             <p class="product__details--info__desc mb-15"></p>
                             <div class="product__variant">
                                 <div class="quickview__variant--list quantity d-flex align-items-center mb-15">
-                                    <a class="primary__btn quickview__cart--btn" id="add-cartitem" onclick="addCartItem(this, '<%=request.getContextPath()%>', ${sessionScope.user.totalCartItem})">Add To Cart</a>
+                                    <a class="primary__btn quickview__cart--btn" id="add-cartitem" onclick="addCartItem(this, '<%=request.getContextPath()%>')">Add To Cart</a>
                                 </div>
                                 <div class="quickview__variant--list variant__wishlist mb-15">
-                                    <a class="variant__wishlist--icon" id="add-wishlist" onclick="addWish(this, '<%=request.getContextPath()%>', ${sessionScope.user.totalWishListItem})" title="Add to wishlist">
+                                    <a class="variant__wishlist--icon" id="add-wishlist" onclick="addWish(this, '<%=request.getContextPath()%>')" title="Add to wishlist">
                                         <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path></svg>
                                         Add to Wishlist
                                     </a>
@@ -447,7 +447,7 @@
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/productHandler.js"> </script>
 <jsp:include page="/views/client/common/common_js.jsp"/>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlistHandler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist-handler.js"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 </body>
 </html>

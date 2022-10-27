@@ -38,6 +38,7 @@ public class AddItemToCart extends HttpServlet {
             updateReq.setQuantity(cartItem.getQuantity() + 1);
             updateReq.setStatus(cartItem.getStatus());
             count = CartItemService.getInstance().updateCartItem(updateReq) ? 1 : 0;
+            out.println("repeat");
         }
         else {
             CartItemCreateRequest createReq = new CartItemCreateRequest();
@@ -50,13 +51,12 @@ public class AddItemToCart extends HttpServlet {
             if(count > 0){
                 user.setTotalCartItem(user.getTotalCartItem() + 1);
                 session.setAttribute("user", user);
+                out.println(user.getTotalCartItem() + "success");
             }
         }
 
         if(count <= 0){
             out.println("error");
-        }else{
-            out.println("success");
         }
     }
 

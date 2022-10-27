@@ -1,8 +1,8 @@
-function openModal(e){
+function openCartItemModal(e){
     let id = parseInt(e.getAttribute("data-cartItemId"));
     document.getElementById('link-delete').setAttribute("data-cartItemId", id.toString())
 }
-function addCartItem(e, context, currAmountCartItem){
+function addCartItem(e, context){
     let productId  = parseInt(e.getAttribute("data-productId"));
     let url = context + `/cart/add`
     $.ajax({
@@ -20,10 +20,8 @@ function addCartItem(e, context, currAmountCartItem){
             if(notify === 'error'){
                 document.getElementById("modal-error").classList.add('is-visible')
             }
-            else if(notify === 'success'){
-                document.querySelectorAll('.cart_item_count').forEach(c => c.innerText = (currAmountCartItem + 1).toString())
-                // document.getElementById("cart_item_count").innerText = (currAmountCartItem + 1).toString()
-                location.reload()
+            else if(notify.includes('success')){
+                document.querySelectorAll('.cart_item_count').forEach(c => c.innerText = (parseInt(notify)).toString())
             }
             else if(notify === 'must-login'){
                 window.location.replace(context + '/cart/items')
@@ -70,8 +68,12 @@ function updateCartItemQuantity(e, context){
             quantity -= 1
         }
     }
-    if(quantity < 0)
+    if(quantity < 0 || quantity === 0) {
         quantity = 0
+        document.getElementById("modal-delete-cart").classList.add('is-visible')
+        openCartItemModal(document.getElementById('cart-remove-'+cartItemId))
+        return;
+    }
     let url = context + `/cart/update`
     $.ajax({
         url: url,
@@ -102,7 +104,7 @@ function updateCartItemQuantity(e, context){
 
                 let total = 0;
                 document.querySelectorAll('.total-price').forEach(c => total += parseFloat(c.innerText))
-                document.getElementById("total-item-price").innerText = total.toFixed(2).toString()
+                document.getElementById("total-item-price").innerText = total.toFixed(2).toString() + " VND"
             }
         },
         error: function (error){
