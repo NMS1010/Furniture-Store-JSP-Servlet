@@ -16,7 +16,11 @@ import java.io.PrintWriter;
             "/my-account/*", "/my-account?*", "/my-account",
             "/wish-list",  "/wish-list/*",  "/wish-list?*",
             "/add-wish","/add-wish/*", "/add-wish?*",
-            "/remove-wish", "/remove-wish?*", "/remove-wish/"
+            "/remove-wish", "/remove-wish?*", "/remove-wish/*",
+            "/cart/items",  "/cart/items/*",  "/cart/items?*",
+            "/cart/add","/cart/add/*", "/cart/add?*",
+            "/cart/remove", "/cart/remove?*", "/cart/remove/*",
+            "/cart/update", "/cart/update?*", "/cart/update/*"
     }
 )
 public class ClientFilter implements Filter {
@@ -38,11 +42,11 @@ public class ClientFilter implements Filter {
         if(session != null)
             user = (UserViewModel) session.getAttribute("user");
 
-
+        String url = httpReq.getRequestURL().toString();
         if(user != null){
             chain.doFilter(request, response);
         }else{
-            if(httpReq.getRequestURL().toString().contains("add-wish")){
+            if(url.contains("add-wish") || url.contains("cart/add")){
                 out.println("must-login");
             }
             else {

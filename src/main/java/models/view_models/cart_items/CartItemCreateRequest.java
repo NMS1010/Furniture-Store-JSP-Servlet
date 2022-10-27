@@ -2,9 +2,17 @@ package models.view_models.cart_items;
 
 public class CartItemCreateRequest {
     private int productId;
-    private int userId ;
+    private int cartId ;
     private int quantity;
     private int status;
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
 
     public int getStatus() {
         return status;
@@ -22,13 +30,6 @@ public class CartItemCreateRequest {
         this.productId = productId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public int getQuantity() {
         return quantity;

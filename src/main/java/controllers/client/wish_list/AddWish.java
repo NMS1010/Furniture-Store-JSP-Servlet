@@ -25,7 +25,7 @@ public class AddWish extends HttpServlet {
         if(user == null)
             return;
         int userId = user.getId();
-        int wishId = WishItemService.getInstance().getWishIdFromUserId(userId);
+        int wishId = WishItemService.getInstance().getWishIdByUserId(userId);
 
         WishItemCreateRequest createReq = new WishItemCreateRequest();
         createReq.setProductId(productId);

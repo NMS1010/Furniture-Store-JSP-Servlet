@@ -16,7 +16,8 @@ function addWish(e, context, currAmountWishItem){
                 document.getElementById("modal-error").classList.add('is-visible')
             }
             else if(notify === 'success'){
-                document.getElementById("wish_count").innerText = (currAmountWishItem + 1).toString()
+                document.querySelectorAll('.wish_count').forEach(c => c.innerText = (currAmountWishItem + 1).toString())
+                // document.getElementById("wish_count").innerText = (currAmountWishItem + 1).toString()
                 location.reload()
             }
             else if(notify === 'must-login'){

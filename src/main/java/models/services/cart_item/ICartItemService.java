@@ -16,4 +16,9 @@ public interface ICartItemService {
     CartItemViewModel retrieveCartItemById(Integer cartItemId);
     ArrayList<CartItemViewModel> retrieveAllCartItem(CartItemGetPagingRequest request);
 
+    ArrayList<CartItemViewModel> retrieveCartByUserId(int userId);
+    int getCartIdByUserId(int userId);
+    CartItemViewModel getCartItemContain(int cartId, int productId);
+    int canUpdateQuantity(int cartItemId, int quantity);
+
 }

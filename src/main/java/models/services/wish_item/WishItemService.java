@@ -47,8 +47,8 @@ public class WishItemService implements IWishItemService {
     }
 
     @Override
-    public int getWishIdFromUserId(int userId) {
-        return WishItemRepository.getInstance().getWishIdFromUserId(userId);
+    public int getWishIdByUserId(int userId) {
+        return WishItemRepository.getInstance().getWishIdByUserId(userId);
     }
 
     @Override

@@ -276,7 +276,7 @@
                                     <div class="product__items--price">
                                         <span class="current__price">${products[p].price} VND</span>
                                     </div>
-                                    <a class="product__items--action__cart--btn primary__btn btn__style3" href="cart.html">
+                                    <a class="product__items--action__cart--btn primary__btn btn__style3" onclick="addCartItem(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalCartItem})" data-productId="${products[p].productId}">
                                         <svg class="product__items--action__cart--btn__icon" xmlns="http://www.w3.org/2000/svg" width="13.897" height="14.565" viewBox="0 0 18.897 21.565">
                                             <path  d="M16.84,8.082V6.091a4.725,4.725,0,1,0-9.449,0v4.725a.675.675,0,0,0,1.35,0V9.432h5.4V8.082h-5.4V6.091a3.375,3.375,0,0,1,6.75,0v4.691a.675.675,0,1,0,1.35,0V9.433h3.374V21.581H4.017V9.432H6.041V8.082H2.667V21.641a1.289,1.289,0,0,0,1.289,1.29h16.32a1.289,1.289,0,0,0,1.289-1.29V8.082Z" transform="translate(-2.667 -1.366)" fill="currentColor"></path>
                                         </svg>
@@ -519,14 +519,7 @@
                             <p class="product__details--info__desc mb-15"></p>
                             <div class="product__variant">
                                 <div class="quickview__variant--list quantity d-flex align-items-center mb-15">
-                                    <div class="quantity__box">
-                                        <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
-                                        <label>
-                                            <input type="number" class="quantity__number quickview__value--number" value="1" />
-                                        </label>
-                                        <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
-                                    </div>
-                                    <button class="primary__btn quickview__cart--btn" type="submit">Add To Cart</button>
+                                    <a class="primary__btn quickview__cart--btn" id="add-cartitem" onclick="addCartItem(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalCartItem})">Add To Cart</a>
                                 </div>
                                 <div class="quickview__variant--list variant__wishlist mb-15">
                                     <a class="variant__wishlist--icon" id="add-wishlist" onclick="addWish(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalWishListItem})" title="Add to wishlist">
@@ -547,5 +540,6 @@
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/productHandler.js"> </script>
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlistHandler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 </body>
 </html>

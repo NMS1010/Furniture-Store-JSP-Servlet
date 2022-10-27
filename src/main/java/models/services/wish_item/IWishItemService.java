@@ -15,7 +15,7 @@ public interface IWishItemService  {
     boolean deleteWishItem(Integer wishItemId);
     WishItemViewModel retrieveWishItemById(Integer wishItemId);
     ArrayList<WishItemViewModel> retrieveAllWishItem(WishItemGetPagingRequest request);
-    int getWishIdFromUserId(int userId);
+    int getWishIdByUserId(int userId);
 
     ArrayList<WishItemViewModel> retrieveWishListByUserId(int userId);
 }

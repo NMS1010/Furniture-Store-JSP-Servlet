@@ -25,8 +25,17 @@ public class UserViewModel {
     private String avatar;
     private long totalBought;
     private long totalWishListItem;
+    private long totalCartItem;
     private ArrayList<UserRoleViewModel> roles;
     private ArrayList<Integer> roleIds;
+
+    public long getTotalCartItem() {
+        return totalCartItem;
+    }
+
+    public void setTotalCartItem(long totalCartItem) {
+        this.totalCartItem = totalCartItem;
+    }
 
     public String getPassword() {
         return password;

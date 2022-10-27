@@ -133,11 +133,12 @@ public class WishItemRepository implements IWishItemRepository{
     }
 
     @Override
-    public int getWishIdFromUserId(int userId) {
+    public int getWishIdByUserId(int userId) {
         Session session = HibernateUtils.getSession();
         Query q = session.createQuery("select wishListId from WishList where user.userId =:s1");
         q.setParameter("s1",userId);
         Object o = q.getSingleResult();
+        session.close();
         if(o == null)
             return -1;
         return (int)o;
@@ -147,7 +148,7 @@ public class WishItemRepository implements IWishItemRepository{
     public ArrayList<WishItemViewModel> retrieveWishListByUserId(int userId) {
         ArrayList<WishItemViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
-        int wishId = getWishIdFromUserId(userId);
+        int wishId = getWishIdByUserId(userId);
         Query q = session.createQuery("from WishItem where wishId=:s1");
         q.setParameter("s1", wishId);
         List<WishItem> wishItems = q.list();

@@ -44,4 +44,23 @@ public class CartItemService implements ICartItemService{
     public ArrayList<CartItemViewModel> retrieveAllCartItem(CartItemGetPagingRequest request) {
         return CartItemRepository.getInstance().retrieveAll(request);
     }
+    @Override
+    public ArrayList<CartItemViewModel> retrieveCartByUserId(int userId) {
+        return CartItemRepository.getInstance().retrieveCartByUserId(userId);
+    }
+
+    @Override
+    public int getCartIdByUserId(int userId) {
+        return CartItemRepository.getInstance().getCartIdByUserId(userId);
+    }
+
+    @Override
+    public CartItemViewModel getCartItemContain(int cartId, int productId) {
+        return CartItemRepository.getInstance().getCartItemContain(cartId, productId);
+    }
+
+    @Override
+    public int canUpdateQuantity(int cartItemId, int quantity) {
+        return CartItemRepository.getInstance().canUpdateQuantity(cartItemId, quantity);
+    }
 }

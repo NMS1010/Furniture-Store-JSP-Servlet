@@ -5,16 +5,32 @@ import java.time.LocalDateTime;
 
 public class CartItemViewModel {
     private int cartItemId;
+    private int cartId;
     private int productId;
     private String productName;
     private String productImage;
-    private int userId;
-    private String userName;
     private int quantity;
     private BigDecimal totalPrice;
     private BigDecimal unitPrice;
     private LocalDateTime dateAdded;
     private int status;
+    private String productStatus;
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
+
+    public String getProductStatus() {
+        return productStatus;
+    }
+
+    public void setProductStatus(String productStatus) {
+        this.productStatus = productStatus;
+    }
 
     public int getStatus() {
         return status;
@@ -56,21 +72,6 @@ public class CartItemViewModel {
         this.productImage = productImage;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public int getQuantity() {
         return quantity;

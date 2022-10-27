@@ -11,6 +11,6 @@ import java.util.ArrayList;
 
 public interface IWishItemRepository extends IModifyEntity<WishItemCreateRequest, WishItemUpdateRequest, Integer>,
         IRetrieveEntity<WishItemViewModel, WishItemGetPagingRequest, Integer> {
-    int getWishIdFromUserId(int userId);
+    int getWishIdByUserId(int userId);
     ArrayList<WishItemViewModel> retrieveWishListByUserId(int userId);
 }

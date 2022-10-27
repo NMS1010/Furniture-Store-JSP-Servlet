@@ -122,7 +122,7 @@
                                         </label>
                                         <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                     </div>
-                                    <button class="quickview__cart--btn primary__btn" type="submit">Thêm vào giỏ hàng</button>
+                                    <a class="quickview__cart--btn primary__btn" id="add-cartitem" onclick="addCartItem(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalCartItem})" data-productId="${product.productId}">Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product__variant--list mb-15">
                                     <a class="variant__wishlist--icon mb-15" id="add-wishlist" onclick="addWish(this,'<%=request.getContextPath()%>', ${sessionScope.user.totalWishListItem})" data-productId="${product.productId}" title="Add to wishlist">
@@ -263,5 +263,6 @@
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/productHandler.js"> </script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlistHandler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 </body>
 </html>

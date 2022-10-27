@@ -41,5 +41,6 @@ function quickView(e, context){
     document.querySelector(".quickview__inner .product__media--preview .swiper-wrapper").innerHTML = htmlBigImg
     document.querySelector(".quickview__inner .product__media--nav .swiper-wrapper").innerHTML = htmlSmallImg
     document.querySelector(".quickview__inner #add-wishlist").setAttribute("data-productId",$("#product-id-" + index).val())
+    document.querySelector(".quickview__inner #add-cartitem").setAttribute("data-productId",$("#product-id-" + index).val())
 }
 
