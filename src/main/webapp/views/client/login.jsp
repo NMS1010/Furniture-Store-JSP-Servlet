@@ -54,7 +54,14 @@
                                     <div class="account__login--divide">
                                         <span class="account__login--divide__text">Hoặc</span>
                                     </div>
-                                    <p class="account__login--signup__text">Bạn chưa có tài khoản <a href="<%=request.getContextPath()%>/register">Đăng ký ngay</a></p>
+                                    <div class="account__social d-flex justify-content-center mb-15">
+                                        <a class="account__social--link twitter" href="<%=request.getContextPath()%>/admin/login">Đăng nhập vào trang quản trị</a>
+                                    </div>
+
+                                    <div class="account__login--divide">
+                                        <span class="account__login--divide__text">Hoặc</span>
+                                    </div>
+                                    <p class="account__login--signup__text">Bạn chưa có tài khoản? <a class="text__secondary" href="<%=request.getContextPath()%>/register">Đăng ký ngay</a></p>
                                 </div>
                             </div>
                         </div>

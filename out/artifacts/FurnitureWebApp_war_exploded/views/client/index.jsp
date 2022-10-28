@@ -478,6 +478,11 @@
             <h3 class="modal- border-bottom-0">Sản phẩm đã có trong Danh sách yêu thích của bạn</h3>
         </div>
     </div>
+    <div class="modal" id="modal-success" data-animation="slideInUp">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
@@ -539,7 +544,7 @@
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/productHandler.js"> </script>
 <jsp:include page="/views/client/common/common_js.jsp"/>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist-handler.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cart_handler.js"></script>
 </body>
 </html>

@@ -88,7 +88,7 @@
                                     <label>
                                         <button class="account__login--btn primary__btn mb-10" type="submit">Đăng ký</button>
                                     </label>
-                                    <p class="account__login--signup__text">Bạn đã có tài khoản? <a href="<%=request.getContextPath()%>/register">Đăng nhập ngay</a></p>
+                                    <p class="account__login--signup__text">Bạn đã có tài khoản? <a class="text__secondary" href="<%=request.getContextPath()%>/signin">Đăng nhập ngay</a></p>
                                 </div>
                             </div>
                         </div>

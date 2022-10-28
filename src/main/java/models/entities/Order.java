@@ -46,7 +46,6 @@ public class Order {
     @Column(nullable = false)
     private int status;
 
-
     @OneToMany
     @JoinColumn(name = "orderId")
     private List<OrderItem> orderItems;
