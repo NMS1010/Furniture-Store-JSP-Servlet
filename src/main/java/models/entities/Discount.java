@@ -14,7 +14,7 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int discountId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String discountCode;
     @Column(nullable = false)
     private double discountValue;

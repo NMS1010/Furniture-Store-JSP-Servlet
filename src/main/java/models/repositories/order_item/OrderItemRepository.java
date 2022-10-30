@@ -30,7 +30,7 @@ public class OrderItemRepository implements IOrderItemRepository{
 
         OrderItem orderItem = new OrderItem();
 
-        orderItem.setOrderItemId(request.getOrderId());
+        orderItem.setOrderId(request.getOrderId());
         orderItem.setProductId(request.getProductId());
         orderItem.setQuantity(request.getQuantity());
         orderItem.setUnitPrice(request.getUnitPrice());
@@ -59,7 +59,7 @@ public class OrderItemRepository implements IOrderItemRepository{
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
         OrderItem orderItem = session.find(OrderItem.class, request.getOrderItemId());
-
+        session.close();
         return HibernateUtils.merge(orderItem);
     }
 
@@ -67,6 +67,7 @@ public class OrderItemRepository implements IOrderItemRepository{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         OrderItem orderItem = session.find(OrderItem.class, entityId);
+        session.close();
         return HibernateUtils.remove(orderItem);
     }
     private OrderItemViewModel getOrderItemViewModel(OrderItem orderItem, Session session){

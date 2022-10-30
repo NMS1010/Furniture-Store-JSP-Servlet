@@ -18,18 +18,15 @@ public class HibernateUtils {
         Session session = getSession();
 
         session.beginTransaction();
-
-        session
-                .getTransaction()
-                .commit();
+        Transaction tx = session.getTransaction();
+        tx.commit();
+        session.close();
     }
     private static SessionFactory buildSessionFactory(){
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
 
-        SessionFactory sessionFactory
-                = configuration.buildSessionFactory();
-        return sessionFactory;
+        return configuration.buildSessionFactory();
     }
 
     public static SessionFactory getSessionFactory(){

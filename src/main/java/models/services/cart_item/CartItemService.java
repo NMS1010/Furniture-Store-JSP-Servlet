@@ -44,6 +44,12 @@ public class CartItemService implements ICartItemService{
     public ArrayList<CartItemViewModel> retrieveAllCartItem(CartItemGetPagingRequest request) {
         return CartItemRepository.getInstance().retrieveAll(request);
     }
+
+    @Override
+    public boolean deleteCartByUserId(int userId) {
+        return CartItemRepository.getInstance().deleteCartByUserId(userId);
+    }
+
     @Override
     public ArrayList<CartItemViewModel> retrieveCartByUserId(int userId) {
         return CartItemRepository.getInstance().retrieveCartByUserId(userId);

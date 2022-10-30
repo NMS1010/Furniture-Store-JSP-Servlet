@@ -51,4 +51,9 @@ public class ProductService implements IProductService {
     public ArrayList<ProductViewModel> retrieveAllProduct(ProductGetPagingRequest request) {
         return ProductRepository.getInstance().retrieveAll(request);
     }
+
+    @Override
+    public boolean updateQuantity(int productId, int quantity) {
+        return ProductRepository.getInstance().updateQuantity(productId, quantity);
+    }
 }

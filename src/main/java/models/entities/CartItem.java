@@ -21,8 +21,6 @@ public class CartItem {
     private int cartId;
 
     @Column(nullable = false)
-    private BigDecimal totalPrice;
-    @Column(nullable = false)
     private int quantity;
 
     @Column(nullable = false)
@@ -55,13 +53,6 @@ public class CartItem {
         this.cartId = cartId;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 
     public int getQuantity() {
         return quantity;

@@ -9,4 +9,6 @@ import models.view_models.discounts.DiscountViewModel;
 
 public interface IDiscountRepository extends IModifyEntity<DiscountCreateRequest, DiscountUpdateRequest, Integer>,
         IRetrieveEntity<DiscountViewModel, DiscountGetPagingRequest, Integer> {
+    DiscountViewModel getDiscountByDiscountCode(String discountCode);
+    boolean updateQuantity(int discountId);
 }

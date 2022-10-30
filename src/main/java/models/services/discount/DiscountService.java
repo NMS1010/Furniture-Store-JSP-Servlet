@@ -48,4 +48,14 @@ public class DiscountService implements IDiscountService{
     public ArrayList<DiscountViewModel> retrieveAllDiscount(DiscountGetPagingRequest request) {
         return DiscountRepository.getInstance().retrieveAll(request);
     }
+
+    @Override
+    public DiscountViewModel getDiscountByDiscountCode(String discountCode) {
+        return DiscountRepository.getInstance().getDiscountByDiscountCode(discountCode);
+    }
+
+    @Override
+    public boolean updateQuantity(int discountId) {
+        return DiscountRepository.getInstance().updateQuantity(discountId);
+    }
 }

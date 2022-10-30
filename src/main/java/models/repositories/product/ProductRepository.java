@@ -20,6 +20,7 @@ import utils.HibernateUtils;
 import utils.HtmlClassUtils;
 import utils.constants.PRODUCT_STATUS;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class ProductRepository implements IProductRepository{
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
         Product product = session.find(Product.class, request.getProductId());
-
+        BigDecimal prevPrice = product.getPrice();
         product.setName(request.getProductName());
         product.setOrigin(request.getOrigin());
         product.setDescription(request.getDescription());
@@ -103,7 +104,6 @@ public class ProductRepository implements IProductRepository{
 
                 session.merge(image);
             }
-
             tx.commit();
         }catch(Exception e){
             if(tx != null)
@@ -154,7 +154,7 @@ public class ProductRepository implements IProductRepository{
         Query q4 = session.createQuery("select productImageId from ProductImage where  productId=:s1 and isDefault = false");
         q4.setParameter("s1", product.getProductId());
         List<Integer> subProductImageIds = q4.list();
-        Query q5 = session.createQuery("select count(*) from OrderItem  where productId=:s1");
+        Query q5 = session.createQuery("select sum(quantity) from OrderItem  where productId=:s1");
         q5.setParameter("s1",product.getProductId());
         Object res = q5.getSingleResult();
         long totalPurchased = res == null ? 0 : (long)res;
@@ -219,5 +219,14 @@ public class ProductRepository implements IProductRepository{
         }
         session.close();
         return list;
+    }
+
+    @Override
+    public boolean updateQuantity(int productId, int quantity) {
+        Session session = HibernateUtils.getSession();
+        Product product = session.find(Product.class, productId);
+        product.setQuantity(product.getQuantity() - quantity);
+        session.close();
+        return HibernateUtils.merge(product);
     }
 }

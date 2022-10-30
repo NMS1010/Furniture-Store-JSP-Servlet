@@ -4,15 +4,24 @@ import java.math.BigDecimal;
 
 public class OrderCreateRequest {
     private int userId;
-    private String discountCode;
+    private int discountId;
     private BigDecimal totalItemPrice;
     private BigDecimal shipping;
+    private BigDecimal totalPrice;
     private String address;
     private String name;
     private String email;
     private String phone;
     private int status;
     private int payment;
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public int getPayment() {
         return payment;
@@ -30,12 +39,12 @@ public class OrderCreateRequest {
         this.userId = userId;
     }
 
-    public String getDiscountCode() {
-        return discountCode;
+    public int getDiscountId() {
+        return discountId;
     }
 
-    public void setDiscountCode(String discountCode) {
-        this.discountCode = discountCode;
+    public void setDiscountId(int discountId) {
+        this.discountId = discountId;
     }
 
     public BigDecimal getTotalItemPrice() {

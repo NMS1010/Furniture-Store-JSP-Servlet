@@ -1,7 +1,13 @@
 <component name="ArtifactManager">
   <artifact type="war" name="FurnitureWebApp:war">
-    <output-path>$PROJECT_DIR$/out/artifacts/FurnitureWebApp_war</output-path>
-    <root id="archive" name="FurnitureWebApp_war.war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>FurnitureWebApp</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="FurnitureWebApp.war">
       <element id="artifact" artifact-name="FurnitureWebApp:war exploded" />
     </root>
   </artifact>

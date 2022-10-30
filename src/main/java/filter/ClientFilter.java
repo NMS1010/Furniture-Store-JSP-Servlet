@@ -20,7 +20,8 @@ import java.io.PrintWriter;
             "/cart/items",  "/cart/items/*",  "/cart/items?*",
             "/cart/add","/cart/add/*", "/cart/add?*",
             "/cart/remove", "/cart/remove?*", "/cart/remove/*",
-            "/cart/update", "/cart/update?*", "/cart/update/*"
+            "/cart/update", "/cart/update?*", "/cart/update/*",
+            "/checkout", "/checkout?*", "/checkout/*"
     }
 )
 public class ClientFilter implements Filter {

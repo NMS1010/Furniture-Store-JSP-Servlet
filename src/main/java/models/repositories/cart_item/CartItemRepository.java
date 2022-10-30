@@ -45,7 +45,6 @@ public class CartItemRepository implements ICartItemRepository {
         Query q = session.createQuery("select price from Product where productId =:s1");
         q.setParameter("s1",request.getProductId());
         BigDecimal unitPrice = (BigDecimal)q.getSingleResult();
-        cartItem.setTotalPrice(unitPrice.multiply(BigDecimal.valueOf(request.getQuantity())) );
         cartItem.setStatus(request.getStatus());
 
         int cartItemId = -1;
@@ -77,7 +76,6 @@ public class CartItemRepository implements ICartItemRepository {
             return false;
 
         cartItem.setQuantity(request.getQuantity());
-        cartItem.setTotalPrice(product.getPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
 
         return HibernateUtils.merge(cartItem);
     }
@@ -118,7 +116,7 @@ public class CartItemRepository implements ICartItemRepository {
         cartItemViewModel.setProductName(product.getName());
         cartItemViewModel.setCartId(cartItem.getCartId());
         cartItemViewModel.setUnitPrice(product.getPrice());
-        cartItemViewModel.setTotalPrice(cartItem.getTotalPrice());
+        cartItemViewModel.setTotalPrice(product.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
         cartItemViewModel.setProductId(cartItem.getProductId());
         cartItemViewModel.setStatus(cartItem.getStatus());
         cartItemViewModel.setProductStatus(getProductStatus(product.getStatus()));
@@ -202,6 +200,21 @@ public class CartItemRepository implements ICartItemRepository {
         if(o == null)
             return null;
         return getCartItemViewModel((CartItem) o, session);
+    }
+
+    @Override
+    public boolean deleteCartByUserId(int userId) {
+        int cartId = getCartIdByUserId(userId);
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("from CartItem where cartId=:s1");
+        q.setParameter("s1", cartId);
+        List<CartItem> cartItems = q.list();
+        for(CartItem c:cartItems){
+            boolean res = delete(c.getCartItemId());
+            if(!res)
+                return false;
+        }
+        return true;
     }
 
     @Override

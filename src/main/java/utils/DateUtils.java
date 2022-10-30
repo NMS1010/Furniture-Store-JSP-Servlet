@@ -39,6 +39,6 @@ public class DateUtils {
         return datetime.format(dtf);
     }
     public static LocalDateTime stringToLocalDateTime(String dateStr){
-        return LocalDateTime.parse(dateStr, DateTimeFormatter.ISO_DATE_TIME);
+        return LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 }

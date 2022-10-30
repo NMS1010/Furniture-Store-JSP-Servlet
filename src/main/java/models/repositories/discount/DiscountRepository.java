@@ -136,4 +136,27 @@ public class DiscountRepository implements IDiscountRepository{
         session.close();
         return list;
     }
+
+    @Override
+    public DiscountViewModel getDiscountByDiscountCode(String discountCode) {
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("from Discount where discountCode=:s1");
+        q.setParameter("s1", discountCode);
+        Object discount = q.getSingleResult();
+        if(discount == null)
+            return null;
+        return getDiscountViewModel((Discount) discount, session);
+    }
+
+    @Override
+    public boolean updateQuantity(int discountId) {
+        Session session = HibernateUtils.getSession();
+        Discount discount = session.find(Discount.class, discountId);
+        if(discount.getQuantity() == 0)
+            return false;
+        discount.setQuantity(discount.getQuantity() - 1);
+        session.close();
+
+        return HibernateUtils.merge(discount);
+    }
 }

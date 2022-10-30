@@ -15,4 +15,5 @@ public interface IProductService {
     boolean deleteProduct(Integer productId);
     ProductViewModel retrieveProductById(Integer productId);
     ArrayList<ProductViewModel> retrieveAllProduct(ProductGetPagingRequest request);
+    boolean updateQuantity(int productId, int quantity);
 }

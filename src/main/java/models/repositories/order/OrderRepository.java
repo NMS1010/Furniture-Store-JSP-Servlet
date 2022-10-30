@@ -18,6 +18,7 @@ import utils.constants.ORDER_PAYMENT;
 import utils.constants.ORDER_STATUS;
 
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,29 +42,15 @@ public class OrderRepository implements IOrderRepository{
         order.setEmail(request.getEmail());
         order.setPhone(request.getPhone());
         order.setName(request.getName());
-
-        int discountId = 0;
-        if(request.getDiscountCode() != null){
-            Query q = session.createQuery("select discountId from Discount where discountCode =: s1");
-            q.setParameter("s1",request.getDiscountCode());
-            discountId = (int)q.getSingleResult();
-        }
-        order.setDiscountId(discountId);
+        if(request.getDiscountId() > 0)
+            order.setDiscountId(request.getDiscountId());
         order.setUserId(request.getUserId());
         if(request.getPayment() == ORDER_PAYMENT.PAID)
             order.setDateDone(DateUtils.dateTimeNow());
         order.setShipping(request.getShipping());
         order.setTotalItemPrice(request.getTotalItemPrice());
 
-        BigDecimal totalPrice = request.getTotalItemPrice().add(request.getShipping());
-        if(discountId > 0){
-
-            Query q = session.createQuery("select discountValue from Discount where discountId =: s1");
-            q.setParameter("s1",discountId);
-            double discountVal = (double)q.getSingleResult();
-            totalPrice = totalPrice.subtract(totalPrice.multiply(BigDecimal.valueOf(discountVal)));
-        }
-        order.setTotalPrice(totalPrice);
+        order.setTotalPrice(request.getTotalPrice());
 
         int orderId = -1;
         try {
@@ -146,7 +133,9 @@ public class OrderRepository implements IOrderRepository{
     }
     private OrderViewModel getOrderViewModel(Order order, Session session){
         OrderViewModel orderViewModel = new OrderViewModel();
-        DiscountViewModel discount = DiscountService.getInstance().retrieveDiscountById(order.getDiscountId());
+        DiscountViewModel discount = null;
+        if(order.getDiscountId() != null)
+            discount = DiscountService.getInstance().retrieveDiscountById(order.getDiscountId());
         Query q = session.createQuery("from User where id =:s1");
         q.setParameter("s1",order.getUserId());
         User user = (User)q.getSingleResult();
@@ -163,9 +152,11 @@ public class OrderRepository implements IOrderRepository{
         orderViewModel.setEmail(order.getEmail());
         orderViewModel.setPhone(order.getPhone());
         orderViewModel.setName(order.getName());
-        orderViewModel.setDiscountId(order.getDiscountId());
-        orderViewModel.setDiscountCode(discount.getDiscountCode());
-        orderViewModel.setDiscountValue(discount.getDiscountValue());
+        if(order.getDiscountId() != null) {
+            orderViewModel.setDiscountId(order.getDiscountId());
+            orderViewModel.setDiscountCode(discount.getDiscountCode());
+            orderViewModel.setDiscountValue(discount.getDiscountValue());
+        }
         orderViewModel.setUserId(order.getUserId());
         orderViewModel.setDateDone(DateUtils.dateTimeToStringWithFormat(order.getDateDone(),"yyyy-MM-dd HH:mm:ss"));
         orderViewModel.setShipping(order.getShipping());

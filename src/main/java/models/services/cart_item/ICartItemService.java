@@ -15,7 +15,7 @@ public interface ICartItemService {
     boolean deleteCartItem(Integer cartItemId);
     CartItemViewModel retrieveCartItemById(Integer cartItemId);
     ArrayList<CartItemViewModel> retrieveAllCartItem(CartItemGetPagingRequest request);
-
+    boolean deleteCartByUserId(int userId);
     ArrayList<CartItemViewModel> retrieveCartByUserId(int userId);
     int getCartIdByUserId(int userId);
     CartItemViewModel getCartItemContain(int cartId, int productId);

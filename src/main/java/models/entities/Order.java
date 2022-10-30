@@ -17,7 +17,7 @@ public class Order {
     @Column(nullable = false)
     private int userId;
     @Column
-    private int discountId;
+    private Integer discountId;
     @Column
     private LocalDateTime dateDone;
 
@@ -92,11 +92,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public int getDiscountId() {
+    public Integer getDiscountId() {
         return discountId;
     }
 
-    public void setDiscountId(int discountId) {
+    public void setDiscountId(Integer discountId) {
         this.discountId = discountId;
     }
 
