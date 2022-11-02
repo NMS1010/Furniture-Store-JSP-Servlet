@@ -1,5 +1,7 @@
 package models.repositories.review_item;
 
+import models.entities.Product;
+import models.entities.ProductImage;
 import models.entities.ReviewItem;
 import models.services.product.ProductService;
 import models.services.review_item.ReviewItemService;
@@ -14,8 +16,7 @@ import org.hibernate.query.Query;
 import utils.DateUtils;
 import utils.HibernateUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ReviewItemRepository implements IReviewItemRepository{
     private static ReviewItemRepository instance = null;
@@ -37,7 +38,7 @@ public class ReviewItemRepository implements IReviewItemRepository{
         reviewItem.setCreatedAt(DateUtils.dateTimeNow());
         reviewItem.setUpdatedAt(DateUtils.dateTimeNow());
         reviewItem.setProductId(request.getProductId());
-        reviewItem.setReviewId(reviewItem.getReviewId());
+        reviewItem.setReviewId(request.getReviewId());
 
         int reviewItemId = -1;
         try {
@@ -79,7 +80,7 @@ public class ReviewItemRepository implements IReviewItemRepository{
     }
     private ReviewItemViewModel getReviewItemViewModel(ReviewItem reviewItem, Session session){
         ReviewItemViewModel reviewItemViewModel = new ReviewItemViewModel();
-        ProductViewModel product = ProductService.getInstance().retrieveProductById(reviewItem.getProductId());
+        //ProductViewModel product = ProductService.getInstance().retrieveProductById(reviewItem.getProductId());
 
         reviewItemViewModel.setReviewItemId(reviewItem.getReviewItemId());
         reviewItemViewModel.setReviewId(reviewItem.getReviewId());
@@ -88,10 +89,21 @@ public class ReviewItemRepository implements IReviewItemRepository{
         reviewItemViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(reviewItem.getCreatedAt(),"yyyy-MM-dd HH:mm:ss"));
         reviewItemViewModel.setRating(reviewItem.getRating());
         Query q = session.createQuery("select r.user.userId from Review r where reviewId=:s1");
+        q.setParameter("s1",reviewItem.getReviewId());
         int userId = (int)q.getSingleResult();
         reviewItemViewModel.setUserId(reviewItem.getReviewId());
         reviewItemViewModel.setStatus(reviewItem.getStatus());
-        reviewItemViewModel.setProductImage(product.getImage());
+
+
+        Query r = session.createQuery("from ProductImage where productId=:s1 and isDefault=true");
+        r.setParameter("s1",reviewItem.getProductId());
+
+        Query g = session.createQuery("from Product where productId=:s1");
+        g.setParameter("s1", reviewItem.getProductId());
+        ProductImage productImage = (ProductImage) r.getSingleResult();
+        Product product = (Product) g.getSingleResult();
+
+        reviewItemViewModel.setProductImage(productImage.getImage());
         reviewItemViewModel.setProductName(product.getName());
         reviewItemViewModel.setDateUpdated(DateUtils.dateTimeToStringWithFormat(reviewItem.getUpdatedAt(),"yyyy-MM-dd HH:mm:ss"));
 
@@ -173,5 +185,25 @@ public class ReviewItemRepository implements IReviewItemRepository{
             });
         session.close();
         return reviewItems;
+    }
+
+    @Override
+    public ArrayList<ReviewItemViewModel> retrieveUserReviewByProductId(Integer userId, Integer productId) {
+        ArrayList<ReviewItemViewModel> reviewItems = ReviewItemService.getInstance().retrieveReviewItemByUserId(userId);
+        reviewItems.removeIf(x -> x.getProductId() != productId);
+
+        return reviewItems;
+    }
+
+    @Override
+    public int getReviewIdByUserId(int userId) {
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("select reviewId from Review where user.userId =:s1");
+        q.setParameter("s1",userId);
+        Object o = q.getSingleResult();
+        session.close();
+        if(o == null)
+            return -1;
+        return (int)o;
     }
 }

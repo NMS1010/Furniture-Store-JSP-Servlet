@@ -3,7 +3,7 @@
   <div id="sidebar" class="sidebar ec-sidebar-footer">
 
     <div class="ec-brand">
-      <a href="<%=request.getContextPath()%>/views/admin/index.jsp" title="Ekka">
+      <a href="<%=request.getContextPath()%>/admin/home" title="Ekka">
         <img class="ec-brand-icon" src="<%=request.getContextPath()%>/assets/admin/img/logo/ec-site-logo.png" alt="" />
         <span class="ec-brand-name text-truncate">Ekka</span>
       </a>

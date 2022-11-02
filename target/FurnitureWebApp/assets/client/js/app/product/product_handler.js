@@ -15,7 +15,7 @@ function quickView(e, context){
     }
 
     document.querySelector(".quickview__inner .rating").innerHTML = html
-    document.querySelector(".quickview__inner .quickview__info--review__text").innerText = $("#product-totalReview-" + index).val() + `reviews`
+    document.querySelector(".quickview__inner .quickview__info--review__text").innerText = $("#product-totalReview-" + index).val() + ` reviews`
     document.querySelector(".quickview__inner .product__details--info__desc").innerText = $("#product-desc-" + index).val()
 
     let htmlBigImg = ``

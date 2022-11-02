@@ -24,7 +24,7 @@ public class OrderDetails extends HttpServlet {
         ArrayList<OrderItemViewModel> orderItems = OrderItemService.getInstance().getByOrderId(orderId);
         request.setAttribute("orderItems", orderItems);
 
-        ServletUtils.forward(request, response, "/views/admin/order/order-detail.jsp");
+        ServletUtils.forward(request, response, "/views/admin/order/order-details.jsp");
     }
 
     @Override

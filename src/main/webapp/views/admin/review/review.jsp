@@ -56,7 +56,7 @@
                                                             <c:forEach begin="1" end="${review.rating}" var="r">
                                                                 <i class="mdi mdi-star is-rated"></i>
                                                             </c:forEach>
-                                                            <c:forEach begin="${review.rating}" end="5" var="r">
+                                                            <c:forEach begin="${review.rating + 1}" end="5" var="r">
                                                                 <i class="mdi mdi-star"></i>
                                                             </c:forEach>
                                                         </div>

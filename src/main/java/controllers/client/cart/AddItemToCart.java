@@ -1,9 +1,11 @@
 package controllers.client.cart;
 
 import models.services.cart_item.CartItemService;
+import models.services.product.ProductService;
 import models.view_models.cart_items.CartItemCreateRequest;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
+import models.view_models.products.ProductViewModel;
 import models.view_models.users.UserViewModel;
 import utils.StringUtils;
 
@@ -32,27 +34,31 @@ public class AddItemToCart extends HttpServlet {
 
         int count = -1;
         CartItemViewModel cartItem = CartItemService.getInstance().getCartItemContain(cartId, productId);
-        if(cartItem != null){
-            CartItemUpdateRequest updateReq = new CartItemUpdateRequest();
-            updateReq.setCartItemId(cartItem.getCartItemId());
-            updateReq.setQuantity(cartItem.getQuantity() + 1);
-            updateReq.setStatus(cartItem.getStatus());
-            count = CartItemService.getInstance().updateCartItem(updateReq) ? 1 : 0;
-            out.println("repeat");
-        }
-        else {
-            CartItemCreateRequest createReq = new CartItemCreateRequest();
-            createReq.setCartId(cartId);
-            createReq.setProductId(productId);
-            createReq.setQuantity(quantity);
-            createReq.setStatus(1);
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
+        if(product.getQuantity() > 0) {
+            if (cartItem != null) {
+                CartItemUpdateRequest updateReq = new CartItemUpdateRequest();
+                updateReq.setCartItemId(cartItem.getCartItemId());
+                updateReq.setQuantity(cartItem.getQuantity() + 1);
+                updateReq.setStatus(cartItem.getStatus());
+                count = CartItemService.getInstance().updateCartItem(updateReq) ? 1 : 0;
+                out.println("repeat");
+            } else {
+                CartItemCreateRequest createReq = new CartItemCreateRequest();
+                createReq.setCartId(cartId);
+                createReq.setProductId(productId);
+                createReq.setQuantity(quantity);
+                createReq.setStatus(1);
 
-            count = CartItemService.getInstance().insertCartItem(createReq);
-            if(count > 0){
-                user.setTotalCartItem(user.getTotalCartItem() + 1);
-                session.setAttribute("user", user);
-                out.println(user.getTotalCartItem() + "success");
+                count = CartItemService.getInstance().insertCartItem(createReq);
+                if (count > 0) {
+                    user.setTotalCartItem(user.getTotalCartItem() + 1);
+                    session.setAttribute("user", user);
+                    out.println(user.getTotalCartItem() + "success");
+                }
             }
+        }else{
+            out.println("expired");
         }
 
         if(count <= 0){

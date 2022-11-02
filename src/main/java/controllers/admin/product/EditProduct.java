@@ -7,6 +7,7 @@ import utils.StringUtils;
 import models.view_models.product_images.ProductImageCreateRequest;
 import models.view_models.products.ProductUpdateRequest;
 import models.view_models.products.ProductViewModel;
+import utils.constants.PRODUCT_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -57,6 +58,7 @@ public class EditProduct extends HttpServlet {
         int categoryId = StringUtils.toInt(request.getParameter("categories"));
         int brandId = StringUtils.toInt(request.getParameter("brands"));
         int status = StringUtils.toInt(request.getParameter("status"));
+
         req.setProductId(productId);
         req.setDescription(description);
         req.setOrigin(origin);

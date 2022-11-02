@@ -7,14 +7,6 @@ public class ReviewItemCreateRequest {
     private int rating;
     private int status;
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
     public int getProductId() {
         return productId;
     }
@@ -23,11 +15,11 @@ public class ReviewItemCreateRequest {
         this.productId = productId;
     }
 
-    public int getUserId() {
+    public int getReviewId() {
         return reviewId;
     }
 
-    public void setUserId(int reviewId) {
+    public void setReviewId(int reviewId) {
         this.reviewId = reviewId;
     }
 
@@ -45,5 +37,13 @@ public class ReviewItemCreateRequest {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

@@ -77,6 +77,10 @@ public class OrderRepository implements IOrderRepository{
         Order order = session.find(Order.class, request.getOrderId());
 
         order.setStatus(request.getStatus());
+        if(request.getStatus() == ORDER_STATUS.DELIVERED && order.getPayment() == ORDER_PAYMENT.COD){
+            order.setPayment(ORDER_PAYMENT.PAID);
+            order.setDateDone(DateUtils.dateTimeNow());
+        }
         session.close();
         return HibernateUtils.merge(order);
     }
@@ -146,7 +150,8 @@ public class OrderRepository implements IOrderRepository{
 
         orderViewModel.setOrderId(order.getOrderId());
         orderViewModel.setAddress(order.getAddress());
-        orderViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(order.getDateCreated(),"yyyy-MM-dd HH:mm:ss"));
+        if(order.getDateCreated() != null)
+            orderViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(order.getDateCreated(),"yyyy-MM-dd HH:mm:ss"));
         orderViewModel.setStatus(order.getStatus());
         orderViewModel.setStatusCode(getStatus(order.getStatus()));
         orderViewModel.setEmail(order.getEmail());
@@ -158,7 +163,8 @@ public class OrderRepository implements IOrderRepository{
             orderViewModel.setDiscountValue(discount.getDiscountValue());
         }
         orderViewModel.setUserId(order.getUserId());
-        orderViewModel.setDateDone(DateUtils.dateTimeToStringWithFormat(order.getDateDone(),"yyyy-MM-dd HH:mm:ss"));
+        if(order.getDateDone() != null)
+            orderViewModel.setDateDone(DateUtils.dateTimeToStringWithFormat(order.getDateDone(),"yyyy-MM-dd HH:mm:ss"));
         orderViewModel.setShipping(order.getShipping());
         orderViewModel.setTotalItemPrice(order.getTotalItemPrice());
         orderViewModel.setTotalPrice(order.getTotalPrice());
@@ -211,7 +217,7 @@ public class OrderRepository implements IOrderRepository{
     public ArrayList<OrderViewModel> retrieveNewOrder(OrderGetPagingRequest request) {
         ArrayList<OrderViewModel> all = retrieveAll(request);
 
-        all.removeIf(x -> x.getStatus() == ORDER_STATUS.DELIVERED);
+        all.removeIf(x -> x.getStatus() != ORDER_STATUS.PENDING);
 
         return all;
     }

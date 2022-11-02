@@ -12,6 +12,7 @@ import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryViewModel;
 import models.view_models.product_images.ProductImageCreateRequest;
 import models.view_models.products.ProductCreateRequest;
+import utils.constants.PRODUCT_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -68,6 +69,7 @@ public class AddProduct extends HttpServlet {
         req.setOrigin(origin);
         req.setPrice(StringUtils.toBigDecimal(price));
         req.setProductName(productName);
+
         req.setQuantity(quantity);
         req.setImage(file);
         req.setCategoryId(categoryId);

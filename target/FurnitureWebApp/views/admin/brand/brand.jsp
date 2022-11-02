@@ -1,3 +1,4 @@
+<%@ page import="com.google.gson.Gson" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="brands" scope="request" type="java.util.ArrayList<models.view_models.brands.BrandViewModel>"/>
@@ -221,51 +222,45 @@
         })
 
         function searchBrandByAjax(param){
-            let txt = param.value;
-            $.ajax({
-                url:"<%=request.getContextPath()%>/admin/brands/search",
-                type:"get",
-                data:{
-                    keyword: txt
-                },
-                success: function (data) {
-                    let html = JSON.parse(data).map((x, index) => {
-                        return `<div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                    <div class="card card-default">
-                                        <div class="card-body text-center p-24px">
-                                            <div class="image mb-3">
-                                                <img src="data:image/png;base64,` + x.image + `" class="img-fluid rounded-circle"
-                                                     alt="Avatar Image">
-                                            </div>
+            let txt = param.value.toLowerCase();
+            <%
+                String json = new Gson().toJson(brands);
+             %>
+            let html = <%=json%>.map((x, index) => {
+                        if(x.brandName.toLowerCase().includes(txt) || x.origin.toLowerCase().includes(txt)){
+                            return `<div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
+                                        <div class="card card-default">
+                                            <div class="card-body text-center p-24px">
+                                                <div class="image mb-3">
+                                                    <img src="data:image/png;base64,` + x.image + `" class="img-fluid rounded-circle"
+                                                         alt="Avatar Image">
+                                                </div>
 
-                                            <h3 class="card-title text-dark">` + x.brandName + `</h3>
-                                            <h5 class="card-title text-dark">` + x.origin + `</h5>
-                                            <p class="item-count">` + x.totalProducts + `<span> items</span></p>
-                                            <span class="brand-delete mdi mdi-delete-outline" data-bs-toggle="modal"
-                                                  data-bs-target="#modal-delete-brand" data-backdrop="static" data-keyboard="false" data-id="` + x.brandId + `" href="#modal-delete-brand"></span>
-                                            <a
-                                                <c:choose>
-                                                    <c:when test="${brand == null}">
-                                                        href="<%=request.getContextPath()%>/admin/brand/edit?brandId=` + x.brandId + `"
-                                                    </c:when>
-                                                    <c:when test="${brand != null}">
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modal-add-brand"
-                                                        href="#modal-add-brand"
-                                                    </c:when>
-                                                </c:choose>
-                                            >
-                                            <span class="mdi mdi-account-edit "></span>
-                                            </a>
+                                                <h3 class="card-title text-dark">` + x.brandName + `</h3>
+                                                <h5 class="card-title text-dark">` + x.origin + `</h5>
+                                                <p class="item-count">` + x.totalProducts + `<span> items</span></p>
+                                                <span class="brand-delete mdi mdi-delete-outline" data-bs-toggle="modal"
+                                                      data-bs-target="#modal-delete-brand" data-backdrop="static" data-keyboard="false" data-id="` + x.brandId + `" href="#modal-delete-brand"></span>
+                                                <a
+                                                    <c:choose>
+                                                        <c:when test="${brand == null}">
+                                                            href="<%=request.getContextPath()%>/admin/brand/edit?brandId=` + x.brandId + `"
+                                                        </c:when>
+                                                        <c:when test="${brand != null}">
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modal-add-brand"
+                                                            href="#modal-add-brand"
+                                                        </c:when>
+                                                    </c:choose>
+                                                >
+                                                <span class="mdi mdi-account-edit "></span>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>`
-                    })
-                    document.getElementById("brand-content").innerHTML = html.join('') ;
-                },
-                error: function (xhr) {
-                }
+                                    </div>`
+                        }
             })
+            document.getElementById("brand-content").innerHTML = html.join('') ;
         }
     </script>
 </body>

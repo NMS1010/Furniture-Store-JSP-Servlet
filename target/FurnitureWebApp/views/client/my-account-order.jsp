@@ -54,9 +54,10 @@
                                 <tr class="account__table--header__child">
                                     <th class="account__table--header__child--items">Đơn hàng</th>
                                     <th class="account__table--header__child--items">Ngày đặt</th>
+                                    <th class="account__table--header__child--items">Ngày thanh toán</th>
                                     <th class="account__table--header__child--items">Trạng thái thanh toán</th>
                                     <th class="account__table--header__child--items">Trạng thái đơn hàng</th>
-                                    <th class="account__table--header__child--items">Số lượng sản phẩm</th>
+                                    <th class="account__table--header__child--items">Tổng sản phẩm</th>
                                     <th class="account__table--header__child--items">Tổng tiền</th>
                                     <th class="account__table--header__child--items">Action</th>
                                 </tr>
@@ -64,13 +65,14 @@
                                 <tbody class="account__table--body mobile__none">
                                 <c:forEach var="o" items="${orders}">
                                     <tr class="account__table--body__child">
-                                        <td class="account__table--body__child--items">${o.orderId}</td>
+                                        <td class="account__table--body__child--items">#${o.orderId}</td>
                                         <td class="account__table--body__child--items">${o.dateCreated}</td>
+                                        <td class="account__table--body__child--items">${o.dateDone}</td>
                                         <td class="account__table--body__child--items">${o.paymentMethod}</td>
                                         <td class="account__table--body__child--items ${o.statusClass}">${o.statusCode}</td>
                                         <td class="account__table--body__child--items">${o.totalItem}</td>
                                         <td class="account__table--body__child--items">${o.totalPrice}</td>
-                                        <td><a href="">Xem chi tiết</a></td>
+                                        <td class="account__table--body__child--items"><a href="<%=request.getContextPath()%>/my-account/order/detail?orderId=${o.orderId}">Xem chi tiết</a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -84,6 +86,10 @@
                                         <td class="account__table--body__child--items">
                                             <strong>Ngày đặt</strong>
                                             <span>${o.dateCreated}</span>
+                                        </td>
+                                        <td class="account__table--body__child--items">
+                                            <strong>Ngày thanh toán</strong>
+                                            <span>${o.dateDone}</span>
                                         </td>
                                         <td class="account__table--body__child--items">
                                             <strong>Trạng thái thanh toán</strong>
@@ -103,7 +109,7 @@
                                         </td>
                                         <td class="account__table--body__child--items">
                                             <strong>Chi tiết</strong>
-                                            <a href="">Xem chi tiết</a>
+                                            <a href="<%=request.getContextPath()%>/my-account/order/detail?orderId=${o.orderId}">Xem chi tiết</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

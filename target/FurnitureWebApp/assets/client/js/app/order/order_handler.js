@@ -30,6 +30,7 @@ function onApplyDiscount(context){
                 let prevPrice = parseFloat(elem.value)
                 document.getElementById("discountId").value = discount.discountId.toString()
                 elem.value = (prevPrice - prevPrice * parseFloat(discount.discountValue)).toString()
+                elem.disable = true
             }
         },
         error: function (error){

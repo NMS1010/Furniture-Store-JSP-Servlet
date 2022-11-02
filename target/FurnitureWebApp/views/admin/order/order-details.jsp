@@ -23,8 +23,11 @@
             <div class="content">
                 <div class="breadcrumb-wrapper breadcrumb-wrapper-2">
                     <h1>Order Detail</h1>
-                    <p class="breadcrumbs"><span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
-                        <span><i class="mdi mdi-chevron-right"></i></span>Orders
+                    <p class="breadcrumbs">
+                        <span><a href="<%=request.getContextPath()%>/admin/home">Home</a></span>
+                        <span><i class="mdi mdi-chevron-right"></i></span>
+                        <a href="<%=request.getContextPath()%>/admin/orders">Orders</a>
+                        <span><i class="mdi mdi-chevron-right"></i></span>Order details
                     </p>
                 </div>
                 <div class="row">
@@ -37,9 +40,9 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-xl-3 col-lg-6">
+                                    <div class="col-xl-2 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Customer:</strong></div><br>
+                                            <div class="info-title"><strong>Khách hàng</strong></div><br>
                                             <div class="info-content">
                                                 ${order.userName}<br>
                                                 ${order.userAddress}<br>
@@ -49,28 +52,36 @@
                                     </div>
                                     <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Shipped To:</strong></div><br>
+                                            <div class="info-title"><strong>Gửi dến</strong></div><br>
                                             <div class="info-content">
-                                                ${order.name}<br>
-                                                ${order.address}<br>
+                                                Tên: ${order.name}<br>
+                                                Địa chỉ: ${order.address}<br>
                                                 <abbr title="Phone">SĐT:</abbr> ${order.phone}
                                             </div>
                                         </address>
                                     </div>
                                     <div class="col-xl-3 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Payment Method:</strong></div><br>
+                                            <div class="info-title"><strong>Trạng thái thanh toán</strong></div><br>
                                             <div class="info-content">
-                                                ${order.paymentMethod}<br>
-                                                ${order.email}<br>
+                                                Trạng thái: ${order.paymentMethod}<br>
+                                                Email: ${order.email}<br>
                                             </div>
                                         </address>
                                     </div>
-                                    <div class="col-xl-3 col-lg-6">
+                                    <div class="col-xl-2 col-lg-6">
                                         <address class="info-grid">
-                                            <div class="info-title"><strong>Order Date:</strong></div><br>
+                                            <div class="info-title"><strong>Ngày tạo hoá đơn</strong></div><br>
                                             <div class="info-content">
                                                 ${order.dateCreated}<br>
+                                            </div>
+                                        </address>
+                                    </div>
+                                    <div class="col-xl-2 col-lg-6">
+                                        <address class="info-grid">
+                                            <div class="info-title"><strong>Ngày thanh toán</strong></div><br>
+                                            <div class="info-content">
+                                                ${order.dateDone}<br>
                                             </div>
                                         </address>
                                     </div>
@@ -86,7 +97,7 @@
                                                         <td class="text-center"><strong>Ảnh</strong></td>
                                                         <td class="text-center"><strong>Tên sản phẩm</strong></td>
                                                         <td class="text-center"><strong>Đơn giá</strong></td>
-                                                        <td class="text-right"><strong>Số lượng</strong></td>
+                                                        <td class="text-center"><strong>Số lượng</strong></td>
                                                         <td class="text-right"><strong>Tổng tiền</strong></td>
                                                     </tr>
                                                 </thead>
@@ -95,7 +106,7 @@
                                                         <tr class="<c:if test="${i == orderItems.size() - 1}">line</c:if>">
                                                             <td>${orderItems.get(i).orderItemId}</td>
                                                             <td><img class="product-img"
-                                                                     src="data:image/png;base64 ${orderItems.get(i).productImage}" alt="" /></td>
+                                                                     src="data:image/png;base64, ${orderItems.get(i).productImage}" alt="" /></td>
                                                             <td><strong>${orderItems.get(i).productName}</strong></td>
                                                             <td class="text-center">${orderItems.get(i).unitPrice}</td>
                                                             <td class="text-center">${orderItems.get(i).quantity}</td>
@@ -124,7 +135,7 @@
                                                 <tr>
                                                     <td colspan="4">
                                                     </td>
-                                                    <td class="text-right"><strong>Phương thức thanh toán</strong></td>
+                                                    <td class="text-right"><strong>Trạng thái thanh toán</strong></td>
                                                     <td class="text-right"><strong>${order.paymentMethod}</strong></td>
                                                 </tr>
                                                 </tbody>

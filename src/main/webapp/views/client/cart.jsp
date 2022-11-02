@@ -114,10 +114,12 @@
                                 </div>
                                 <div class="cart__summary--footer">
                                     <p class="cart__summary--footer__desc">Tính tiền ở bước thanh toán</p>
-                                    <ul class="d-flex justify-content-between">
-<%--                                        <li><button class="cart__summary--footer__btn primary__btn cart" type="submit">Cập nhật giỏ hàng</button></li>--%>
-                                        <li><a class="cart__summary--footer__btn primary__btn checkout" href="<%=request.getContextPath()%>/checkout">Mua hàng</a></li>
-                                    </ul>
+                                    <p class="cart__summary--footer__desc">Lưu ý: Giỏ hàng phải có ít nhất 1 sản phẩm mới có thể thanh toán</p>
+                                    <c:if test="${cartItems.size() > 0}">
+                                        <ul class="d-flex justify-content-between">
+                                            <li><a class="cart__summary--footer__btn primary__btn checkout" href="<%=request.getContextPath()%>/checkout">Mua hàng</a></li>
+                                        </ul>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

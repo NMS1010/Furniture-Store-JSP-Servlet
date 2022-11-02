@@ -16,6 +16,7 @@ import models.view_models.review_items.ReviewItemUpdateRequest;
 import models.view_models.review_items.ReviewItemViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ReviewItemService implements IReviewItemService {
@@ -63,4 +64,16 @@ public class ReviewItemService implements IReviewItemService {
     public ArrayList<ReviewItemViewModel> retrieveReviewItemByUserId(Integer userId) {
         return ReviewItemRepository.getInstance().retrieveByUserId(userId);
     }
+
+    @Override
+    public ArrayList<ReviewItemViewModel> retrieveUserReviewByProductId(Integer userId, Integer productId) {
+        return ReviewItemRepository.getInstance().retrieveUserReviewByProductId(userId,productId);
+    }
+
+    @Override
+    public int getReviewIdByUserId(int userId) {
+        return ReviewItemRepository.getInstance().getReviewIdByUserId(userId);
+    }
+
+
 }

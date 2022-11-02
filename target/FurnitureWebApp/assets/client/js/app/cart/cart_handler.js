@@ -20,6 +20,9 @@ function addCartItem(e, context){
             if(notify === 'error'){
                 document.getElementById("modal-error").classList.add('is-visible')
             }
+            else if(notify === 'expired'){
+                document.getElementById("modal-expired").classList.add('is-visible')
+            }
             else if(notify.includes('success')){
                 document.querySelectorAll('.cart_item_count').forEach(c => c.innerText = (parseInt(notify)).toString())
                 document.getElementById("modal-success").classList.add('is-visible')
