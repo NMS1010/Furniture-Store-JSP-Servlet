@@ -155,6 +155,10 @@ public class DiscountRepository implements IDiscountRepository{
         if(discount.getQuantity() == 0)
             return false;
         discount.setQuantity(discount.getQuantity() - 1);
+        if(discount.getQuantity() == 0){
+            discount.setQuantity(0);
+            discount.setStatus(DISCOUNT_STATUS.IN_ACTIVE);
+        }
         session.close();
 
         return HibernateUtils.merge(discount);

@@ -57,12 +57,11 @@ public class AddItemToCart extends HttpServlet {
                     out.println(user.getTotalCartItem() + "success");
                 }
             }
+            if(count <= 0){
+                out.println("error");
+            }
         }else{
             out.println("expired");
-        }
-
-        if(count <= 0){
-            out.println("error");
         }
     }
 

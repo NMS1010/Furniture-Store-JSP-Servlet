@@ -1,3 +1,4 @@
+<%@ page import="utils.constants.SORT_BY" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="categories" type="java.util.ArrayList<models.view_models.categories.CategoryViewModel>" scope="request"/>
@@ -122,18 +123,18 @@
                 <div class="col-xl-3 col-lg-4">
                     <div class="shop__sidebar--widget widget__area d-md-none">
                         <div class="single__widget widget__bg">
-                            <h2 class="widget__title position__relative h3">Search</h2>
-                            <form class="widget__search--form" action="#">
+                            <h2 class="widget__title position__relative h3">Tìm kiếm</h2>
+                            <form class="widget__search--form" action="<%=request.getContextPath()%>/products">
                                 <label>
-                                    <input class="widget__search--form__input border-0" placeholder="Search by" type="text">
+                                    <input class="widget__search--form__input border-0" placeholder="Search by" type="text" name="keyword" id="keyword">
                                 </label>
                                 <button class="widget__search--form__btn"  type="submit">
-                                    Search
+                                    Tìm
                                 </button>
                             </form>
                         </div>
                         <div class="single__widget widget__bg">
-                            <h2 class="widget__title position__relative h3">Categories</h2>
+                            <h2 class="widget__title position__relative h3">Danh mục sản phẩm</h2>
                             <ul class="widget__categories--menu">
                                 <c:forEach var="c" items="${categories}">
                                     <li class="widget__categories--menu__list">
@@ -145,9 +146,15 @@
                                             </svg>
                                         </label>
                                         <ul class="widget__categories--sub__menu">
+                                            <li class="widget__categories--sub__menu--list">
+                                                <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
+                                                    <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${c.image}" alt="categories-img">
+                                                    <span class="widget__categories--sub__menu--text">${c.name}</span>
+                                                </a>
+                                            </li>
                                             <c:forEach var="sub" items="${c.subCategories}">
                                                 <li class="widget__categories--sub__menu--list">
-                                                    <a class="widget__categories--sub__menu--link d-flex align-items-center" href="shop.html">
+                                                    <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${sub.categoryId}">
                                                         <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${sub.image}" alt="categories-img">
                                                         <span class="widget__categories--sub__menu--text">${sub.name}</span>
                                                     </a>
@@ -159,35 +166,35 @@
                             </ul>
                         </div>
                         <div class="single__widget price__filter widget__bg">
-                            <h2 class="widget__title position__relative h3">Filter By Price</h2>
-                            <form class="price__filter--form" action="#">
+                            <h2 class="widget__title position__relative h3">Lọc sản phẩm theo giá</h2>
+                            <form class="price__filter--form" action="<%=request.getContextPath()%>/products">
                                 <div class="price__filter--form__inner mb-15 d-flex align-items-center">
                                     <div class="price__filter--group">
-                                        <label class="price__filter--label" for="Filter-Price-GTE2">From</label>
+                                        <label class="price__filter--label" for="Filter-Price-GTE2">Từ</label>
                                         <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                                            <span class="price__filter--currency">$</span>
-                                            <input class="price__filter--input__field border-0" id="filterPrice-GTE2" name="filter.v.price.gte" type="number" placeholder="0" min="0" max="250.00">
+                                            <span class="price__filter--currency">VND</span>
+                                            <input class="price__filter--input__field border-0" id="filterPrice-GTE2" name="filter.v.price.gte" type="number" placeholder="0" min="0" required>
                                         </div>
                                     </div>
                                     <div class="price__divider">
                                         <span>-</span>
                                     </div>
                                     <div class="price__filter--group">
-                                        <label class="price__filter--label" for="Filter-Price-LTE2">To</label>
+                                        <label class="price__filter--label" for="Filter-Price-LTE2">Đến</label>
                                         <div class="price__filter--input border-radius-5 d-flex align-items-center">
-                                            <span class="price__filter--currency">$</span>
-                                            <input class="price__filter--input__field border-0" id="filterPrice-LTE2" name="filter.v.price.lte" type="number" min="0" placeholder="250.00" max="250.00">
+                                            <span class="price__filter--currency">VND</span>
+                                            <input class="price__filter--input__field border-0" id="filterPrice-LTE2" name="filter.v.price.lte" type="number" min="0" placeholder="250.00" required>
                                         </div>
                                     </div>
                                 </div>
-                                <button class="price__filter--btn primary__btn" type="submit">Filter</button>
+                                <button class="price__filter--btn primary__btn" type="submit">Lọc giá</button>
                             </form>
                         </div>
                         <div class="single__widget widget__bg">
-                            <h2 class="widget__title position__relative h3">Brands</h2>
+                            <h2 class="widget__title position__relative h3">Thương hiệu</h2>
                             <ul class="widget__tagcloud">
                                 <c:forEach var="b" items="${brands}">
-                                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="shop.html">${b.brandName}</a></li>
+                                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="<%=request.getContextPath()%>/products?brandId=${b.brandId}">${b.brandName}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -201,15 +208,18 @@
                         </button>
                         <div class="product__view--mode d-flex align-items-center">
                             <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
-                                <label class="product__view--label">Sort By :</label>
-                                <div class="select shop__header--select">
-                                    <select class="product__view--select">
-                                        <option selected value="1">Sort by latest</option>
-                                        <option value="2">Sort by popularity</option>
-                                        <option value="3">Sort by newness</option>
-                                        <option value="4">Sort by  rating </option>
-                                    </select>
-                                </div>
+                                <label class="product__view--label">Sắp xếp :</label>
+                                    <form action="<%=request.getContextPath()%>/products" class="d-flex">
+
+                                        <div class="select shop__header--select">
+                                            <select class="product__view--select" name="sortBy">
+                                                <c:forEach var="s" items="<%=SORT_BY.SortBy%>">
+                                                    <option <c:if test="${s.value == sortBy}"> selected</c:if> value="${s.value}">${s.key}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="price__filter--btn primary__btn">Sắp xếp</button>
+                                    </form>
                             </div>
                             <div class="product__view--mode__list">
                                 <div class="product__grid--column__buttons d-flex justify-content-center">
@@ -395,6 +405,12 @@
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
+
+    <div class="modal" id="modal-expired" data-animation="slideInUp">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Sản phẩm đã hết hàng hoặc ngừng kinh doanh</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
@@ -436,12 +452,12 @@
                             <p class="product__details--info__desc mb-15"></p>
                             <div class="product__variant">
                                 <div class="quickview__variant--list quantity d-flex align-items-center mb-15">
-                                    <a class="primary__btn quickview__cart--btn" id="add-cartitem" onclick="addCartItem(this, '<%=request.getContextPath()%>')">Add To Cart</a>
+                                    <a class="primary__btn quickview__cart--btn" id="add-cartitem" onclick="addCartItem(this, '<%=request.getContextPath()%>')">Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="quickview__variant--list variant__wishlist mb-15">
                                     <a class="variant__wishlist--icon" id="add-wishlist" onclick="addWish(this, '<%=request.getContextPath()%>')" title="Add to wishlist">
                                         <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path></svg>
-                                        Add to Wishlist
+                                        Thêm vào Danh sách yêu thích
                                     </a>
                                 </div>
                             </div>
@@ -457,6 +473,25 @@
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/product_handler.js"> </script>
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cart_handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
+<script>
+    function onSelectChange(e, context){
+        let x = e.value;
+        let url = context + '/products'
+        $.ajax({
+            url: url,
+            method: "GET",
+            data: {
+                'sortBy' : x
+            },
+            async: false,
+            success: function (data){
+            },
+            error: function (error){
+
+            }
+        })
+    }
+</script>
 </body>
 </html>

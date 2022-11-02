@@ -125,11 +125,16 @@
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
+    <div class="modal" id="modal-expired" data-animation="slideInUp">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Sản phẩm đã hết hàng hoặc ngừng kinh doanh</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cart_handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 </body>
 </html>

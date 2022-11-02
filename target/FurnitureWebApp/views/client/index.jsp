@@ -80,7 +80,7 @@
                     <c:forEach var="c" items="${categories}">
                         <div class="col mb-30">
                             <div class="categories__product--items border border-radius-5 text-center">
-                                <a class="categories__product--items__link" href="<%=request.getContextPath()%>/products">
+                                <a class="categories__product--items__link" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
                                     <img class="categories__product--thumbnail__img display-block" src="data:image/png;base64, ${c.image}" alt="categories-product">
                                     <h3 class="categories__product--title h4">${c.name}</h3>
                                 </a>
@@ -552,6 +552,6 @@
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/product_handler.js"> </script>
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cart_handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 </body>
 </html>

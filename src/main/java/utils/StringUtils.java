@@ -43,6 +43,8 @@ public class StringUtils {
         return res;
     }
     public static BigDecimal toBigDecimal(String str) {
+        if(str == null)
+            return BigDecimal.valueOf(0);
         BigDecimal result;
         //str = removeNonDigit(str);
 

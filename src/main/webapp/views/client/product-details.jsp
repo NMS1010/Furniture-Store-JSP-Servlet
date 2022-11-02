@@ -115,13 +115,6 @@
                             <p class="product__details--info__desc mb-20">${product.description}</p>
                             <div class="product__variant">
                                 <div class="product__variant--list quantity d-flex align-items-center mb-20">
-                                    <div class="quantity__box">
-                                        <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
-                                        <label>
-                                            <input type="number" class="quantity__number quickview__value--number" value="1" />
-                                        </label>
-                                        <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
-                                    </div>
                                     <a class="quickview__cart--btn primary__btn" id="add-cartitem" onclick="addCartItem(this,'<%=request.getContextPath()%>')" data-productId="${product.productId}">Thêm vào giỏ hàng</a>
                                 </div>
                                 <div class="product__variant--list mb-15">
@@ -259,6 +252,12 @@
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
+
+    <div class="modal" id="modal-expired" data-animation="slideInUp">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Sản phẩm đã hết hàng hoặc ngừng kinh doanh</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
@@ -267,6 +266,6 @@
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/product_handler.js"> </script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cart_handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 </body>
 </html>

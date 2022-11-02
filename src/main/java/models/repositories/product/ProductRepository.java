@@ -138,13 +138,13 @@ public class ProductRepository implements IProductRepository{
         String status = "";
         switch (i){
             case PRODUCT_STATUS.IN_STOCK:
-                status = "In Stock";
+                status = "Còn hàng";
                 break;
             case PRODUCT_STATUS.OUT_STOCK:
-                status = "Out Stock";
+                status = "Hết hàng";
                 break;
             case PRODUCT_STATUS.SUSPENDED:
-                status = "Suspended";
+                status = "Ngừng kinh doanh";
                 break;
             default:
                 status = "Undefined";
@@ -237,6 +237,8 @@ public class ProductRepository implements IProductRepository{
         Session session = HibernateUtils.getSession();
         Product product = session.find(Product.class, productId);
         product.setQuantity(product.getQuantity() - quantity);
+        if(product.getQuantity() == 0)
+            product.setStatus(PRODUCT_STATUS.OUT_STOCK);
         session.close();
         return HibernateUtils.merge(product);
     }
