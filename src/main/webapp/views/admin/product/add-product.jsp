@@ -56,7 +56,7 @@
                                                         <div class="avatar-upload">
                                                             <div class="avatar-edit">
                                                                 <input type='file' id="imageUpload" class="ec-image-upload" name="main-image"
-                                                                       accept=".png, .jpg, .jpeg" <c:if test="${product == null}">required</c:if>>/>
+                                                                       accept=".png, .jpg, .jpeg" <c:if test="${product == null}">required</c:if> />
                                                                 <label for="imageUpload"><img
                                                                         src="<%=request.getContextPath()%>/assets/admin/img/icons/edit.svg"
                                                                         class="svg_img header_svg" alt="edit" /></label>

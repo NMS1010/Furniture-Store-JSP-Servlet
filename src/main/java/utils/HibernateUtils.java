@@ -1,5 +1,6 @@
 package utils;
 
+import common.paging.PagingRequest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -99,18 +100,24 @@ public class HibernateUtils {
 
         return count;
     }
-    public static String getRetrieveAllQuery(String tableName, List<String> columnName, String sortBy, String keyword, String typeSort){
+    public static String getRetrieveAllQuery(String tableName, PagingRequest req){
         String cmd = "from " + tableName;
-        if(keyword != null && keyword != "" && columnName!= null && (long) columnName.size() > 0){
+        if(req.getKeyword() != null && !req.getKeyword().equals("") && req.getColumnName()!= null && (long) req.getColumnName().size() > 0){
             String list = "";
-            for(String c:columnName){
-                list += c + " like '%" + keyword + "%' or ";
+            for(String c:req.getColumnName()){
+                list += c + " like '%" + req.getKeyword() + "%' or ";
             }
             list = list.substring(0, list.lastIndexOf("or "));
             cmd += " where " + list;
+            if(req.getCondition() != null && !req.getCondition().equals("")){
+                cmd += " and " + req.getCondition();
+            }
         }
-        if(sortBy != null && !sortBy.equals(""))
-            cmd += " order by " + sortBy + " " + typeSort;
+        else if(req.getCondition() != null && !req.getCondition().equals("")){
+            cmd += " where " + req.getCondition();
+        }
+        if(req.getSortBy() != null && !req.getSortBy().equals(""))
+            cmd += " order by " + req.getSortBy() + " " + req.getTypeSort();
 
         return cmd;
     }

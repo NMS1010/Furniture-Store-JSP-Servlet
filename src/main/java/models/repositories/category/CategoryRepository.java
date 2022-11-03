@@ -141,7 +141,7 @@ public class CategoryRepository implements ICategoryRepository{
         ArrayList<CategoryViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("Category", request.getColumnName(), request.getSortBy(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("Category", request);
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());

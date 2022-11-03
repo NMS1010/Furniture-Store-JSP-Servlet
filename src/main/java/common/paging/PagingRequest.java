@@ -12,6 +12,15 @@ public class PagingRequest {
     private List<String> columnName;
     private String typeSort = "ASC";
     private String keyword = null;
+    private String condition = null;
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
 
     public String getSortBy() {
         return sortBy;

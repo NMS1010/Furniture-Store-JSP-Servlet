@@ -33,45 +33,52 @@ public class RetrieveAllProduct extends HttpServlet {
         CategoryGetPagingRequest req2 = new CategoryGetPagingRequest();
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req2);
         categories.removeIf(x -> x.getParentCategoryId() != 0);
+
         ProductGetPagingRequest req1 = new ProductGetPagingRequest();
-        ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
+
         String keyword = request.getParameter("keyword");
         int categoryId = StringUtils.toInt(request.getParameter("categoryId"));
         int brandId = StringUtils.toInt(request.getParameter("brandId"));
         BigDecimal minPrice = StringUtils.toBigDecimal(request.getParameter("filter.v.price.gte"));
         BigDecimal maxPrice = StringUtils.toBigDecimal(request.getParameter("filter.v.price.lte"));
         String sortBy = request.getParameter("sortBy");
-        if(keyword != null)
-            products.removeIf(x -> !x.getName().toLowerCase().contains(keyword.toLowerCase()));
+        if(keyword != null) {
+            req1.setKeyword(keyword);
+            ArrayList<String> columns = new ArrayList<>();
+            columns.add("name");
+            req1.setColumnName(columns);
+        }
         if(categoryId != 0){
-            products.removeIf(x -> x.getCategoryId() != categoryId);
+            req1.setCondition("categoryId = " + categoryId);
         }
         if(brandId != 0){
-            products.removeIf(x -> x.getBrandId() != brandId);
+            req1.setCondition("brandId = " + brandId);
         }
         if(minPrice.compareTo(BigDecimal.valueOf(0)) != 0  && maxPrice.compareTo(BigDecimal.valueOf(0)) != 0){
-            products.removeIf(x -> x.getPrice().compareTo(minPrice) < 0 ||  x.getPrice().compareTo(maxPrice) > 0);
+            req1.setCondition("price >= " + minPrice + " and " + "price <= " + maxPrice);
         }
         if(sortBy != null){
             int s = StringUtils.toInt(sortBy);
             if(s == SORT_BY.BY_NAME_AZ){
-                products.sort(Comparator.comparing(ProductViewModel::getName));
+                req1.setSortBy("name");
+                req1.setTypeSort("ASC");
             }
             else if (s == SORT_BY.BY_NAME_ZA){
-                products.sort((o1, o2) -> o2.getName().compareTo(o1.getName()));
+                req1.setSortBy("name");
+                req1.setTypeSort("DESC");
             }
             else if (s == SORT_BY.BY_PRICE_AZ){
-                products.sort(Comparator.comparing(ProductViewModel::getPrice));
+                req1.setSortBy("price");
+                req1.setTypeSort("ASC");
             }
             else if(s == SORT_BY.BY_PRICE_ZA){
-                products.sort((o1, o2) -> o2.getPrice().compareTo(o1.getPrice()));
+                req1.setSortBy("price");
+                req1.setTypeSort("DESC");
 
-            }
-            else if(s == SORT_BY.BY_REVIEW){
-                products.sort((o1, o2) -> (int) (o1.getAvgRating() - o2.getAvgRating()));
             }
             request.setAttribute("sortBy", s);
         }
+        ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
         request.setAttribute("products", products);
         request.setAttribute("brands", brands);
         request.setAttribute("categories", categories);

@@ -101,7 +101,7 @@ public class OrderItemRepository implements IOrderItemRepository{
         ArrayList<OrderItemViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("OrderItem", request.getColumnName(),request.getSortBy(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("OrderItem", request);
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());

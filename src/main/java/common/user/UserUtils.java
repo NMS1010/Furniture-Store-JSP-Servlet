@@ -31,6 +31,7 @@ public class UserUtils {
         reqCreate.setPassword(request.getParameter("password"));
         reqCreate.setStatus(StringUtils.toInt(request.getParameter("status")));
         String[] values = request.getParameterValues("roleCheckBox");
+
         if(values == null)
             return reqCreate;
         ArrayList<Integer> roleIds = new ArrayList<>();

@@ -104,7 +104,7 @@ public class BrandRepository implements IBrandRepository{
         ArrayList<BrandViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("Brand", request.getColumnName(), request.getSortBy(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("Brand", request);
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());

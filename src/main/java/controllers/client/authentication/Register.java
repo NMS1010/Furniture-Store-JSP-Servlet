@@ -7,6 +7,7 @@ import models.view_models.roles.RoleGetPagingRequest;
 import models.view_models.roles.RoleViewModel;
 import models.view_models.users.UserCreateRequest;
 import utils.ServletUtils;
+import utils.constants.USER_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -30,7 +31,7 @@ public class Register extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         UserCreateRequest createReq = UserUtils.CreateRegisterRequest(request);
-
+        createReq.setStatus(USER_STATUS.ACTIVE);
         RoleGetPagingRequest reqRole = new RoleGetPagingRequest();
         ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(reqRole);
 

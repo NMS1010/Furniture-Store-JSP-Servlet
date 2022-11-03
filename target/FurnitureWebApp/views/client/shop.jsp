@@ -475,22 +475,8 @@
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
 <script>
-    function onSelectChange(e, context){
-        let x = e.value;
-        let url = context + '/products'
-        $.ajax({
-            url: url,
-            method: "GET",
-            data: {
-                'sortBy' : x
-            },
-            async: false,
-            success: function (data){
-            },
-            error: function (error){
-
-            }
-        })
+    if(${products.size() == 0}){
+        document.querySelector(".shop__product--wrapper").innerHTML = `<p class="text-center " style="font-size: 30px; color:red;">Không có sản phẩm</p>`
     }
 </script>
 </body>

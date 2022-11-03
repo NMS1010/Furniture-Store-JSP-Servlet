@@ -134,7 +134,7 @@ public class ReviewItemRepository implements IReviewItemRepository{
         ArrayList<ReviewItemViewModel> list = new ArrayList<>();
         Session session = HibernateUtils.getSession();
         int offset = (request.getPageIndex() - 1)*request.getPageSize();
-        String cmd = HibernateUtils.getRetrieveAllQuery("ReviewItem", request.getColumnName(), request.getSortBy(), request.getKeyword(), request.getTypeSort());
+        String cmd = HibernateUtils.getRetrieveAllQuery("ReviewItem", request);
         Query q = session.createQuery(cmd);
         q.setFirstResult(offset);
         q.setMaxResults(request.getPageSize());
