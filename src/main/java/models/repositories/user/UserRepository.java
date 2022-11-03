@@ -13,6 +13,7 @@ import utils.HibernateUtils;
 import utils.constants.USER_GENDER;
 import utils.constants.USER_STATUS;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -176,7 +177,8 @@ public class UserRepository implements IUserRepository{
         userViewModel.setPassword(user.getPassword());
 
         Query q1 = session.createQuery("select sum(oi.quantity) from User u inner join Order o on u.userId = o.userId " +
-                "inner join OrderItem oi on o.orderId = oi.orderId");
+                "inner join OrderItem oi on o.orderId = oi.orderId where u.userId=:s1");
+        q1.setParameter("s1",user.getUserId());
         Object res1 = q1.getSingleResult();
         userViewModel.setTotalBought(res1 != null ? (long)res1 : 0);
 
@@ -192,6 +194,16 @@ public class UserRepository implements IUserRepository{
         q3.setParameter("s1",user.getUserId());
         Object res3 = q3.getSingleResult();
         userViewModel.setTotalCartItem(res3 != null ? (long)res3 : 0);
+
+        Query q4 = session.createQuery("select count(*) from User u inner join Order o on u.userId = o.userId where o.userId=:s1");
+        q4.setParameter("s1",user.getUserId());
+        Object res4 = q4.getSingleResult();
+        userViewModel.setTotalOrders(res4 != null ? (long)res4 : 0);
+
+        Query q5 = session.createQuery("select sum(o.totalPrice) from User u inner join Order o on u.userId = o.userId where o.userId=:s1");
+        q5.setParameter("s1",user.getUserId());
+        Object res5 = q5.getSingleResult();
+        userViewModel.setTotalCost(res5 != null ? (BigDecimal)res5 : BigDecimal.valueOf(0));
 
         userViewModel.setRoles(UserRoleService.getInstance().getByUserId(user.getUserId()));
 

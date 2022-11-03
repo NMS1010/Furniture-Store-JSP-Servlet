@@ -210,7 +210,6 @@
                             <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
                                 <label class="product__view--label">Sắp xếp :</label>
                                     <form action="<%=request.getContextPath()%>/products" class="d-flex">
-
                                         <div class="select shop__header--select">
                                             <select class="product__view--select" name="sortBy">
                                                 <c:forEach var="s" items="<%=SORT_BY.SortBy%>">
@@ -389,6 +388,34 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="pagination__area bg__gray--color">
+                            <nav class="pagination">
+                                <ul class="pagination__wrapper d-flex align-items-center justify-content-center">
+                                    <li class="pagination__list">
+                                        <a onclick="onClickLink(this, '${pageIndex - 1 > 0 ? pageIndex - 1 : 1}')" class="pagination__item--arrow  link ">
+                                            <svg xmlns="http://www.w3.org/2000/svg"  width="22.51" height="20.443" viewBox="0 0 512 512">
+                                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M244 400L100 256l144-144M120 256h292"></path>
+                                            </svg>
+                                        </a>
+                                    <li>
+                                    <c:forEach var="i" begin="1" end="${totalPage}">
+                                        <li class="pagination__list">
+                                            <a <c:if test="${i == pageIndex}">class="pagination__item pagination__item--current"</c:if> onclick="onClickLink(this, '${i}')" class="pagination__item link">
+                                                ${i}
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                    <li class="pagination__list">
+                                        <a onclick="onClickLink(this, '${pageIndex + 1 <= totalPage ? pageIndex + 1 : totalPage}')" class="pagination__item--arrow link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 512 512">
+                                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M268 112l144 144-144 144M392 256H100"></path>
+                                            </svg>
+                                        </a>
+                                    <li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -477,6 +504,34 @@
 <script>
     if(${products.size() == 0}){
         document.querySelector(".shop__product--wrapper").innerHTML = `<p class="text-center " style="font-size: 30px; color:red;">Không có sản phẩm</p>`
+    }
+    function onClickLink(e, index){
+        index = parseInt(index)
+        let alteredURL = removeParam('pageIndex', window.location.href)
+        if(!alteredURL.includes('?')) {
+            alteredURL += '?pageIndex=' + index
+        }
+        else{
+            alteredURL += '&pageIndex='+ index
+        }
+        e.href = alteredURL
+    }
+    function removeParam(key, sourceURL) {
+        let rtn = sourceURL.split("?")[0],
+            param,
+            params_arr = [],
+            queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+        if (queryString !== "") {
+            params_arr = queryString.split("&");
+            for (let i = params_arr.length - 1; i >= 0; i -= 1) {
+                param = params_arr[i].split("=")[0];
+                if (param === key) {
+                    params_arr.splice(i, 1);
+                }
+            }
+            if (params_arr.length) rtn = rtn + "?" + params_arr.join("&");
+        }
+        return rtn;
     }
 </script>
 </body>

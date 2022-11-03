@@ -2,6 +2,7 @@ package models.view_models.users;
 
 import models.view_models.user_roles.UserRoleViewModel;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -26,8 +27,26 @@ public class UserViewModel {
     private long totalBought;
     private long totalWishListItem;
     private long totalCartItem;
+    private long totalOrders;
+    private BigDecimal totalCost;
     private ArrayList<UserRoleViewModel> roles;
     private ArrayList<Integer> roleIds;
+
+    public BigDecimal getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(BigDecimal totalCost) {
+        this.totalCost = totalCost;
+    }
+
+    public long getTotalOrders() {
+        return totalOrders;
+    }
+
+    public void setTotalOrders(long totalOrders) {
+        this.totalOrders = totalOrders;
+    }
 
     public long getTotalCartItem() {
         return totalCartItem;

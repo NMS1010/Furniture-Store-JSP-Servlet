@@ -62,11 +62,20 @@
                                     <p class="reviews__comment--content__desc">${review.content}</p>
                                     <span class="reviews__comment--content__date">${review.dateUpdated}</span>
                                 </div>
+                                <a class="text-white primary__btn" href="<%=request.getContextPath()%>/my-account/order/review/edit?reviewItemId=${review.reviewItemId}">Chỉnh sửa</a>
                             </div>
                         </c:forEach>
                     </div>
                     <div id="writereview" style="display: none" class="reviews__comment--reply__area">
-                        <form action="<%=request.getContextPath()%>/my-account/order/review/add" method="post">
+                        <form
+                                <c:if test="${productReview == null}">
+                                    action="<%=request.getContextPath()%>/my-account/order/review/add"
+                                </c:if>
+                                <c:if test="${productReview != null}">
+                                    action="<%=request.getContextPath()%>/my-account/order/review/edit"
+                                </c:if>
+                                method="post"
+                        >
                             <h3 class="reviews__comment--reply__title mb-15">Viết đánh giá</h3>
                             <div class="reviews__ratting d-flex align-items-center mb-20">
                                 <ul class="rating d-flex">
@@ -110,10 +119,11 @@
                             <input type="hidden" name="productId" id="productId" value="${product.productId}">
                             <div class="row">
                                 <div class="col-12 mb-10">
-                                    <textarea name="content" id="content" class="reviews__comment--reply__textarea" placeholder="Your Comments...." required></textarea>
+                                    <textarea name="content" id="content" class="reviews__comment--reply__textarea" placeholder="Đánh giá của bạn...." required>${productReview.content}</textarea>
                                 </div>
                             </div>
-                            <input type="hidden" id="rating" name="rating" >
+                            <input type="hidden" id="rating" name="rating" value="${productReview.rating}">
+                            <input type="hidden" id="reviewItemId" name="reviewItemId" value="${productReview.reviewItemId}">
                             <button class="text-white primary__btn" data-hover="Submit" type="submit">Đánh giá</button>
                             <button class="text-white primary__btn" data-hover="Submit" onclick="document.getElementById('writereview').style.display = 'none'">Huỷ</button>
                         </form>
@@ -130,6 +140,10 @@
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script>
+    if(${productReview != null}){
+        document.getElementById('writereview').style.display = 'block'
+        onChangeRating(document.getElementById("star-"+`${productReview.rating}`))
+    }
     function onChangeRating(e){
         let index = parseInt(e.getAttribute("data-index"));
         for(let i =1; i<=5; i++){

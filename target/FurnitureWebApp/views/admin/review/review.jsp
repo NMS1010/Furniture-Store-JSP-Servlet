@@ -38,6 +38,7 @@
                                                 <th>Tên sản phẩm</th>
                                                 <th>Tên người dùng</th>
                                                 <th>Ratings</th>
+                                                <th>Nội dung đánh giá</th>
                                                 <th>Ngày đánh giá</th>
                                                 <th>Ngày cập nhật đánh giá</th>
                                                 <th>Trạng thái</th>
@@ -61,6 +62,7 @@
                                                             </c:forEach>
                                                         </div>
                                                     </td>
+                                                    <td>${review.content}</td>
                                                     <td>${review.dateCreated}</td>
                                                     <td>${review.dateUpdated}</td>
                                                     <td>${review.status == 1 ? "ACTIVE" : "INACTIVE"}</td>

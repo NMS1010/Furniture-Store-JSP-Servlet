@@ -9,8 +9,10 @@ import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryViewModel;
 import models.view_models.products.ProductGetPagingRequest;
 import models.view_models.products.ProductViewModel;
+import utils.HibernateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
+import utils.constants.PAGING_PARAM;
 import utils.constants.SORT_BY;
 
 import javax.servlet.*;
@@ -42,20 +44,25 @@ public class RetrieveAllProduct extends HttpServlet {
         BigDecimal minPrice = StringUtils.toBigDecimal(request.getParameter("filter.v.price.gte"));
         BigDecimal maxPrice = StringUtils.toBigDecimal(request.getParameter("filter.v.price.lte"));
         String sortBy = request.getParameter("sortBy");
+        long totalProduct = HibernateUtils.count("Product",null);
         if(keyword != null) {
             req1.setKeyword(keyword);
             ArrayList<String> columns = new ArrayList<>();
             columns.add("name");
             req1.setColumnName(columns);
+            totalProduct = HibernateUtils.count("Product"," name like '%" + keyword + "%'");
         }
-        if(categoryId != 0){
+        else if(categoryId != 0){
             req1.setCondition("categoryId = " + categoryId);
+            totalProduct = HibernateUtils.count("Product","categoryId = " + categoryId);
         }
-        if(brandId != 0){
+        else if(brandId != 0){
             req1.setCondition("brandId = " + brandId);
+            totalProduct = HibernateUtils.count("Product","brandId = " + brandId);
         }
-        if(minPrice.compareTo(BigDecimal.valueOf(0)) != 0  && maxPrice.compareTo(BigDecimal.valueOf(0)) != 0){
+        else if(minPrice.compareTo(BigDecimal.valueOf(0)) != 0  && maxPrice.compareTo(BigDecimal.valueOf(0)) != 0){
             req1.setCondition("price >= " + minPrice + " and " + "price <= " + maxPrice);
+            totalProduct = HibernateUtils.count("Product","price >= " + minPrice + " and " + "price <= " + maxPrice);
         }
         if(sortBy != null){
             int s = StringUtils.toInt(sortBy);
@@ -78,7 +85,16 @@ public class RetrieveAllProduct extends HttpServlet {
             }
             request.setAttribute("sortBy", s);
         }
+        int pageIndex = StringUtils.toInt(request.getParameter("pageIndex"));
+        if(pageIndex == 0)
+            pageIndex = PAGING_PARAM.PAGE_INDEX;
+        int pageSize = PAGING_PARAM.PAGE_SIZE;
+        req1.setPageIndex(pageIndex);
+        req1.setPageSize(pageSize);
         ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
+        request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("totalPage", Math.ceil((totalProduct * 1.0) / pageSize));
+
         request.setAttribute("products", products);
         request.setAttribute("brands", brands);
         request.setAttribute("categories", categories);
