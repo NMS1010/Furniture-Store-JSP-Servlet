@@ -15,16 +15,16 @@ import java.io.IOException;
 public class ChangeOrderStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String orderId = request.getParameter("orderId");
-
-        OrderViewModel order = OrderService.getInstance().retrieveOrderById(Integer.parseInt(orderId));
-        request.setAttribute("currOrder", order);
-        ServletUtils.forward(request, response, "/admin/orders");
+//        String orderId = request.getParameter("orderId");
+//
+//        OrderViewModel order = OrderService.getInstance().retrieveOrderById(Integer.parseInt(orderId));
+//        request.setAttribute("currOrder", order);
+//        ServletUtils.forward(request, response, "/admin/orders");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int orderId = StringUtils.toInt(request.getParameter("orderId"));
+        int orderId = StringUtils.toInt(request.getParameter("editOrderId"));
         int status = StringUtils.toInt(request.getParameter("orderStatus"));
         OrderUpdateRequest req = new OrderUpdateRequest();
         req.setOrderId(orderId);

@@ -79,16 +79,10 @@
                             <div class="dropdown-menu">
                               <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/order/detail?orderId=${order.orderId}">Chi tiết đơn hàng</a>
                               <a class="dropdown-item"
-                                      <c:choose>
-                                        <c:when test="${currOrder == null}">
-                                          href="<%=request.getContextPath()%>/admin/order/editStatus?orderId=${order.orderId}"
-                                        </c:when>
-                                        <c:when test="${currOrder != null}">
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#modal-change-order-status"
-                                          href="#modal-change-order-status"
-                                        </c:when>
-                                      </c:choose>
+                                data-orderId="${order.orderId}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modal-change-order-status"
+                                href="#modal-change-order-status"
                               >Cập nhật trạng thái</a>
                             </div>
                           </div>
@@ -108,7 +102,7 @@
               <h3 class="modal-header border-bottom-0 d-flex justify-content-center">Trạng thái đơn hàng</h3>
               <div class="modal-body p-4 d-flex justify-content-center" >
                 <form action="<%=request.getContextPath()%>/admin/order/editStatus" method="post">
-                  <input type="hidden" name="orderId" id="orderID" value="${currOrder.orderId}">
+                  <input type="hidden" name="editOrderId" id="editOrderId">
                   <label for="orderStatus">Trạng thái đơn hàng</label>
                     <select name="orderStatus" id="orderStatus" class="form-select" required>
                       <c:forEach var="s" items="<%=ORDER_STATUS.Status%>">
@@ -149,12 +143,15 @@
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
   $(window).on('load', function() {
-    if(${currOrder != null}) {
-      $('#modal-change-order-status').modal('show');
-    }
     if(${error != null}){
       $('#modal-error').modal('show');
     }
+  });
+  $(document).ready(function () {
+    $('#modal-change-order-status').on('show.bs.modal', function (event) {
+      let id = $(event.relatedTarget).attr('data-orderId');
+      document.getElementById('editOrderId').value = id
+    });
   });
 </script>
 </body>

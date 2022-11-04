@@ -42,7 +42,7 @@
                     <div class="product-brand card card-default p-24px">
                         <div class="search-form d-lg-inline-block w-25">
                             <div class="input-group">
-                                <input oninput="searchBrandByAjax(this)" type="text" name="query" id="search-input" class="form-control"
+                                <input oninput="searchBrand(this)" type="text" name="query" id="search-input" class="form-control"
                                        placeholder="search.." autofocus autocomplete="off" />
                             </div>
                             <div id="search-results-container">
@@ -221,7 +221,7 @@
             document.querySelector('.clear-img').src = "<%=request.getContextPath()%>/assets/admin/img/products/vender-upload-thumb-preview.jpg";
         })
 
-        function searchBrandByAjax(param){
+        function searchBrand(param){
             let txt = param.value.toLowerCase();
             <%
                 String json = new Gson().toJson(brands);

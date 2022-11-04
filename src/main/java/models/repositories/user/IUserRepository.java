@@ -20,6 +20,7 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     boolean checkPhone(String phone);
     boolean checkPassword(int userId, String password);
     boolean login(UserLoginRequest request);
-
+    ArrayList<UserViewModel> getTopUserByTotalOrder(int top);
     UserViewModel getUserByUserName(String username);
+    long getTotalUser();
 }

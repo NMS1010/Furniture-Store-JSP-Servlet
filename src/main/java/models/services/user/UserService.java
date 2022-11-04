@@ -78,4 +78,14 @@ public class UserService implements IUserService{
         return UserRepository.getInstance().getUserByUserName(username);
     }
 
+    @Override
+    public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) {
+        return UserRepository.getInstance().getTopUserByTotalOrder(top);
+    }
+
+    @Override
+    public long getTotalUser() {
+        return UserRepository.getInstance().getTotalUser();
+    }
+
 }

@@ -15,7 +15,7 @@
 <script src='<%=request.getContextPath()%>/assets/admin/plugins/data-tables/datatables.responsive.min.js'></script>
 <!-- Chart -->
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/charts/Chart.min.js"></script>
-<script src="<%=request.getContextPath()%>/assets/admin/js/chart.js"></script>
+<script src="<%=request.getContextPath()%>/assets/admin/js/chartjs.js"></script>
 
 <!-- Google map chart -->
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/charts/google-map-loader.js"></script>

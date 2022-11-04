@@ -4,6 +4,7 @@ import models.entities.Order;
 import models.entities.User;
 import models.repositories.order.OrderRepository;
 import models.services.discount.DiscountService;
+import models.view_models.orders.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -13,10 +14,6 @@ import utils.HtmlClassUtils;
 import utils.constants.ORDER_PAYMENT;
 import utils.constants.ORDER_STATUS;
 import models.view_models.discounts.DiscountViewModel;
-import models.view_models.orders.OrderCreateRequest;
-import models.view_models.orders.OrderGetPagingRequest;
-import models.view_models.orders.OrderUpdateRequest;
-import models.view_models.orders.OrderViewModel;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -67,5 +64,25 @@ public class OrderService implements IOrderService{
     @Override
     public ArrayList<OrderViewModel> retrieveNewOrder(OrderGetPagingRequest request) {
         return OrderRepository.getInstance().retrieveNewOrder(request);
+    }
+
+    @Override
+    public long getTotalOrder() {
+        return OrderRepository.getInstance().getTotalOrder();
+    }
+
+    @Override
+    public BigDecimal getRevenue() {
+        return OrderRepository.getInstance().getRevenue();
+    }
+
+    @Override
+    public ArrayList<OrderViewModel> getTopOrderSoon(int top) {
+        return OrderRepository.getInstance().getTopOrderSoon(top);
+    }
+
+    @Override
+    public OrderOverviewViewModel getOrderOverviewStatistics() {
+        return OrderRepository.getInstance().getOrderOverviewStatistics();
     }
 }

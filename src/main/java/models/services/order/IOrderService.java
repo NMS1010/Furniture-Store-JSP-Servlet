@@ -2,11 +2,9 @@ package models.services.order;
 
 import common.interfaces.IModifyEntity;
 import common.interfaces.IRetrieveEntity;
-import models.view_models.orders.OrderCreateRequest;
-import models.view_models.orders.OrderGetPagingRequest;
-import models.view_models.orders.OrderUpdateRequest;
-import models.view_models.orders.OrderViewModel;
+import models.view_models.orders.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public interface IOrderService {
@@ -18,4 +16,8 @@ public interface IOrderService {
     ArrayList<OrderViewModel> retrieveOrderByUserId(int userId);
     ArrayList<OrderViewModel> retrieveDeliveredOrder(OrderGetPagingRequest request);
     ArrayList<OrderViewModel> retrieveNewOrder(OrderGetPagingRequest request);
+    long getTotalOrder();
+    BigDecimal getRevenue();
+    ArrayList<OrderViewModel> getTopOrderSoon(int top);
+    OrderOverviewViewModel getOrderOverviewStatistics();
 }

@@ -3,6 +3,7 @@ package models.repositories.cart_item;
 import models.entities.CartItem;
 import models.entities.CartItem;
 import models.repositories.product.ProductRepository;
+import models.repositories.user.UserRepository;
 import models.services.cart_item.CartItemService;
 import models.services.cart_item.ICartItemService;
 import models.services.product.ProductService;
@@ -11,6 +12,7 @@ import models.view_models.cart_items.CartItemGetPagingRequest;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.products.ProductViewModel;
+import models.view_models.users.UserViewModel;
 import models.view_models.wish_items.WishItemViewModel;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -224,5 +226,45 @@ public class CartItemRepository implements ICartItemRepository {
         if(product.getQuantity() < quantity)
             return product.getQuantity();
         return -1;
+    }
+
+    @Override
+    public String addProductToCart(int productId, int quantity, int userId) {
+        int cartId = CartItemService.getInstance().getCartIdByUserId(userId);
+        String responseStatus;
+        int count = -1;
+        CartItemViewModel cartItem = CartItemService.getInstance().getCartItemContain(cartId, productId);
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
+        if(product.getQuantity() > 0) {
+            if (cartItem != null) {
+                CartItemUpdateRequest updateReq = new CartItemUpdateRequest();
+                updateReq.setCartItemId(cartItem.getCartItemId());
+                updateReq.setQuantity(cartItem.getQuantity() + 1);
+                updateReq.setStatus(cartItem.getStatus());
+                count = CartItemService.getInstance().updateCartItem(updateReq) ? 1 : 0;
+                responseStatus = "repeat";
+            } else {
+                CartItemCreateRequest createReq = new CartItemCreateRequest();
+                createReq.setCartId(cartId);
+                createReq.setProductId(productId);
+                createReq.setQuantity(quantity);
+                createReq.setStatus(1);
+
+                count = CartItemService.getInstance().insertCartItem(createReq);
+                if (count > 0) {
+                    responseStatus = "success";
+                }
+                else{
+                    responseStatus = "error";
+                }
+            }
+            if(count <= 0){
+                responseStatus = "error";
+            }
+        }else{
+            responseStatus = "expired";
+        }
+
+        return responseStatus;
     }
 }

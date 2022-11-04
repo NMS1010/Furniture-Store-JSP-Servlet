@@ -351,6 +351,23 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
+    public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) {
+
+        ArrayList<UserViewModel> users = UserService.getInstance().retrieveAllUser(new UserGetPagingRequest());
+
+        users.sort((o1, o2) -> (int) (o2.getTotalOrders() - o1.getTotalOrders()));
+
+        ArrayList<UserViewModel> customers = new ArrayList<>();
+        for (int i = 0; i< users.size();i++){
+            if(i < top){
+                customers.add(users.get(i));
+            }
+        }
+
+        return customers;
+    }
+
+    @Override
     public UserViewModel getUserByUserName(String username) {
         Session session = HibernateUtils.getSession();
 
@@ -365,5 +382,10 @@ public class UserRepository implements IUserRepository{
             return getUserViewModel(user, session);
         }
         return null;
+    }
+
+    @Override
+    public long getTotalUser() {
+        return HibernateUtils.count("User","");
     }
 }

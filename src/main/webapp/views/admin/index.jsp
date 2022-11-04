@@ -1,7 +1,9 @@
+<%@ page import="com.google.gson.Gson" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:useBean id="customers" type="java.util.ArrayList<models.view_models.users.UserViewModel>" scope="request"/>
 <jsp:useBean id="orders" type="java.util.ArrayList<models.view_models.orders.OrderViewModel>" scope="request"/>
+<jsp:useBean id="statistics" type="models.view_models.orders.OrderOverviewViewModel" scope="request"/>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -12,7 +14,7 @@
     <title>Ekka - Admin Dashboard eCommerce</title>
     <jsp:include page="/views/admin/common/common_css.jsp" />
 </head>
-    <body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-light ec-header-light" id="body">
+    <body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-light ec-header-light" id="body" onload="updateChart()">
         <div class="wrapper">
             <jsp:include page="/views/admin/common/sidebar.jsp"/>
             <div class="ec-page-wrapper">
@@ -64,13 +66,13 @@
                                                     <th>Người dùng</th>
                                                     <th>Số lượng đơn hàng</th>
                                                     <th>Số lượng sản phẩm đã mua</th>
-                                                    <th>Tổng giá</th>
+                                                    <th>Tổng giá (VND)</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <c:forEach var="u" items="${customers}">
                                                     <tr>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <div class="media">
                                                                 <div class="media-image mr-3 rounded-circle">
                                                                     <a href="<%=request.getContextPath()%>/admin/user/detail?userId=${u.id}"><img
@@ -86,9 +88,9 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>${u.totalOrders} đơn hàng</td>
-                                                        <td>${u.totalBought} số lượng sản phẩm đã mua</td>
-                                                        <td class="text-dark d-none d-md-block">${u.totalCost} VND</td>
+                                                        <td class="text-center">${u.totalOrders}</td>
+                                                        <td class="text-center">${u.totalBought}</td>
+                                                        <td class="text-dark text-center d-none d-md-block">${u.totalCost}</td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -101,35 +103,33 @@
                                 <!-- Doughnut Chart -->
                                 <div class="card card-default">
                                     <div class="card-header justify-content-center">
-                                        <h2>Orders Overview</h2>
+                                        <h2>Tổng quan trạng thái đơn hàng</h2>
                                     </div>
                                     <div class="card-body">
                                         <canvas id="doChart"></canvas>
                                     </div>
-                                    <a href="#" class="pb-5 d-block text-center text-muted"><i
-                                            class="mdi mdi-download mr-2"></i> Download overall report</a>
                                     <div class="card-footer d-flex flex-wrap bg-white p-0">
                                         <div class="col-6">
                                             <div class="p-20">
                                                 <ul class="d-flex flex-column justify-content-between">
-                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                                                        style="color: #4c84ff"></i>Order Completed</li>
-                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                                                        style="color: #80e1c1 "></i>Order Unpaid</li>
-                                                    <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                                           style="color: #ff7b7b "></i>Order returned</li>
+                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle mr-2"
+                                                                        style="color: #88aaf3"></i>Đã giao thành công</li>
+                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle mr-2"
+                                                                        style="color: #50d7ab "></i>Đang giao</li>
+                                                    <li><i class="mdi mdi-checkbox-blank-circle mr-2"
+                                                           style="color: #9586cd "></i>Sẵn sàng chuyển đi</li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <div class="col-6 border-left">
                                             <div class="p-20">
                                                 <ul class="d-flex flex-column justify-content-between">
-                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                                                        style="color: #8061ef"></i>Order Pending</li>
-                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                                                        style="color: #ffa128"></i>Order Canceled</li>
-                                                    <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2"
-                                                           style="color: #7be6ff"></i>Order Broken</li>
+                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle mr-2"
+                                                                        style="color: #f3d676"></i>Đang đợi</li>
+                                                    <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle mr-2"
+                                                                        style="color: #ed9090"></i>Đã huỷ</li>
+                                                    <li><i class="mdi mdi-checkbox-blank-circle mr-2"
+                                                           style="color: #a4d9e5"></i>Hoàn trả</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -171,12 +171,12 @@
                                                         <td>#${o.orderId}</td>
                                                         <td>${o.userName}</td>
                                                         <td>${o.name}</td>
-                                                        <td class="d-none d-lg-table-cell">${o.totalItem}</td>
+                                                        <td class="d-none text-center d-lg-table-cell">${o.totalItem}</td>
                                                         <td class="d-none d-lg-table-cell">${o.dateCreated}</td>
-                                                        <td class="d-none d-lg-table-cell">${o.paymentMethod}</td>
+                                                        <td class="d-none text-center d-lg-table-cell">${o.paymentMethod}</td>
                                                         <td class="d-none d-lg-table-cell">${o.dateDone}</td>
                                                         <td class="d-none d-lg-table-cell">${o.totalPrice} VND</td>
-                                                        <td>
+                                                        <td class="text-center">
                                                             <span class="${o.statusClass}">${o.statusCode}</span>
                                                         </td>
                                                         <td class="text-right">
@@ -188,9 +188,6 @@
                                                                 <ul class="dropdown-menu dropdown-menu-right">
                                                                     <li class="dropdown-item">
                                                                         <a href="<%=request.getContextPath()%>/admin/order/detail?orderId=${o.orderId}">Chi tiết</a>
-                                                                    </li>
-                                                                    <li class="dropdown-item">
-                                                                        <a href="<%=request.getContextPath()%>/admin/order/editStatus?orderId=${o.orderId}">Cập nhật trạng thái</a>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -210,5 +207,57 @@
             </div>
         </div>
         <jsp:include page="/views/admin/common/common_js.jsp" />
+    <script>
+        function updateChart(){
+            <%
+                String json = new Gson().toJson(statistics);
+            %>
+            let obj = <%=json%>;
+            let ctx = $('#doChart');
+            let graph = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["completed", "delivering", "ready", "pending", "canceled", "returned"],
+                    datasets: [
+                        {
+                            label: ["completed", "delivering", "ready", "pending", "canceled", "returned"],
+                            data: [obj["totalCompleted"],obj["totalDelivering"],obj["totalReady"],obj["totalPending"],obj["totalCanceled"],obj["totalReturned"] ],
+                            backgroundColor: ["#88aaf3", "#50d7ab", "#9586cd", "#f3d676", "#ed9090", "#a4d9e5"],
+                            borderWidth: 1
+                            // borderColor: ['#88aaf3','#29cc97','#8061ef','#fec402']
+                            // hoverBorderColor: ['#88aaf3', '#29cc97', '#8061ef', '#fec402']
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    cutoutPercentage: 75,
+                    tooltips: {
+                        callbacks: {
+                            title: function(tooltipItem, data) {
+                                return "Order : " + data["labels"][tooltipItem[0]["index"]];
+                            },
+                            label: function(tooltipItem, data) {
+                                return data["datasets"][0]["data"][tooltipItem["index"]];
+                            }
+                        },
+                        titleFontColor: "#888",
+                        bodyFontColor: "#555",
+                        titleFontSize: 12,
+                        bodyFontSize: 14,
+                        backgroundColor: "rgba(256,256,256,0.95)",
+                        displayColors: true,
+                        borderColor: "rgba(220, 220, 220, 0.9)",
+                        borderWidth: 2
+                    }
+                }
+            });
+            graph.update();
+        }
+    </script>
     </body>
 </html>

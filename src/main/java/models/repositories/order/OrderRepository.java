@@ -3,11 +3,9 @@ package models.repositories.order;
 import models.entities.Order;
 import models.entities.User;
 import models.services.discount.DiscountService;
+import models.services.order.OrderService;
 import models.view_models.discounts.DiscountViewModel;
-import models.view_models.orders.OrderCreateRequest;
-import models.view_models.orders.OrderGetPagingRequest;
-import models.view_models.orders.OrderUpdateRequest;
-import models.view_models.orders.OrderViewModel;
+import models.view_models.orders.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -235,5 +233,61 @@ public class OrderRepository implements IOrderRepository{
             list.add(v);
         }
         return list;
+    }
+
+    @Override
+    public BigDecimal getRevenue() {
+        ArrayList<OrderViewModel> orders = OrderService.getInstance().retrieveAllOrder(new OrderGetPagingRequest());
+
+        BigDecimal totalRevenue = BigDecimal.valueOf(0);
+        for(OrderViewModel o: orders){
+            totalRevenue = totalRevenue.add(o.getTotalPrice());
+        }
+
+        return totalRevenue;
+    }
+
+    @Override
+    public long getTotalOrder() {
+        return HibernateUtils.count("Order", "");
+    }
+
+    @Override
+    public OrderOverviewViewModel getOrderOverviewStatistics() {
+        ArrayList<OrderViewModel> orders = retrieveAll(new OrderGetPagingRequest());
+        OrderOverviewViewModel res = new OrderOverviewViewModel();
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("select count(*) from Order where status=:s1");
+
+        q.setParameter("s1", ORDER_STATUS.PENDING);
+        res.setTotalPending((long)q.getSingleResult());
+
+        q.setParameter("s1", ORDER_STATUS.READY_TO_SHIP);
+        res.setTotalReady((long)q.getSingleResult());
+
+        q.setParameter("s1", ORDER_STATUS.ON_THE_WAY);
+        res.setTotalDelivering((long)q.getSingleResult());
+
+        q.setParameter("s1", ORDER_STATUS.DELIVERED);
+        res.setTotalCompleted((long)q.getSingleResult());
+
+        q.setParameter("s1", ORDER_STATUS.CANCEL);
+        res.setTotalCanceled((long)q.getSingleResult());
+
+        q.setParameter("s1", ORDER_STATUS.RETURN);
+        res.setTotalReturned((long)q.getSingleResult());
+
+        return res;
+
+    }
+
+    @Override
+    public ArrayList<OrderViewModel> getTopOrderSoon(int top) {
+        OrderGetPagingRequest req = new OrderGetPagingRequest();
+        req.setPageSize(top);
+        req.setSortBy("dateCreated");
+        req.setTypeSort("DESC");
+
+        return retrieveAll(req);
     }
 }

@@ -20,5 +20,5 @@ public interface ICartItemService {
     int getCartIdByUserId(int userId);
     CartItemViewModel getCartItemContain(int cartId, int productId);
     int canUpdateQuantity(int cartItemId, int quantity);
-
+    String addProductToCart(int productId, int quantity, int userId);
 }
