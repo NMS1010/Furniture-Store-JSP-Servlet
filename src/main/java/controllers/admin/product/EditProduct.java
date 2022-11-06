@@ -7,6 +7,7 @@ import utils.StringUtils;
 import models.view_models.product_images.ProductImageCreateRequest;
 import models.view_models.products.ProductUpdateRequest;
 import models.view_models.products.ProductViewModel;
+import utils.constants.IMAGE_PER_PRODUCT;
 import utils.constants.PRODUCT_STATUS;
 
 import javax.servlet.*;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @WebServlet(name = "EditProduct", value = "/admin/product/edit")
 @MultipartConfig(
@@ -41,11 +43,11 @@ public class EditProduct extends HttpServlet {
         Part file = request.getPart("main-image");
 
         List<Part> subImages = new ArrayList<Part>();
-        //int numberSubImage = StringUtils.toInt(request.getParameter("number-sub-image"));
         int minSubImage = StringUtils.toInt(request.getParameter("min-number-sub-image"));
-        for(int i=minSubImage; i<= 6; i++){
+        for(int i = minSubImage; i<= IMAGE_PER_PRODUCT.QUANTITY; i++){
             Part f = request.getPart("sub-image-" + i);
-            subImages.add(f);
+            if(f != null && !Objects.equals(f.getSubmittedFileName(), ""))
+                subImages.add(f);
         }
         int productId = StringUtils.toInt(request.getParameter("productId"));
 

@@ -20,6 +20,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @WebServlet(name = "AddProduct", value = "/admin/product/add")
 @MultipartConfig(
@@ -50,7 +51,8 @@ public class AddProduct extends HttpServlet {
         int numberSubImage = StringUtils.toInt(request.getParameter("number-sub-image"));
         for(int i=1; i<= numberSubImage; i++){
             Part f = request.getPart("sub-image-" + i);
-            subImages.add(f);
+            if(f != null && !Objects.equals(f.getSubmittedFileName(), ""))
+                subImages.add(f);
         }
 
         ProductCreateRequest req = new ProductCreateRequest();

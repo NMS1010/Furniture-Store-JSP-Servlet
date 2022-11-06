@@ -1,4 +1,5 @@
 <%@ page import="utils.constants.PRODUCT_STATUS" %>
+<%@ page import="utils.constants.IMAGE_PER_PRODUCT" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="categories" scope="request" type="java.util.ArrayList<models.view_models.categories.CategoryViewModel>"/>
@@ -192,7 +193,7 @@
                                                         <div class="col-md-4">
                                                             <label for="number-sub-image" class="form-label">Số lượng ảnh mô tả</label>
                                                             <input type="hidden" value="${product != null ? product.productImages.size() : 1}" name="min-number-sub-image" class="min-number-sub-image">
-                                                            <input value="${product != null ? product.productImages.size() : 1}" onkeydown="return false" data-prev-value="0" type="number" class="form-control number-sub-image"  min="${product != null ? product.productImages.size() : 1}" max="6" id="number-sub-image" name="number-sub-image">
+                                                            <input value="${product != null ? product.productImages.size() : 1}" onkeydown="return false" data-prev-value="0" type="number" class="form-control number-sub-image" min="${product != null ? product.productImages.size() : 1}" max="<%=IMAGE_PER_PRODUCT.QUANTITY%>" id="number-sub-image" name="number-sub-image">
                                                         </div>
                                                     </div>
                                                     <div class="row mt-4">
@@ -243,7 +244,7 @@
             let node = document.querySelector('.thumb-upload-set');
             let direction = e.target.value > parseInt(e.target.dataset.prevValue) ? 'up' : 'down'
             e.target.dataset.prevValue = e.target.value;
-            if(direction === 'up' && e.target.value <= 6){
+            if(direction === 'up' && e.target.value <= <%=IMAGE_PER_PRODUCT.QUANTITY%>){
                 let html = `
                             <div class="thumb-upload">
                                 <div class="thumb-edit">

@@ -32,8 +32,8 @@ public class EditDiscount extends HttpServlet {
         DiscountUpdateRequest updateReq = new DiscountUpdateRequest();
 
         int discountId = StringUtils.toInt(request.getParameter("discountId"));
-        updateReq.setDiscountId(discountId);
 
+        updateReq.setDiscountId(discountId);
         updateReq.setStartDate(DateUtils.stringToLocalDateTime(request.getParameter("startDate")));
         updateReq.setEndDate(DateUtils.stringToLocalDateTime(request.getParameter("endDate")));
         updateReq.setStatus(StringUtils.toInt(request.getParameter("status")));

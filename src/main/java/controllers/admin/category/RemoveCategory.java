@@ -19,12 +19,12 @@ public class RemoveCategory extends HttpServlet {
         boolean isSuccess = CategoryService.getInstance().deleteCategory(StringUtils.toInt(categoryId));
         String error = "";
         if(!isSuccess){
-            error = "?error=true";
+            error = "error=true";
         }
         if(sub == null || sub.equals(""))
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories" + error);
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?" + error);
         else {
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true" + error);
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true&" + error);
         }
     }
 

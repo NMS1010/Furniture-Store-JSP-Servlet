@@ -1,7 +1,6 @@
 package controllers.admin.product;
 
 import com.google.gson.Gson;
-import models.services.product.ProductService;
 import models.services.product_images.ProductImageService;
 import utils.StringUtils;
 
