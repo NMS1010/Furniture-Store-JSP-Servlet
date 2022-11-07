@@ -1,5 +1,6 @@
 package models.repositories.user;
 
+import common.user.UserUtils;
 import models.entities.*;
 import models.services.user.UserService;
 import models.services.user_role.UserRoleService;
@@ -14,6 +15,7 @@ import utils.constants.USER_GENDER;
 import utils.constants.USER_STATUS;
 
 import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +40,11 @@ public class UserRepository implements IUserRepository{
         user.setStatus(request.getStatus());
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
-        user.setPassword(request.getPassword());
+        try {
+            user.setPassword(UserUtils.hashPassword(request.getPassword()));
+        } catch (NoSuchAlgorithmException e) {
+            return -1;
+        }
         user.setUsername(request.getUsername());
         user.setDateOfBirth(request.getDateOfBirth());
         user.setFirstName(request.getFirstName());
@@ -100,8 +106,13 @@ public class UserRepository implements IUserRepository{
         user.setStatus(request.getStatus());
         user.setEmail(request.getEmail());
         user.setUsername(request.getUsername());
-        if(request.getPassword() != null && !Objects.equals(request.getPassword(), ""))
-            user.setPassword(request.getPassword());
+        if(request.getPassword() != null && !Objects.equals(request.getPassword(), "")) {
+            try {
+                user.setPassword(UserUtils.hashPassword(request.getPassword()));
+            } catch (NoSuchAlgorithmException e) {
+                return false;
+            }
+        }
         if(request.getAvatar()!= null && !request.getAvatar().getSubmittedFileName().equals("")){
             user.setAvatar(FileUtil.encodeBase64(request.getAvatar()));
         }
@@ -176,8 +187,8 @@ public class UserRepository implements IUserRepository{
         userViewModel.setAvatar(user.getAvatar());
         userViewModel.setPassword(user.getPassword());
 
-        Query q1 = session.createQuery("select sum(oi.quantity) from User u inner join Order o on u.userId = o.userId " +
-                "inner join OrderItem oi on o.orderId = oi.orderId where u.userId=:s1");
+        Query q1 = session.createQuery("select sum(oi.quantity) from Order o " +
+                "inner join OrderItem oi on o.orderId = oi.orderId where o.userId=:s1");
         q1.setParameter("s1",user.getUserId());
         Object res1 = q1.getSingleResult();
         userViewModel.setTotalBought(res1 != null ? (long)res1 : 0);
@@ -200,7 +211,7 @@ public class UserRepository implements IUserRepository{
         Object res4 = q4.getSingleResult();
         userViewModel.setTotalOrders(res4 != null ? (long)res4 : 0);
 
-        Query q5 = session.createQuery("select sum(o.totalPrice) from User u inner join Order o on u.userId = o.userId where o.userId=:s1");
+        Query q5 = session.createQuery("select sum(o.totalPrice) from Order o where o.userId=:s1");
         q5.setParameter("s1",user.getUserId());
         Object res5 = q5.getSingleResult();
         userViewModel.setTotalCost(res5 != null ? (BigDecimal)res5 : BigDecimal.valueOf(0));
@@ -331,14 +342,22 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public boolean checkPassword(int userId, String password) {
-        return checkContain("select count(*) from User where userId=" + userId +" and password=:s1", password);
+        try {
+            return checkContain("select count(*) from User where userId=" + userId +" and password=:s1", UserUtils.hashPassword(password));
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
     }
     @Override
     public boolean login(UserLoginRequest request) {
         Session session = HibernateUtils.getSession();
         Query q = session.createQuery("select count(*) from User where username=:s1 and password=:s2");
         q.setParameter("s1", request.getUsername());
-        q.setParameter("s2", request.getPassword());
+        try {
+            q.setParameter("s2",  UserUtils.hashPassword(request.getPassword()));
+        } catch (NoSuchAlgorithmException e) {
+            return false;
+        }
         try {
             Object o = q.getSingleResult();
             if(o == null || (long)o == 0)

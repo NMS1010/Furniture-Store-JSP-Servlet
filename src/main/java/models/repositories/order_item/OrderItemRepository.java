@@ -1,6 +1,8 @@
 package models.repositories.order_item;
 
 import models.entities.OrderItem;
+import models.repositories.order.OrderRepository;
+import models.services.order.OrderService;
 import models.services.product.ProductService;
 import models.view_models.order_items.OrderItemCreateRequest;
 import models.view_models.order_items.OrderItemGetPagingRequest;
@@ -12,6 +14,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.HibernateUtils;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +53,13 @@ public class OrderItemRepository implements IOrderItemRepository{
         finally {
             session.close();
         }
-
+        if(orderItemId != -1) {
+            boolean res = ProductService.getInstance().updateQuantity(orderItem.getProductId(), orderItem.getQuantity());
+            if (!res) {
+                OrderService.getInstance().clearOrder(orderItem.getOrderId());
+                return 0;
+            }
+        }
         return orderItemId;
     }
 

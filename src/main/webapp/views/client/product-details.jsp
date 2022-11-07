@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>Furea - Furniture Shop</title>
-    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/client/img/favicon.ico">
     <jsp:include page="/views/client/common/common_css.jsp"/>
@@ -109,7 +109,7 @@
                                             </span>
                                         </li>
                                     </c:forEach>
-                                    <li class="rating__list"><span class="rating__list--text">( ${product.avgRating}.0)</span></li>
+                                    <li class="rating__list"><span class="rating__list--text">( ${product.avgRating}.0 )</span></li>
                                 </ul>
                             </div>
                             <p class="product__details--info__desc mb-20">${product.description}</p>
@@ -120,7 +120,7 @@
                                 <div class="product__variant--list mb-15">
                                     <a class="variant__wishlist--icon mb-15" id="add-wishlist" onclick="addWish(this,'<%=request.getContextPath()%>')" data-productId="${product.productId}" title="Add to wishlist">
                                         <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path></svg>
-                                        Thêm vào Wish List
+                                        Thêm vào Danh sách yêu thích
                                     </a>
                                 </div>
                                 <div class="product__variant--list mb-15">
@@ -146,9 +146,9 @@
             <div class="row row-cols-1">
                 <div class="col">
                     <ul class="product__details--tab d-flex mb-30">
-                        <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">Description</li>
-                        <li class="product__details--tab__list" data-toggle="tab" data-target="#reviews">Product Reviews</li>
-                        <li class="product__details--tab__list" data-toggle="tab" data-target="#information">Additional Info</li>
+                        <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">Mô tả sản phẩm</li>
+                        <li class="product__details--tab__list" data-toggle="tab" data-target="#reviews">Đánh giá sản phẩm</li>
+                        <li class="product__details--tab__list" data-toggle="tab" data-target="#information">Thông tin thêm về sản phẩm</li>
                     </ul>
                     <div class="product__details--tab__inner border-radius-10">
                         <div class="tab_content">

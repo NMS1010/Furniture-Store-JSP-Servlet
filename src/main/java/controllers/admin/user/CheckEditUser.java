@@ -1,5 +1,6 @@
 package controllers.admin.user;
 
+import common.user.UserUtils;
 import models.services.user.UserService;
 import utils.StringUtils;
 import models.view_models.users.UserViewModel;
@@ -9,6 +10,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -40,8 +42,12 @@ public class CheckEditUser extends HttpServlet {
         if(!Objects.equals(user.getPhone(), phone) && UserService.getInstance().checkPhone(phone)){
             exists.add("phone");
         }
-        if(!Objects.equals(user.getPassword(), request.getParameter("password"))){
-            exists.add("password");
+        try {
+            if(!Objects.equals(user.getPassword(), UserUtils.hashPassword(request.getParameter("password")))){
+                exists.add("password");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
         PrintWriter out = response.getWriter();
         out.println(exists);

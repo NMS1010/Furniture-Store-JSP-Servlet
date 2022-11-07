@@ -25,9 +25,10 @@ public class CheckDiscount extends HttpServlet {
                 DateUtils.stringToLocalDateTime(discount.getEndDate()).isBefore(DateUtils.dateTimeNow())){
             out.println("expired");
         }
-        else
+        else {
             DiscountService.getInstance().updateQuantity(discount.getDiscountId());
             out.println(new Gson().toJson(discount));
+        }
     }
 
     @Override

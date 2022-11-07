@@ -23,8 +23,10 @@ public class RemoveItem extends HttpServlet {
         }else{
             HttpSession session = request.getSession();
             UserViewModel user = (UserViewModel) session.getAttribute("user");
-            if(user == null)
+            if(user == null) {
+                out.println("error");
                 return;
+            }
             user.setTotalCartItem(user.getTotalCartItem() - 1);
             session.setAttribute("user", user);
             //ServletUtils.redirect(response, request.getContextPath() + "/wish-list");

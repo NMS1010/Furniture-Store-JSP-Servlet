@@ -58,28 +58,10 @@ public class CreateOrder extends HttpServlet {
         createOrderReq.setTotalItemPrice(StringUtils.toBigDecimal(totalItemPrice));
         createOrderReq.setUserId(userId);
 
-        int orderId = OrderService.getInstance().insertOrder(createOrderReq);
-        if(orderId < 0){
-            request.setAttribute("error", "error");
-            ServletUtils.forward(request,response, "/checkout");
-            return;
-        }
-        ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
-        for(CartItemViewModel c: cartItems){
-            OrderItemCreateRequest createOrderItemReq = new OrderItemCreateRequest();
-            createOrderItemReq.setOrderId(orderId);
-            createOrderItemReq.setQuantity(c.getQuantity());
-            createOrderItemReq.setUnitPrice(c.getUnitPrice());
-            createOrderItemReq.setProductId(c.getProductId());
-            int orderItemId = OrderItemService.getInstance().insertOrderItem(createOrderItemReq);
-            ProductService.getInstance().updateQuantity(c.getProductId(), c.getQuantity());
-        }
-
-        boolean success = CartItemService.getInstance().deleteCartByUserId(userId);
-        HttpSession session = request.getSession();
-        UserViewModel user = (UserViewModel) session.getAttribute("user");
-        user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
-        session.setAttribute("user", user);
-        ServletUtils.redirect(response, request.getContextPath() + "/cart/items");
+        boolean res = OrderService.getInstance().createOrder(request, createOrderReq, userId);
+        String error = "";
+        if(!res)
+            error = "?error=true";
+        ServletUtils.redirect(response, request.getContextPath() + "/cart/items" + error);
     }
 }

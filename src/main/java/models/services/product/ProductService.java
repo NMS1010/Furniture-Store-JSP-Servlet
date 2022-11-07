@@ -56,4 +56,9 @@ public class ProductService implements IProductService {
     public boolean updateQuantity(int productId, int quantity) {
         return ProductRepository.getInstance().updateQuantity(productId, quantity);
     }
+
+    @Override
+    public int getQuantity(int productId) {
+        return ProductRepository.getInstance().getQuantity(productId);
+    }
 }

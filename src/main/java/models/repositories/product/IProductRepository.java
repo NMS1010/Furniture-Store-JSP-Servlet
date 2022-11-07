@@ -12,4 +12,5 @@ import java.math.BigDecimal;
 public interface IProductRepository extends IModifyEntity<ProductCreateRequest, ProductUpdateRequest, Integer>,
         IRetrieveEntity<ProductViewModel, ProductGetPagingRequest, Integer> {
     boolean updateQuantity(int productId, int quantity);
+    int getQuantity(int productId);
 }

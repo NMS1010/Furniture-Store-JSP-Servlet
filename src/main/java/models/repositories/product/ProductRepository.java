@@ -236,9 +236,19 @@ public class ProductRepository implements IProductRepository{
         Session session = HibernateUtils.getSession();
         Product product = session.find(Product.class, productId);
         product.setQuantity(product.getQuantity() - quantity);
+        session.close();
         if(product.getQuantity() == 0)
             product.setStatus(PRODUCT_STATUS.OUT_STOCK);
-        session.close();
+        else if(product.getQuantity() < 0){
+            return false;
+        }
         return HibernateUtils.merge(product);
+    }
+
+    @Override
+    public int getQuantity(int productId) {
+        Session s = HibernateUtils.getSession();
+        Product p = s.find(Product.class, productId);
+        return p.getQuantity();
     }
 }

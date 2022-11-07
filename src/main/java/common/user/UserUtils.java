@@ -9,7 +9,11 @@ import utils.StringUtils;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, // 1 MB
@@ -52,7 +56,12 @@ public class UserUtils {
 
         return loginRequest;
     }
+    public static String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 
+        return DatatypeConverter.printHexBinary(hash);
+    }
     public static UserUpdateRequest CreateUserUpdateRequest(HttpServletRequest request) throws ServletException, IOException{
         UserUpdateRequest reqUpdate = new UserUpdateRequest();
 

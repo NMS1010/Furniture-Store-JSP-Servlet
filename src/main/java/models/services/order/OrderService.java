@@ -15,6 +15,7 @@ import utils.constants.ORDER_PAYMENT;
 import utils.constants.ORDER_STATUS;
 import models.view_models.discounts.DiscountViewModel;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,5 +85,15 @@ public class OrderService implements IOrderService{
     @Override
     public OrderOverviewViewModel getOrderOverviewStatistics() {
         return OrderRepository.getInstance().getOrderOverviewStatistics();
+    }
+
+    @Override
+    public boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId) {
+        return OrderRepository.getInstance().createOrder(request, orderReq, userId);
+    }
+
+    @Override
+    public boolean clearOrder(int orderId) {
+        return OrderRepository.getInstance().clearOrder(orderId);
     }
 }

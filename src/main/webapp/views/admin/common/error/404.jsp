@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: nguye
-  Date: 10/1/2022
-  Time: 12:27 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -12,7 +5,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Ekka - Admin Dashboard HTML Template.">
+        <meta name="description" content="Ekka - Admin Dashboard">
 
         <title>Ekka - Admin Dashboard</title>
         <jsp:include page="/views/admin/common/common_css.jsp"/>

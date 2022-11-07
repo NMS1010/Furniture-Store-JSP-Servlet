@@ -1,4 +1,3 @@
-<%@ page import="utils.constants.USER_STATUS" %>
 <%@ page import="utils.constants.USER_GENDER" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
@@ -6,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>Furea - Furniture Shop</title>
-    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/client/img/favicon.ico">
     <jsp:include page="/views/client/common/common_css.jsp"/>
@@ -23,7 +22,7 @@
                         <h1 class="breadcrumb__content--title text-white mb-10">Login</h1>
                         <ul class="breadcrumb__content--menu d-flex">
                             <li class="breadcrumb__content--menu__items"><a class="text-white" href="<%=request.getContextPath()%>/home">Home</a></li>
-                            <li class="breadcrumb__content--menu__items"><span class="text-white">Register</span></li>
+                            <li class="breadcrumb__content--menu__items"><span class="text-white">Đăng ký</span></li>
                         </ul>
                     </div>
                 </div>

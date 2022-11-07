@@ -16,4 +16,5 @@ public interface IProductService {
     ProductViewModel retrieveProductById(Integer productId);
     ArrayList<ProductViewModel> retrieveAllProduct(ProductGetPagingRequest request);
     boolean updateQuantity(int productId, int quantity);
+    int getQuantity(int productId);
 }

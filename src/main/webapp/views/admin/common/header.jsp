@@ -23,14 +23,14 @@
                         </li>
                         <li>
                             <a href="<%=request.getContextPath()%>/admin/user/detail?userId=${admin.id}">
-                                <i class="mdi mdi-account"></i> My Profile
+                                <i class="mdi mdi-account"></i> Tài khoản của tôi
                             </a>
                         </li>
                         <li class="right-sidebar-in">
-                            <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> Setting </a>
+                            <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> Cài đặt </a>
                         </li>
                         <li class="dropdown-footer">
-                            <a href="<%=request.getContextPath()%>/admin/logout"> <i class="mdi mdi-logout"></i> Log Out </a>
+                            <a href="<%=request.getContextPath()%>/admin/logout"> <i class="mdi mdi-logout"></i> Đăng xuất </a>
                         </li>
                     </ul>
                 </li>

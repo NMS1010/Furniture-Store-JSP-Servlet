@@ -18,7 +18,7 @@
     <property name="hibernate.connection.useUnicode">true</property>
     <!-- Disable the second-level cache -->
     <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
-    <property name="hbm2ddl.auto">update</property>
+<!--    <property name="hbm2ddl.auto">update</property>-->
 
     <mapping class="models.entities.Category" />
     <mapping class="models.entities.Brand"/>

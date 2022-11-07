@@ -33,13 +33,13 @@
             <li class="header__account--items  header__account--search__items">
               <a class="header__account--btn search__open--btn" href="javascript:void(0)">
                 <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg" width="26.51" height="23.443" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path></svg>
-                <span class="visually-hidden">Search</span>
+                <span class="visually-hidden">Tìm kiếm</span>
               </a>
             </li>
             <li class="header__account--items">
               <a class="header__account--btn" href="<%=request.getContextPath()%>/my-account">
                 <svg xmlns="http://www.w3.org/2000/svg"  width="26.51" height="23.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path></svg>
-                <span class="visually-hidden">My Account</span>
+                <span class="visually-hidden">Tài khoản của tôi</span>
               </a>
             </li>
             <li class="header__account--items">
@@ -63,7 +63,7 @@
         </div>
         <c:if  test="${sessionScope.user != null}">
           <div>
-            <a href="<%=request.getContextPath()%>/signout">Logout</a>
+            <a href="<%=request.getContextPath()%>/signout">Đăng xuất</a>
           </div>
         </c:if>
       </div>
@@ -93,7 +93,7 @@
                         <span class="offcanvas__account--items__icon">
                           <svg xmlns="http://www.w3.org/2000/svg"  width="20.51" height="19.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path></svg>
                             </span>
-            <span class="offcanvas__account--items__label">Login / Register</span>
+            <span class="offcanvas__account--items__label">Đăng nhập / Đăng ký</span>
           </a>
         </div>
       </nav>
@@ -125,7 +125,7 @@
                         <span class="offcanvas__stikcy--toolbar__icon">
                           <svg xmlns="http://www.w3.org/2000/svg"  width="22.51" height="20.443" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path></svg>
                         </span>
-          <span class="offcanvas__stikcy--toolbar__label">Search</span>
+          <span class="offcanvas__stikcy--toolbar__label">Tìm kiếm</span>
         </a>
       </li>
       <li class="offcanvas__stikcy--toolbar__list">
@@ -135,7 +135,7 @@
                               <path  d="M79.963,138.379l-13.358,0-.56-1.927a.871.871,0,0,0-.6-.592l-1.961-.529a.91.91,0,0,0-.226-.03.864.864,0,0,0-.226,1.7l1.491.4,3.026,10.919a1.277,1.277,0,1,0,1.844,1.144.358.358,0,0,0,0-.049h6.163c0,.017,0,.034,0,.049a1.277,1.277,0,1,0,1.434-1.267c-1.531-.247-7.783-.55-7.783-.55l-.205-.8h7.8a.9.9,0,0,0,.863-.651l1.688-5.943h.62a.936.936,0,1,0,0-1.872Zm-9.934,6.474H68.568c-.04,0-.1.008-.125-.085-.034-.118-.082-.283-.082-.283l-1.146-4.037a.061.061,0,0,1,.011-.057.064.064,0,0,1,.053-.025h1.777a.064.064,0,0,1,.063.051l.969,4.34,0,.013a.058.058,0,0,1,0,.019A.063.063,0,0,1,70.03,144.853Zm3.731-4.41-.789,4.359a.066.066,0,0,1-.063.051h-1.1a.064.064,0,0,1-.063-.051l-.789-4.357a.064.064,0,0,1,.013-.055.07.07,0,0,1,.051-.025H73.7a.06.06,0,0,1,.051.025A.064.064,0,0,1,73.76,140.443Zm3.737,0L76.26,144.8a.068.068,0,0,1-.063.049H74.684a.063.063,0,0,1-.051-.025.064.064,0,0,1-.013-.055l.973-4.357a.066.066,0,0,1,.063-.051h1.777a.071.071,0,0,1,.053.025A.076.076,0,0,1,77.5,140.448Z" transform="translate(-62.393 -135.3)" fill="currentColor"></path>
                             </svg>
                         </span>
-          <span class="offcanvas__stikcy--toolbar__label">Cart</span>
+          <span class="offcanvas__stikcy--toolbar__label">Giỏ hàng</span>
           <span class="items__count cart_item_count">${sessionScope.user != null ? sessionScope.user.totalCartItem : 0}</span>
         </a>
       </li>
@@ -146,7 +146,7 @@
                               <path  d="M71.775,135.51a5.153,5.153,0,0,1,1.267-1.524,4.986,4.986,0,0,1,6.584.358,4.728,4.728,0,0,1,1.174,4.914,10.458,10.458,0,0,1-2.132,3.808,22.591,22.591,0,0,1-5.4,4.558c-.445.282-.9.549-1.356.812a.306.306,0,0,1-.254.013,25.491,25.491,0,0,1-6.279-4.8,11.648,11.648,0,0,1-2.52-4.009,4.957,4.957,0,0,1,.028-3.787,4.629,4.629,0,0,1,3.744-2.863,4.782,4.782,0,0,1,5.086,2.447c.013.019.025.034.057.076Z" transform="translate(-62.498 -132.915)" fill="currentColor"></path>
                             </svg>
                         </span>
-          <span class="offcanvas__stikcy--toolbar__label">Wishlist</span>
+          <span class="offcanvas__stikcy--toolbar__label">Danh sách yêu thích</span>
           <span class="items__count wishlist__count wish_count">${sessionScope.user != null ? sessionScope.user.totalWishListItem : 0}</span>
         </a>
       </li>
@@ -157,10 +157,10 @@
   <!-- Start search box area -->
   <div class="predictive__search--box " tabindex="-1">
     <div class="predictive__search--box__inner">
-      <h2 class="predictive__search--title">Search Products</h2>
+      <h2 class="predictive__search--title">Tìm kiếm sản phẩm</h2>
       <form class="predictive__search--form" action="<%=request.getContextPath()%>/products">
         <label>
-          <input class="predictive__search--input" placeholder="Search Here" type="text" name="keyword" id="keyword">
+          <input class="predictive__search--input" placeholder="Nhập tên sản phẩm" type="text" name="keyword" id="keyword">
         </label>
         <button type="submit" class="predictive__search--button" aria-label="search button"><svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg" width="30.51" height="25.443" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path></svg>  </button>
       </form>

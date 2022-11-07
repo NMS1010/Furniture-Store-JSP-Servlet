@@ -26,14 +26,14 @@
         <li class="has-sub">
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/users">
             <i class="mdi mdi-account-group"></i>
-            <span class="nav-text">Users</span>
+            <span class="nav-text">Quản lý <br> tài khoản</span>
           </a>
         </li>
         <!-- Roles -->
         <li class="has-sub">
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/roles">
             <i class="mdi mdi-account-group"></i>
-            <span class="nav-text">Roles</span>
+            <span class="nav-text">QUản lý <br> vai trò <br> hệ thống</span>
           </a>
           <hr>
         </li>
@@ -41,7 +41,7 @@
         <li class="has-sub">
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/categories">
             <i class="mdi mdi-dns-outline"></i>
-            <span class="nav-text">Categories</span>
+            <span class="nav-text">Quản lý <br> danh mục <br> sản phẩm</span>
           </a>
         </li>
 
@@ -49,7 +49,7 @@
         <li class="has-sub">
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/products">
             <i class="mdi mdi-palette-advanced"></i>
-            <span class="nav-text">Products</span>
+            <span class="nav-text">Quản lý <br> sản phẩm</span>
           </a>
         </li>
 
@@ -57,7 +57,7 @@
         <li class="has-sub">
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/orders">
             <i class="mdi mdi-cart"></i>
-            <span class="nav-text">Orders</span>
+            <span class="nav-text">Quản lý <br> đơn hàng</span>
           </a>
         </li>
 
@@ -65,7 +65,7 @@
         <li>
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/reviews" >
             <i class="mdi mdi-star-half"></i>
-            <span class="nav-text">Reviews</span>
+            <span class="nav-text">Quản lý <br> đánh giá <br> sản phẩm</span>
           </a>
         </li>
 
@@ -73,7 +73,7 @@
         <li>
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/brands">
             <i class="mdi mdi-tag-faces"></i>
-            <span class="nav-text">Brands</span>
+            <span class="nav-text">Quản lý <br> thương hiệu</span>
           </a>
         </li>
 
@@ -81,7 +81,7 @@
         <li>
           <a class="sidenav-item-link" href="<%=request.getContextPath()%>/admin/discounts">
             <i class="mdi mdi-sale"></i>
-            <span class="nav-text">Discount</span>
+            <span class="nav-text">Quản lý <br> mã giảm giá</span>
           </a>
           <hr>
         </li>

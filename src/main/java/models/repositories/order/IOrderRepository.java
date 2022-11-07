@@ -4,6 +4,7 @@ import common.interfaces.IModifyEntity;
 import common.interfaces.IRetrieveEntity;
 import models.view_models.orders.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -16,4 +17,6 @@ public interface IOrderRepository  extends IModifyEntity<OrderCreateRequest, Ord
     long getTotalOrder();
     OrderOverviewViewModel getOrderOverviewStatistics();
     ArrayList<OrderViewModel> getTopOrderSoon(int top);
+    boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId);
+    boolean clearOrder(int orderId);
 }

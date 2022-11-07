@@ -2,10 +2,18 @@ package models.repositories.order;
 
 import models.entities.Order;
 import models.entities.User;
+import models.repositories.cart_item.CartItemRepository;
+import models.repositories.product.ProductRepository;
+import models.services.cart_item.CartItemService;
 import models.services.discount.DiscountService;
 import models.services.order.OrderService;
+import models.services.order_item.OrderItemService;
+import models.view_models.cart_items.CartItemUpdateRequest;
+import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.discounts.DiscountViewModel;
+import models.view_models.order_items.OrderItemCreateRequest;
 import models.view_models.orders.*;
+import models.view_models.users.UserViewModel;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -15,6 +23,8 @@ import utils.HtmlClassUtils;
 import utils.constants.ORDER_PAYMENT;
 import utils.constants.ORDER_STATUS;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -289,5 +299,67 @@ public class OrderRepository implements IOrderRepository{
         req.setTypeSort("DESC");
 
         return retrieveAll(req);
+    }
+
+    @Override
+    public boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId) {
+        int orderId = OrderService.getInstance().insertOrder(orderReq);
+        if(orderId < 1)
+            return false;
+        ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
+        for(CartItemViewModel c: cartItems){
+            OrderItemCreateRequest createOrderItemReq = new OrderItemCreateRequest();
+            createOrderItemReq.setOrderId(orderId);
+            createOrderItemReq.setQuantity(c.getQuantity());
+            createOrderItemReq.setUnitPrice(c.getUnitPrice());
+            createOrderItemReq.setProductId(c.getProductId());
+            int orderItemId = OrderItemService.getInstance().insertOrderItem(createOrderItemReq);
+            if(orderItemId == -1) {
+                return false;
+            }
+            // Số lượng product trong kho không đủ
+            else if(orderItemId == 0){
+                // update lại số lượng trong giỏ hàng = với số lượng trong kho nếu vượt quá
+                for(CartItemViewModel ci: cartItems) {
+                    int currQuantity = ProductRepository.getInstance().getQuantity(ci.getProductId());
+                    if (currQuantity == 0) {
+                        CartItemRepository.getInstance().delete(ci.getCartItemId());
+                    }
+                    else if(currQuantity < ci.getQuantity()) {
+                        CartItemUpdateRequest r = new CartItemUpdateRequest();
+                        r.setCartItemId(ci.getCartItemId());
+                        r.setQuantity(currQuantity);
+                        r.setStatus(1);
+                        CartItemRepository.getInstance().update(r);
+                    }
+                }
+                return false;
+            }
+        }
+        boolean success = CartItemService.getInstance().deleteCartByUserId(userId);
+        if(!success){
+            clearOrder(orderId);
+            return false;
+        }
+        HttpSession session = request.getSession();
+        UserViewModel user = (UserViewModel) session.getAttribute("user");
+        user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
+        session.setAttribute("user", user);
+        return true;
+    }
+
+    @Override
+    public boolean clearOrder(int orderId) {
+        Session s = HibernateUtils.getSession();
+        Query q = s.createQuery("select orderItemId from OrderItem where orderId=:s1");
+        q.setParameter("s1",orderId);
+        List<Integer> oIds = q.list();
+        s.close();
+        for(int id:oIds) {
+            boolean res = OrderItemService.getInstance().deleteOrderItem(id);
+            if(!res)
+                return false;
+        }
+        return delete(orderId);
     }
 }

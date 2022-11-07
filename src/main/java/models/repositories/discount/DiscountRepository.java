@@ -142,10 +142,14 @@ public class DiscountRepository implements IDiscountRepository{
         Session session = HibernateUtils.getSession();
         Query q = session.createQuery("from Discount where discountCode=:s1");
         q.setParameter("s1", discountCode);
-        Object discount = q.getSingleResult();
-        if(discount == null)
+        try {
+            Object discount = q.getSingleResult();
+            if (discount == null)
+                return null;
+            return getDiscountViewModel((Discount) discount, session);
+        }catch (Exception e){
             return null;
-        return getDiscountViewModel((Discount) discount, session);
+        }
     }
 
     @Override

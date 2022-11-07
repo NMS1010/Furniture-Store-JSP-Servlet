@@ -5,7 +5,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" >
     <title>Furea - Furniture Shop</title>
-    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/client/img/favicon.ico">
     <jsp:include page="/views/client/common/common_css.jsp"/>
@@ -39,7 +39,7 @@
                 <div class="account__left--sidebar">
                     <h3 class="account__content--title mb-20">Tài khoản của tôi</h3>
                     <ul class="account__menu">
-                        <li class="account__menu--list active"><a href="#">Đơn hàng của tôi</a></li>
+                        <li class="account__menu--list active"><a href="<%=request.getContextPath()%>/my-account">Đơn hàng của tôi</a></li>
                         <li class="account__menu--list"><a href="<%=request.getContextPath()%>/my-account?info=true">Cập nhật thông tin</a></li>
                         <li class="account__menu--list"><a href="<%=request.getContextPath()%>/wish-list">Danh sách yêu thích</a></li>
                         <li class="account__menu--list"><a href="<%=request.getContextPath()%>/signout">Đăng xuất</a></li>

@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <title>Furea - Furniture Shop</title>
-    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/client/img/favicon.ico">
     <jsp:include page="/views/client/common/common_css.jsp"/>
@@ -25,13 +25,13 @@
     </button>
     <div class="offcanvas__filter--sidebar__inner">
         <div class="single__widget widget__bg">
-            <h2 class="widget__title position__relative h3">Search</h2>
-            <form class="widget__search--form" action="#">
+            <h2 class="widget__title position__relative h3">Tìm kiếm theo tên sản phẩm</h2>
+            <form class="widget__search--form" action="<%=request.getContextPath()%>/products">
                 <label>
-                    <input class="widget__search--form__input border-0" placeholder="Search by" type="text">
+                    <input class="widget__search--form__input border-0" placeholder="Nhập tên sản phẩm..." type="text" name="keyword">
                 </label>
                 <button class="widget__search--form__btn"  type="submit">
-                    Search
+                    Tìm kiê
                 </button>
             </form>
         </div>
@@ -39,60 +39,64 @@
             <h2 class="widget__title position__relative h3">Categories</h2>
             <ul class="widget__categories--menu">
                 <c:forEach var="c" items="${categories}">
-                    <c:if test="${c.parentCategoryId == 0}">
-                        <li class="widget__categories--menu__list">
-                            <label class="widget__categories--menu__label d-flex align-items-center">
-                                <img class="widget__categories--menu__img" src="data:image/png;base64, ${c.image}" alt="categories-img">
-                                <span class="widget__categories--menu__text">${c.name}</span>
-                                <svg class="widget__categories--menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394">
-                                    <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
-                                </svg>
-                            </label>
-                            <ul class="widget__categories--sub__menu">
-                                <c:forEach var="sub" items="${c.subCategories}">
-                                    <li class="widget__categories--sub__menu--list">
-                                        <a class="widget__categories--sub__menu--link d-flex align-items-center" href="shop.html">
-                                            <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${sub.image}" alt="categories-img">
-                                            <span class="widget__categories--sub__menu--text">${sub.name}</span>
-                                        </a>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                        </li>
-                    </c:if>
+                    <li class="widget__categories--menu__list">
+                        <label class="widget__categories--menu__label d-flex align-items-center">
+                            <img class="widget__categories--menu__img" src="data:image/png;base64, ${c.image}" alt="categories-img">
+                            <span class="widget__categories--menu__text">${c.name}</span>
+                            <svg class="widget__categories--menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394">
+                                <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
+                            </svg>
+                        </label>
+                        <ul class="widget__categories--sub__menu">
+                            <li class="widget__categories--sub__menu--list">
+                                <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
+                                    <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${c.image}" alt="categories-img">
+                                    <span class="widget__categories--sub__menu--text">${c.name}</span>
+                                </a>
+                            </li>
+                            <c:forEach var="sub" items="${c.subCategories}">
+                                <li class="widget__categories--sub__menu--list">
+                                    <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
+                                        <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${sub.image}" alt="categories-img">
+                                        <span class="widget__categories--sub__menu--text">${sub.name}</span>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </li>
                 </c:forEach>
             </ul>
         </div>
         <div class="single__widget price__filter widget__bg">
-            <h2 class="widget__title position__relative h3">Filter By Price</h2>
-            <form class="price__filter--form" action="#">
+            <h2 class="widget__title position__relative h3">Lọc theo giá</h2>
+            <form class="price__filter--form" action="<%=request.getContextPath()%>/products">
                 <div class="price__filter--form__inner mb-15 d-flex align-items-center">
                     <div class="price__filter--group">
-                        <label class="price__filter--label" for="Filter-Price-GTE2">From</label>
+                        <label class="price__filter--label" for="Filter-Price-GTE2">Từ</label>
                         <div class="price__filter--input border-radius-5 d-flex align-items-center">
                             <span class="price__filter--currency">$</span>
-                            <input class="price__filter--input__field border-0" id="Filter-Price-GTE2" name="filter.v.price.gte" type="number" placeholder="0" min="0" max="250.00">
+                            <input class="price__filter--input__field border-0" id="Filter-Price-GTE2" name="filter.v.price.gte" type="number" placeholder="0" min="0" required>
                         </div>
                     </div>
                     <div class="price__divider">
                         <span>-</span>
                     </div>
                     <div class="price__filter--group">
-                        <label class="price__filter--label" for="Filter-Price-LTE2">To</label>
+                        <label class="price__filter--label" for="Filter-Price-LTE2">Đến</label>
                         <div class="price__filter--input border-radius-5 d-flex align-items-center">
                             <span class="price__filter--currency">$</span>
-                            <input class="price__filter--input__field border-0" id="Filter-Price-LTE2" name="filter.v.price.lte" type="number" min="0" placeholder="250.00" max="250.00">
+                            <input class="price__filter--input__field border-0" id="Filter-Price-LTE2" name="filter.v.price.lte" type="number" min="0" placeholder="250.00" required>
                         </div>
                     </div>
                 </div>
-                <button class="price__filter--btn primary__btn" type="submit">Filter</button>
+                <button class="price__filter--btn primary__btn" type="submit">Lọc</button>
             </form>
         </div>
         <div class="single__widget widget__bg">
             <h2 class="widget__title position__relative h3">Brands</h2>
             <ul class="widget__tagcloud">
                 <c:forEach var="b" items="${brands}">
-                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="shop.html">${b.brandName}</a></li>
+                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="<%=request.getContextPath()%>/products?brandId=${b.brandId}">${b.brandName}</a></li>
                 </c:forEach>
             </ul>
         </div>
@@ -123,13 +127,13 @@
                 <div class="col-xl-3 col-lg-4">
                     <div class="shop__sidebar--widget widget__area d-md-none">
                         <div class="single__widget widget__bg">
-                            <h2 class="widget__title position__relative h3">Tìm kiếm</h2>
+                            <h2 class="widget__title position__relative h3">Tìm kiếm theo tên sản phẩm</h2>
                             <form class="widget__search--form" action="<%=request.getContextPath()%>/products">
                                 <label>
-                                    <input class="widget__search--form__input border-0" placeholder="Search by" type="text" name="keyword" id="keyword">
+                                    <input class="widget__search--form__input border-0" placeholder="Nhập tên sản phẩm..." type="text" name="keyword" id="keyword">
                                 </label>
                                 <button class="widget__search--form__btn"  type="submit">
-                                    Tìm
+                                    Tìm kiếm
                                 </button>
                             </form>
                         </div>
@@ -204,7 +208,7 @@
                     <div class="shop__header bg__gray--color d-flex align-items-center justify-content-between mb-30">
                         <button class="widget__filter--btn d-none d-md-flex align-items-center">
                             <svg  class="widget__filter--btn__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="28" d="M368 128h80M64 128h240M368 384h80M64 384h240M208 256h240M64 256h80"></path><circle cx="336" cy="128" r="28" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="28"></circle><circle cx="176" cy="256" r="28" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="28"></circle><circle cx="336" cy="384" r="28" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="28"></circle></svg>
-                            <span class="widget__filter--btn__text">Filter</span>
+                            <span class="widget__filter--btn__text">Lọc</span>
                         </button>
                         <div class="product__view--mode d-flex align-items-center">
                             <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
@@ -355,7 +359,7 @@
                                                                     <svg class="product__list--action__cart--btn__icon" xmlns="http://www.w3.org/2000/svg" width="16.897" height="17.565" viewBox="0 0 18.897 21.565">
                                                                         <path  d="M16.84,8.082V6.091a4.725,4.725,0,1,0-9.449,0v4.725a.675.675,0,0,0,1.35,0V9.432h5.4V8.082h-5.4V6.091a3.375,3.375,0,0,1,6.75,0v4.691a.675.675,0,1,0,1.35,0V9.433h3.374V21.581H4.017V9.432H6.041V8.082H2.667V21.641a1.289,1.289,0,0,0,1.289,1.29h16.32a1.289,1.289,0,0,0,1.289-1.29V8.082Z" transform="translate(-2.667 -1.366)" fill="currentColor"></path>
                                                                     </svg>
-                                                                    <span class="product__list--action__cart--text"> Add To Cart</span>
+                                                                    <span class="product__list--action__cart--text">Thêm vào giỏ hàng</span>
                                                                 </a>
                                                                 <ul class="product__list--action__wrapper d-flex align-items-center">
                                                                     <li class="product__list--action__child">

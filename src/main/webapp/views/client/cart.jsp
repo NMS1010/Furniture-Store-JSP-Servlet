@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" >
     <title>Furea - Furniture Shop</title>
-    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/client/img/favicon.ico">
     <jsp:include page="/views/client/common/common_css.jsp"/>
@@ -168,10 +168,22 @@
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
+    <div class="modal" id="modal-checkout-error" data-animation="slideInUp">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Có lỗi xảy ra khi đặt hàng, vui lòng thử lại</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
+<script>
+    $(window).on('load', function() {
+        if(window.location.href.includes("error")){
+            document.getElementById("modal-checkout-error").classList.add('is-visible')
+        }
+    });
+</script>
 </body>
 </html>

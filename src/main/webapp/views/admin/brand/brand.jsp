@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Ekka - Admin Dashboard eCommerce HTML Template.">
+    <meta name="description" content="Ekka - Admin Dashboard">
 
     <title>Ekka - Admin Dashboard eCommerce</title>
     <jsp:include page="/views/admin/common/common_css.jsp"/>
@@ -28,11 +28,11 @@
                         <div>
                             <c:choose>
                                 <c:when test="${brand == null}">
-                                    <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-brand" href="#modal-add-brand">Add Brand</a>
+                                    <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-brand" href="#modal-add-brand">Thêm thương hiệu</a>
                                 </c:when>
                                 <c:when test="${brand != null}">
                                     <form method="post" action="<%=request.getContextPath()%>/admin/brands">
-                                        <input type="submit" class="btn btn-primary" value="Add Brand">
+                                        <input type="submit" class="btn btn-primary" value="Thêm thương hiệu">
                                     </form>
                                 </c:when>
                             </c:choose>

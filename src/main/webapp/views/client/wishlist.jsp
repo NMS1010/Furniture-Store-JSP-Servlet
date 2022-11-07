@@ -6,7 +6,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" >
     <title>Furea - Furniture Shop</title>
-    <meta name="description" content="Morden Bootstrap HTML5 Template">
+    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="<%=request.getContextPath()%>/assets/client/img/favicon.ico">
     <jsp:include page="/views/client/common/common_css.jsp"/>
@@ -45,7 +45,7 @@
                                     <th class="cart__table--header__list">Sản phẩm</th>
                                     <th class="cart__table--header__list">Giá</th>
                                     <th class="cart__table--header__list text-center">Trạng thái</th>
-                                    <th class="cart__table--header__list text-right">Thêm vào giỏ hàng</th>
+                                    <th class="cart__table--header__list text-right">Action</th>
                                 </tr>
                             </thead>
                             <tbody class="cart__table--body">
