@@ -14,12 +14,13 @@ function onApplyDiscount(context){
         success: function (data){
             console.log(data)
             let str = data.toString()
-            let notify = str.slice(0, str.length - 2);
-            if(notify === 'error'){
-                discountValidateMessage.innerText = "Mã khuyến mãi không hợp lệ"
-                discountValue.value = "0 %"
+            if(str.includes('error')){
+                if(str.length <=10) {
+                    discountValidateMessage.innerText = "Mã khuyến mãi không hợp lệ"
+                    discountValue.value = "0 %"
+                }
             }
-            else if(notify === 'expired'){
+            else if(str.includes('expired')){
                 discountValidateMessage.innerText = "Mã khuyến mãi đã hêt hạn sử dụng"
                 discountValue.value = "0 %"
             }

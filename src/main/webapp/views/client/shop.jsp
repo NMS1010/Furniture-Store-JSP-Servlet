@@ -504,7 +504,7 @@
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/product_handler.js"> </script>
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cart-handler.js"></script>
 <script>
     if(${products.size() == 0}){
         document.querySelector(".shop__product--wrapper").innerHTML = `<p class="text-center " style="font-size: 30px; color:red;">Không có sản phẩm</p>`

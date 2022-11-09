@@ -6,6 +6,7 @@ import models.services.user.UserService;
 import models.view_models.roles.RoleGetPagingRequest;
 import models.view_models.roles.RoleViewModel;
 import models.view_models.users.UserCreateRequest;
+import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
 import utils.constants.USER_STATUS;
 
@@ -24,7 +25,13 @@ import java.util.ArrayList;
 public class Register extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletUtils.forward(request,response, "/views/client/register.jsp");
+        HttpSession session = request.getSession();
+        UserViewModel user = (UserViewModel)session.getAttribute("user");
+        if(user != null){
+            ServletUtils.redirect(response, request.getContextPath() + "/home");
+        }
+        else
+            ServletUtils.forward(request,response, "/views/client/register.jsp");
     }
 
     @Override

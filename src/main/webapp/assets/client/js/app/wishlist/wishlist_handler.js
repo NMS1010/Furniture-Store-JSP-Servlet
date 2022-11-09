@@ -11,16 +11,15 @@ function addWish(e, context){
         success: function (data){
             console.log(data)
             let str = data.toString()
-            let notify = str.slice(0, str.length - 2);
-            if(notify === 'error'){
+            if(str.includes('error')){
                 document.getElementById("modal-error").classList.add('is-visible')
             }
-            else if(notify.includes('success')){
-                document.querySelectorAll('.wish_count').forEach(c => c.innerText = (parseInt(notify)).toString())
+            else if(str.includes('success')){
+                document.querySelectorAll('.wish_count').forEach(c => c.innerText = (parseInt(str)).toString())
                 document.getElementById("modal-success").classList.add('is-visible')
 
             }
-            else if(notify === 'must-login'){
+            else if(str.includes('must-login')){
                 window.location.replace(context + '/wish-list')
             }
         },
@@ -46,9 +45,9 @@ function deleteWishItem(e, context){
         success: function (data){
             console.log(data)
             let str = data.toString()
-            let notify = str.slice(0, str.length - 2);
-            if(notify === 'error'){
-                document.getElementById("modal-error").classList.add('is-visible')
+            if(str.includes('error')){
+                if(str.length <=10)
+                    document.getElementById("modal-error").classList.add('is-visible')
             }
             else{
                 window.location.replace(context+ '/wish-list')

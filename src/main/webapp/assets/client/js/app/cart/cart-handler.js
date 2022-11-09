@@ -16,18 +16,17 @@ function addCartItem(e, context){
         success: function (data){
             console.log(data)
             let str = data.toString()
-            let notify = str.slice(0, str.length - 2);
-            if(notify === 'error'){
+            if(str.includes('error')){
                 document.getElementById("modal-error").classList.add('is-visible')
             }
-            else if(notify === 'expired'){
+            else if(str.includes('expired')){
                 document.getElementById("modal-expired").classList.add('is-visible')
             }
-            else if(notify.includes('success')){
-                document.querySelectorAll('.cart_item_count').forEach(c => c.innerText = (parseInt(notify)).toString())
+            else if(str.includes('success')){
+                document.querySelectorAll('.cart_item_count').forEach(c => c.innerText = (parseInt(str)).toString())
                 document.getElementById("modal-success").classList.add('is-visible')
             }
-            else if(notify === 'must-login'){
+            else if(str.includes('must-login')){
                 window.location.replace(context + '/cart/items')
             }
         },
@@ -49,8 +48,7 @@ function deleteCartItem(e, context){
         success: function (data){
             console.log(data)
             let str = data.toString()
-            let notify = str.slice(0, str.length - 2);
-            if(notify === 'error'){
+            if(str.includes('error')){
                 document.getElementById("modal-error").classList.add('is-visible')
             }
             else{
@@ -90,15 +88,15 @@ function updateCartItemQuantity(e, context){
         success: function (data){
             console.log(data)
             let str = data.toString()
-            let notify = str.slice(0, str.length - 2);
-            if(notify === 'error'){
-                document.getElementById("modal-error").classList.add('is-visible')
+            if(str.includes('error') ){
+                if(str.length <=10)
+                    document.getElementById("modal-error").classList.add('is-visible')
             }
             else{
                 let overMessage = document.getElementById("over-quantity-" + cartItemId.toString())
-                if(notify.includes('over')){
+                if(str.includes('over')){
                     overMessage.innerText = "Số sản phẩm không đủ"
-                    quantity = parseInt(notify)
+                    quantity = parseInt(str)
                     document.getElementById("cart-item-quantity-" + cartItemId.toString()).value = quantity
                 }else{
                     overMessage.innerText = ""

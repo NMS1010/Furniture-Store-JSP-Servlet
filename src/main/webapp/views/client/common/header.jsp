@@ -93,7 +93,18 @@
                         <span class="offcanvas__account--items__icon">
                           <svg xmlns="http://www.w3.org/2000/svg"  width="20.51" height="19.443" viewBox="0 0 512 512"><path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path><path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path></svg>
                             </span>
-            <span class="offcanvas__account--items__label">Đăng nhập / Đăng ký</span>
+
+            <c:if  test="${sessionScope.user != null}">
+              <div>
+                <a class="offcanvas__account--items__label" href="<%=request.getContextPath()%>/signout">Đăng xuất</a>
+              </div>
+            </c:if>
+            <c:if  test="${sessionScope.user == null}">
+              <div>
+                <a class="offcanvas__account--items__label" href="<%=request.getContextPath()%>/signin">Đăng nhập </a>
+                <a class="offcanvas__account--items__label" href="<%=request.getContextPath()%>/register"> Đăng ký</a>
+              </div>
+            </c:if>
           </a>
         </div>
       </nav>
@@ -146,7 +157,7 @@
                               <path  d="M71.775,135.51a5.153,5.153,0,0,1,1.267-1.524,4.986,4.986,0,0,1,6.584.358,4.728,4.728,0,0,1,1.174,4.914,10.458,10.458,0,0,1-2.132,3.808,22.591,22.591,0,0,1-5.4,4.558c-.445.282-.9.549-1.356.812a.306.306,0,0,1-.254.013,25.491,25.491,0,0,1-6.279-4.8,11.648,11.648,0,0,1-2.52-4.009,4.957,4.957,0,0,1,.028-3.787,4.629,4.629,0,0,1,3.744-2.863,4.782,4.782,0,0,1,5.086,2.447c.013.019.025.034.057.076Z" transform="translate(-62.498 -132.915)" fill="currentColor"></path>
                             </svg>
                         </span>
-          <span class="offcanvas__stikcy--toolbar__label">Danh sách yêu thích</span>
+          <span class="offcanvas__stikcy--toolbar__label">Danh sách <br> yêu thích</span>
           <span class="items__count wishlist__count wish_count">${sessionScope.user != null ? sessionScope.user.totalWishListItem : 0}</span>
         </a>
       </li>

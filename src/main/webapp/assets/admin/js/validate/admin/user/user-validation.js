@@ -84,7 +84,7 @@ function validateForm(e, context){
         success: function (data){
             console.log(data)
             let str = data.toString()
-            let arr = str.slice(0, str.length - 2).replace('[','').replace(']','').split(', ');
+            let arr = str.replace('[','').replace(']','').split(', ');
             console.log(arr)
             if (arr.includes('user')) {
                 $('#userValidateMessage').html('Tên tài khoản đã tồn tại').css('color','red')

@@ -266,6 +266,6 @@
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/product/product_handler.js"> </script>
 <script src="<%=request.getContextPath()%>/assets/client/js/app/wishlist/wishlist_handler.js"></script>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cartHandler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/cart/cart-handler.js"></script>
 </body>
 </html>

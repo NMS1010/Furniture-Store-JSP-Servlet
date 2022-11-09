@@ -16,7 +16,13 @@ import java.io.PrintWriter;
 public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletUtils.forward(request,response, "/views/client/login.jsp");
+        HttpSession session = request.getSession();
+        UserViewModel user = (UserViewModel)session.getAttribute("user");
+        if(user != null){
+            ServletUtils.redirect(response, request.getContextPath() + "/home");
+        }
+        else
+            ServletUtils.forward(request,response, "/views/client/login.jsp");
     }
 
     @Override
@@ -27,8 +33,6 @@ public class SignIn extends HttpServlet {
 
         if(UserService.getInstance().login(loginRequest)){
             UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
-            Cookie c = new Cookie("user", loginRequest.getUsername());
-            response.addCookie(c);
 
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
