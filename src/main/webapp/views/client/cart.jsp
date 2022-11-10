@@ -77,11 +77,11 @@
                                             </td>
                                             <td class="cart__table--body__list">
                                                 <div class="quantity__box">
-                                                    <button data-cartItemId="${c.cartItemId}" onclick="updateCartItemQuantity(this, '<%=request.getContextPath()%>')"  type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
+                                                    <button <c:if test="${c.quantity == 0}">disabled</c:if> data-cartItemId="${c.cartItemId}" onclick="updateCartItemQuantity(this, '<%=request.getContextPath()%>')"  type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
                                                     <label>
                                                         <input data-cartItemId="${c.cartItemId}" oninput="updateCartItemQuantity(this, '<%=request.getContextPath()%>')" min="1" type="number" class="quantity__number quickview__value--number" id="cart-item-quantity-${c.cartItemId}" value="${c.quantity}" />
                                                     </label>
-                                                    <button data-cartItemId="${c.cartItemId}" onclick="updateCartItemQuantity(this, '<%=request.getContextPath()%>')" type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
+                                                    <button <c:if test="${c.quantity == 0}">disabled</c:if> data-cartItemId="${c.cartItemId}" onclick="updateCartItemQuantity(this, '<%=request.getContextPath()%>')" type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                                 </div>
                                                 <p id="over-quantity-${c.cartItemId}" class="continue__shopping--link"></p>
                                             </td>

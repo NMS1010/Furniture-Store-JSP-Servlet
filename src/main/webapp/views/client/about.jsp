@@ -72,7 +72,7 @@
                 <h2 class="section__heading--maintitle">Thông tin</h2>
             </div>
             <div class="team__container">
-                <div class="row justify-content-between">
+                <div class="row justify-content-center">
 <%--                    <div class="col-lg-2 col-md-4 col-sm-6 col-6 custom-col">--%>
 <%--                        <div class="team__items text-center">--%>
 <%--                            <div class="team__thumbnail">--%>
@@ -169,7 +169,7 @@
                                 <img class="team__thumbnail--img border-radius-50 display-block" src="<%=request.getContextPath()%>/assets/client/img/member/Son.jpg" alt="team-thumb">
                             </div>
                             <div class="team__content">
-                                <h3 class="team__content--title">Nguyễn Minh Sơn <br> 20110713</h3>
+                                <h3 class="team__content--title">Nguyễn Minh Sơn</h3>
                                 <span class="team__content--subtitle"></span>
                                 <ul class="team__social d-flex justify-content-center align-items-center">
                                     <li class="team__social--list">

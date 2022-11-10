@@ -84,7 +84,8 @@ public class ProductRepository implements IProductRepository{
         Transaction tx = null;
         Product product = session.find(Product.class, request.getProductId());
         if(request.getQuantity() == 0){
-            request.setStatus(PRODUCT_STATUS.OUT_STOCK);
+            if(request.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                request.setStatus(PRODUCT_STATUS.OUT_STOCK);
         }
         if(request.getStatus() == PRODUCT_STATUS.OUT_STOCK || request.getStatus() == PRODUCT_STATUS.SUSPENDED){
             request.setQuantity(0);

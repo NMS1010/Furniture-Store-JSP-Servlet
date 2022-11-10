@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="main__footer">
       <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
           <div class="footer__widget">
             <h2 class="footer__widget--title d-none d-md-block">About Us <button class="footer__widget--button" aria-label="footer widget button"></button>
               <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -12,7 +12,7 @@
             </h2>
             <div class="footer__widget--inner">
               <a class="footer__logo" href="<%=request.getContextPath()%>/home"><img src="<%=request.getContextPath()%>/assets/client/img/logo/nav-log.webp" alt="footer-logo"></a>
-              <p class="footer__widget--desc">Website kinh doanh các sản phẩm nội thất<br> cho gia đình - Nhóm 19</p>
+              <p class="footer__widget--desc">Website kinh doanh các sản phẩm nội thất<br> FurSshop</p>
               <div class="footer__social">
                 <ul class="social__shear d-flex">
                   <li class="social__shear--list">
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
           <div class="footer__widget">
             <h2 class="footer__widget--title ">Quick Links <button class="footer__widget--button" aria-label="footer widget button"></button>
               <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -65,7 +65,7 @@
             </ul>
           </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-4 col-md-6">
           <div class="footer__widget">
             <h2 class="footer__widget--title ">Thông tin tài khoản<button class="footer__widget--button" aria-label="footer widget button"></button>
               <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -76,29 +76,6 @@
               <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="<%=request.getContextPath()%>/my-account">Tài khoản của tôi</a></li>
               <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="<%=request.getContextPath()%>/cart/items">Giỏ hàng</a></li>
             </ul>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <div class="footer__widget">
-            <h2 class="footer__widget--title ">Newsletter <button class="footer__widget--button" aria-label="footer widget button"></button>
-              <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
-                <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
-              </svg>
-            </h2>
-            <div class="footer__newsletter footer__widget--inner">
-              <p class="footer__newsletter--desc">Get updates by subscribe our
-                weekly newsletter</p>
-              <form class="newsletter__subscribe--form__style position__relative" action="#">
-                <label>
-                  <input class="footer__newsletter--input newsletter__subscribe--input" placeholder="Enter your email address" type="email">
-                </label>
-                <button class="footer__newsletter--button newsletter__subscribe--button primary__btn" type="submit">Subscribe
-                  <svg class="newsletter__subscribe--button__icon" xmlns="http://www.w3.org/2000/svg" width="9.159" height="7.85" viewBox="0 0 9.159 7.85">
-                    <path  data-name="Icon material-send" d="M3,12.35l9.154-3.925L3,4.5,3,7.553l6.542.872L3,9.3Z" transform="translate(-3 -4.5)" fill="currentColor"></path>
-                  </svg>
-                </button>
-              </form>
-            </div>
           </div>
         </div>
       </div>
