@@ -17,6 +17,6 @@ public interface ICartItemRepository  extends IModifyEntity<CartItemCreateReques
     CartItemViewModel getCartItemContain(int cartId, int productId);
     boolean deleteCartByUserId(int userId);
     int canUpdateQuantity(int cartItemId, int quantity);
-
+    void updateQuantityByProductId(int productId, int quantity);
     String addProductToCart(int productId, int quantity, int userId);
 }

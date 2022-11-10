@@ -20,6 +20,7 @@ public class GetCheckout extends HttpServlet {
         if(userId == -1)
             return;
         ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
+        cartItems.removeIf(x -> x.getQuantity() == 0);
         request.setAttribute("cartItems",cartItems);
         BigDecimal totalItemPrice = BigDecimal.valueOf(0);
         BigDecimal shipping = BigDecimal.valueOf(0);

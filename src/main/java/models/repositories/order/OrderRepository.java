@@ -308,6 +308,8 @@ public class OrderRepository implements IOrderRepository{
             return false;
         ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
         for(CartItemViewModel c: cartItems){
+            if(c.getQuantity() == 0)
+                continue;
             OrderItemCreateRequest createOrderItemReq = new OrderItemCreateRequest();
             createOrderItemReq.setOrderId(orderId);
             createOrderItemReq.setQuantity(c.getQuantity());

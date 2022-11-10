@@ -78,7 +78,7 @@ public class CartItemRepository implements ICartItemRepository {
             return false;
 
         cartItem.setQuantity(request.getQuantity());
-
+        session.close();
         return HibernateUtils.merge(cartItem);
     }
 
@@ -86,6 +86,7 @@ public class CartItemRepository implements ICartItemRepository {
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         CartItem cartItem = session.find(CartItem.class, entityId);
+        session.close();
         return HibernateUtils.remove(cartItem);
     }
     private String getProductStatus(int i){
@@ -168,8 +169,7 @@ public class CartItemRepository implements ICartItemRepository {
         q.setParameter("s1", cartId);
         List<CartItem> cartItems = q.list();
         for(CartItem cartItem : cartItems){
-            CartItemViewModel v = getCartItemViewModel(cartItem, session);
-            list.add(v);
+            list.add(getCartItemViewModel(cartItem, session));
         }
         session.close();
         return list;
@@ -226,6 +226,23 @@ public class CartItemRepository implements ICartItemRepository {
         if(product.getQuantity() < quantity)
             return product.getQuantity();
         return -1;
+    }
+
+    @Override
+    public void updateQuantityByProductId(int productId, int quantity) {
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("select cartItemId from CartItem where productId=:s1");
+        q.setParameter("s1",productId);
+
+        List<Integer> cartItemIds = q.list();
+        session.close();
+        for (int id:cartItemIds){
+            session = HibernateUtils.getSession();
+            CartItem c = session.find(CartItem.class, id);
+            c.setQuantity(quantity);
+            session.close();
+            HibernateUtils.merge(c);
+        }
     }
 
     @Override

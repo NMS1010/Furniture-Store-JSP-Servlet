@@ -254,6 +254,7 @@
 
 <jsp:include page="/views/client/common/common_js.jsp"/>
 
+<script src="<%=request.getContextPath()%>/assets/admin/js/ekka.js"></script>
 <script>
     $(window).on('load', function() {
         if(${error != null}){

@@ -71,6 +71,11 @@ public class CartItemService implements ICartItemService{
     }
 
     @Override
+    public void updateQuantityByProductId(int productId, int quantity) {
+        CartItemRepository.getInstance().updateQuantityByProductId(productId, quantity);
+    }
+
+    @Override
     public String addProductToCart(int productId, int quantity, int userId) {
         return CartItemRepository.getInstance().addProductToCart(productId, quantity, userId);
     }
