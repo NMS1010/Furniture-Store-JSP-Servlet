@@ -6,6 +6,7 @@ import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.UserLoginRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
+import utils.constants.USER_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -26,6 +27,7 @@ public class Login extends HttpServlet {
 
         UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
         boolean isAdmin = false;
+        boolean isBanned = false;
         if(UserService.getInstance().login(loginRequest)){
             UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
             for(UserRoleViewModel role:user.getRoles()){
@@ -33,7 +35,10 @@ public class Login extends HttpServlet {
                     Cookie c = new Cookie("admin", loginRequest.getUsername());
                     response.addCookie(c);
                     isAdmin = true;
-
+                    if(user.getStatus() == USER_STATUS.IN_ACTIVE) {
+                        isBanned = true;
+                        break;
+                    }
                     HttpSession session = request.getSession();
                     session.setAttribute("admin",user);
                     break;
@@ -43,7 +48,10 @@ public class Login extends HttpServlet {
 
         if(!isAdmin){
             out.println("error");
-        }else{
+        }else if(isAdmin && isBanned){
+            out.println("banned");
+        }
+        else{
             ServletUtils.redirect(response, request.getContextPath() + "/admin/home");
         }
     }

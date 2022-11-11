@@ -112,7 +112,7 @@
                       <label>
                         <input class="checkout__discount--code__input--field border-radius-5" name="discount" id="discount" placeholder="Mã giảm giá"  type="text">
                       </label>
-                      <a class="checkout__discount--code__btn primary__btn border-radius-5" onclick="onApplyDiscount('<%=request.getContextPath()%>')">Áp dụng</a>
+                      <a <c:if test="${cartItems.size() == 0}">disabled style="background-color: #000000; color: #ffffff" </c:if> class="checkout__discount--code__btn primary__btn border-radius-5" <c:if test="${cartItems.size() > 0}">onclick="onApplyDiscount('<%=request.getContextPath()%>')"</c:if> >Áp dụng</a>
                   </div>
                   <p id="discountValidateMessage"></p>
                   <div class="checkout__total">
@@ -155,7 +155,7 @@
                       <option value="<%=ORDER_PAYMENT.COD%>">COD</option>
                     </select>
                   </div>
-                  <button class="checkout__now--btn primary__btn" type="submit">Thanh toán</button>
+                  <button <c:if test="${cartItems.size() == 0}">disabled style="background-color: #000000; color: #ffffff" </c:if> class="checkout__now--btn primary__btn" type="submit">Thanh toán</button>
                 </aside>
               </div>
             </div>

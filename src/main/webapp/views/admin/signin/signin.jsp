@@ -69,6 +69,9 @@
                 if(str.includes('error') && str.length <= 10){
                     $('#authenticationValidateMessage').html('Username/password không chính xác').css('color','red')
                     noError = false;
+                }else if(str.includes("banned") && str.length <= 10){
+                    $('#authenticationValidateMessage').html('Tài khoản bị cấm hoạt động').css('color','red')
+                    noError = false;
                 }
             },
             error: function (error){
