@@ -234,6 +234,9 @@
             if(${error != null}){
                 $('#modal-error').modal('show');
             }
+            else if(window.location.href.includes("error")){
+                $('#modal-error').modal('show');
+            }
         });
         $('.number-sub-image').on('input', (e) => {
             changeNumberSubImage(e)

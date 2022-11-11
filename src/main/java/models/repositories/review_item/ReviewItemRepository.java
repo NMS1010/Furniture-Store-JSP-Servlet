@@ -64,7 +64,6 @@ public class ReviewItemRepository implements IReviewItemRepository{
         ReviewItem reviewItem = session.find(ReviewItem.class, request.getReviewItemId());
 
         reviewItem.setContent(request.getContent());
-        reviewItem.setStatus(request.getStatus());
         reviewItem.setRating(request.getRating());
         reviewItem.setUpdatedAt(DateUtils.dateTimeNow());
 
@@ -190,8 +189,7 @@ public class ReviewItemRepository implements IReviewItemRepository{
     @Override
     public ArrayList<ReviewItemViewModel> retrieveUserReviewByProductId(Integer userId, Integer productId) {
         ArrayList<ReviewItemViewModel> reviewItems = ReviewItemService.getInstance().retrieveReviewItemByUserId(userId);
-        reviewItems.removeIf(x -> x.getProductId() != productId);
-
+        reviewItems.removeIf(x -> x.getProductId() != productId || x.getStatus() == 0);
         return reviewItems;
     }
 

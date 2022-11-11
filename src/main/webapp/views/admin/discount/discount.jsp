@@ -188,6 +188,9 @@
     if(${error != null}){
       $('#modal-error').modal('show');
     }
+    else if(window.location.href.includes("error")){
+      $('#modal-error').modal('show');
+    }
   });
   $(document).ready(function () {
     $('#modal-delete-discount').on('show.bs.modal', function (event) {

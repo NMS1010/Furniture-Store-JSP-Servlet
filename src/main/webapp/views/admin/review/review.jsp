@@ -79,7 +79,7 @@
 
                                                             <div class="dropdown-menu">
                                                                 <a type="button" class="dropdown-item btn btn-danger" data-bs-toggle="modal"
-                                                                   data-bs-target="#modal-change-review" data-id="${review.reviewId}" href="#modal-change-review">Xoá
+                                                                   data-bs-target="#modal-change-review" data-id="${review.reviewId}" href="#modal-change-review">Đổi trạng thái
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -124,9 +124,16 @@
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
     $(window).on('load', function() {
-        if(${error != null}){
+        if(window.location.href.includes("error") || ${error != null}){
             $('#modal-error').modal('show');
         }
+    });
+    $(document).ready(function () {
+        $('#modal-change-review').on('show.bs.modal', function (event) {
+            let id = $(event.relatedTarget).attr('data-id');
+            let link = "<%=request.getContextPath()%>/admin/review/editStatus?reviewItemId=" + id;
+            document.getElementById('link-change').href = link
+        });
     });
 </script>
 </body>

@@ -36,7 +36,6 @@ public class EditReview extends HttpServlet {
         updateReq.setReviewItemId(reviewItemId);
         updateReq.setRating(StringUtils.toInt(request.getParameter("rating")));
         updateReq.setContent(request.getParameter("content"));
-        updateReq.setStatus(1);
 
         boolean success = ReviewItemService.getInstance().updateReviewItem(updateReq);
 

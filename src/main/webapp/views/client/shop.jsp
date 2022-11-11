@@ -31,12 +31,12 @@
                     <input class="widget__search--form__input border-0" placeholder="Nhập tên sản phẩm..." type="text" name="keyword">
                 </label>
                 <button class="widget__search--form__btn"  type="submit">
-                    Tìm kiê
+                    Tìm kiếm
                 </button>
             </form>
         </div>
         <div class="single__widget widget__bg">
-            <h2 class="widget__title position__relative h3">Categories</h2>
+            <h2 class="widget__title position__relative h3">Danh mục sản phẩm</h2>
             <ul class="widget__categories--menu">
                 <c:forEach var="c" items="${categories}">
                     <li class="widget__categories--menu__list">
@@ -93,7 +93,7 @@
             </form>
         </div>
         <div class="single__widget widget__bg">
-            <h2 class="widget__title position__relative h3">Brands</h2>
+            <h2 class="widget__title position__relative h3">Thương hiệu</h2>
             <ul class="widget__tagcloud">
                 <c:forEach var="b" items="${brands}">
                     <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="<%=request.getContextPath()%>/products?brandId=${b.brandId}">${b.brandName}</a></li>
@@ -310,7 +310,7 @@
                                                                 <svg class="product__items--action__cart--btn__icon" xmlns="http://www.w3.org/2000/svg" width="13.897" height="14.565" viewBox="0 0 18.897 21.565">
                                                                     <path  d="M16.84,8.082V6.091a4.725,4.725,0,1,0-9.449,0v4.725a.675.675,0,0,0,1.35,0V9.432h5.4V8.082h-5.4V6.091a3.375,3.375,0,0,1,6.75,0v4.691a.675.675,0,1,0,1.35,0V9.433h3.374V21.581H4.017V9.432H6.041V8.082H2.667V21.641a1.289,1.289,0,0,0,1.289,1.29h16.32a1.289,1.289,0,0,0,1.289-1.29V8.082Z" transform="translate(-2.667 -1.366)" fill="currentColor"></path>
                                                                 </svg>
-                                                                <span class="add__to--cart__text"> Add to cart</span>
+                                                                <span class="add__to--cart__text">Thêm vào giỏ hàng</span>
                                                             </a>
                                                         </div>
                                                     </div>

@@ -66,8 +66,7 @@
             success: function (data){
                 console.log(data)
                 let str = data.toString()
-                let notify = str.slice(0, str.length - 2);
-                if(notify === 'error'){
+                if(str.includes('error') && str.length <= 10){
                     $('#authenticationValidateMessage').html('Username/password không chính xác').css('color','red')
                     noError = false;
                 }

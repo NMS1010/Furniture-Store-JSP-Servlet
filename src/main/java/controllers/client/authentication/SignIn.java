@@ -5,6 +5,7 @@ import models.services.user.UserService;
 import models.view_models.users.UserLoginRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
+import utils.constants.USER_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -33,12 +34,15 @@ public class SignIn extends HttpServlet {
 
         if(UserService.getInstance().login(loginRequest)){
             UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
-
-            HttpSession session = request.getSession();
-            session.setAttribute("user",user);
-            ServletUtils.redirect(response, request.getContextPath() + "/home");
+            if(user.getStatus() == USER_STATUS.IN_ACTIVE){
+                out.println("banned".trim());
+            }else {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                ServletUtils.redirect(response, request.getContextPath() + "/home");
+            }
         }else{
-            out.println("error");
+            out.println("error".trim());
         }
 
     }

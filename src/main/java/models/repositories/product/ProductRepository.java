@@ -195,6 +195,7 @@ public class ProductRepository implements IProductRepository{
         });
         productViewModel.setProductImages(productImageViewModels);
         ArrayList<ReviewItemViewModel> productReviews = ReviewItemService.getInstance().retrieveReviewItemByProductId(product.getProductId());
+        productReviews.removeIf(x -> x.getStatus() == 0);
         int totalRating = productReviews.stream().mapToInt(ReviewItemViewModel::getRating).sum();
         long avgRating = Math.round((totalRating * 1.0)/productReviews.size());
 

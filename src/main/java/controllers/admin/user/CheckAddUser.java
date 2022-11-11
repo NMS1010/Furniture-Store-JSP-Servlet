@@ -23,13 +23,13 @@ public class CheckAddUser extends HttpServlet {
 
         ArrayList<String> exists = new ArrayList<>();
         if(UserService.getInstance().checkUsername(request.getParameter("username"))){
-            exists.add("user");
+            exists.add("user".trim());
         }
         if(UserService.getInstance().checkEmail(request.getParameter("email"))){
-            exists.add("email");
+            exists.add("email".trim());
         }
         if(UserService.getInstance().checkPhone(request.getParameter("phone"))){
-            exists.add("phone");
+            exists.add("phone".trim());
         }
         PrintWriter out = response.getWriter();
         out.println(exists);

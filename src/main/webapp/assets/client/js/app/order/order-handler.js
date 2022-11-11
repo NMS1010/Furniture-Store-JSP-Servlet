@@ -21,7 +21,11 @@ function onApplyDiscount(context){
                 }
             }
             else if(str.includes('expired')){
-                discountValidateMessage.innerText = "Mã khuyến mãi đã hêt hạn sử dụng"
+                discountValidateMessage.innerText = "Mã khuyến mãi đã hết hạn sử dụng"
+                discountValue.value = "0 %"
+            }
+            else if(str.includes("out")){
+                discountValidateMessage.innerText = "Mã khuyến mãi đã được dùng hết"
                 discountValue.value = "0 %"
             }
             else{

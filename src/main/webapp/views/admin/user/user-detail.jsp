@@ -271,7 +271,7 @@
         <jsp:include page="/views/admin/common/common_js.jsp"/>
         <script>
             $(window).on('load', function() {
-                if((new URLSearchParams(window.location.search)).has("error")){
+                if((new URLSearchParams(window.location.search)).has("error") || ${error != null}){
                     $('#modal-error').modal('show');
                 }
             });
@@ -279,6 +279,6 @@
                 validateForm(e, `<%=request.getContextPath()%>`)
             })
         </script>
-        <script src="<%=request.getContextPath()%>/assets/admin/js/validate/admin/user/user-validation.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/admin/js/validate/admin/user/user_validation.js"></script>
     </body>
 </html>

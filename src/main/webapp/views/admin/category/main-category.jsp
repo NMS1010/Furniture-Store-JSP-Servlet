@@ -208,6 +208,9 @@
             if(${error != null}){
                 $('#modal-error').modal('show');
             }
+            else if(window.location.href.includes("error")){
+              $('#modal-error').modal('show');
+            }
         });
         $(".clear-form").on("click", function(e) {
           e.preventDefault();

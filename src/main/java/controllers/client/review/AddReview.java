@@ -31,9 +31,10 @@ public class AddReview extends HttpServlet {
         createReq.setContent(request.getParameter("content"));
         createReq.setProductId(productId);
         createReq.setStatus(1);
-
+        String error = "";
         int reviewItemId = ReviewItemService.getInstance().insertReviewItem(createReq);
-
-        ServletUtils.redirect(response, request.getContextPath() + "/my-account/order/reviews?productId=" + productId);
+        if(reviewItemId == -1)
+            error = "&error=true";
+        ServletUtils.redirect(response, request.getContextPath() + "/my-account/order/reviews?productId=" + productId + error);
     }
 }

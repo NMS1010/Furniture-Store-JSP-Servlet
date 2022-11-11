@@ -122,7 +122,7 @@
                                     <textarea name="content" id="content" class="reviews__comment--reply__textarea" placeholder="Đánh giá của bạn...." required>${productReview.content}</textarea>
                                 </div>
                             </div>
-                            <input type="hidden" id="rating" name="rating" value="${productReview.rating}">
+                            <input type="hidden" id="rating" name="rating" value="${productReview == null ? 5 :productReview.rating}">
                             <input type="hidden" id="reviewItemId" name="reviewItemId" value="${productReview.reviewItemId}">
                             <button class="text-white primary__btn" data-hover="Submit" type="submit">Đánh giá</button>
                             <button class="text-white primary__btn" data-hover="Submit" onclick="document.getElementById('writereview').style.display = 'none'">Huỷ</button>

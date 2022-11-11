@@ -83,7 +83,8 @@ public class OrderRepository implements IOrderRepository{
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
         Order order = session.find(Order.class, request.getOrderId());
-
+        if(order.getStatus() == ORDER_STATUS.DELIVERED && request.getStatus() != ORDER_STATUS.RETURN)
+            return false;
         order.setStatus(request.getStatus());
         if(request.getStatus() == ORDER_STATUS.DELIVERED && order.getPayment() == ORDER_PAYMENT.COD){
             order.setPayment(ORDER_PAYMENT.PAID);

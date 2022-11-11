@@ -34,17 +34,17 @@ public class CheckEditUser extends HttpServlet {
 
         ArrayList<String> exists = new ArrayList<>();
         if(!Objects.equals(user.getUsername(), username) && UserService.getInstance().checkUsername(username)){
-            exists.add("user");
+            exists.add("user".trim());
         }
         if(!Objects.equals(user.getEmail(), email) && UserService.getInstance().checkEmail(email)){
-            exists.add("email");
+            exists.add("email".trim());
         }
         if(!Objects.equals(user.getPhone(), phone) && UserService.getInstance().checkPhone(phone)){
-            exists.add("phone");
+            exists.add("phone".trim());
         }
         try {
             if(!Objects.equals(user.getPassword(), UserUtils.hashPassword(request.getParameter("password")))){
-                exists.add("password");
+                exists.add("password".trim());
             }
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);

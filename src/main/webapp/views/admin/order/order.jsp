@@ -127,7 +127,7 @@
         <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content">
-              <h3 class="modal-header border-bottom-0 d-flex justify-content-center">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
+              <h3 class="modal-header border-bottom-0 d-flex justify-content-center">Thao tác bị lỗi, đơn hàng đã giao thành công chỉ có thể hoàn trả</h3>
               <div class="modal-footer px-4">
                 <button type="button" class="btn btn-secondary btn-pill d-flex justify-content-center"
                         data-bs-dismiss="modal">Thoát</button>
@@ -143,7 +143,7 @@
 <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
   $(window).on('load', function() {
-    if(${error != null}){
+    if(window.location.href.includes("error")){
       $('#modal-error').modal('show');
     }
   });
