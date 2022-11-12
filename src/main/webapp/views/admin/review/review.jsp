@@ -79,7 +79,7 @@
 
                                                             <div class="dropdown-menu">
                                                                 <a type="button" class="dropdown-item btn btn-danger" data-bs-toggle="modal"
-                                                                   data-bs-target="#modal-change-review" data-id="${review.reviewId}" href="#modal-change-review">Đổi trạng thái
+                                                                   data-bs-target="#modal-change-review" data-id="${review.reviewItemId}" href="#modal-change-review">Đổi trạng thái
                                                                 </a>
                                                             </div>
                                                         </div>

@@ -1,7 +1,44 @@
+var options = [];
+let allCheckBox = document.querySelectorAll('.roleCheckBox:checked')
+allCheckBox.forEach(checkbox => {
+    options.push(checkbox.value)
+})
+$( '.role.dropdown-menu a' ).on( 'click', function( event ) {
+
+    var $target = $( event.currentTarget ),
+        val = $target.attr( 'data-value' ),
+        $inp = $target.find( 'input' ),
+        idx;
+
+    if ( ( idx = options.indexOf( val ) ) > -1 ) {
+        options.splice( idx, 1 );
+        setTimeout( function() { $inp.prop( 'checked', false ) }, 0);
+    } else {
+        options.push( val );
+        setTimeout( function() { $inp.prop( 'checked', true ) }, 0);
+    }
+
+    $( event.target ).blur();
+
+    console.log( options );
+    return false;
+});
+
+
+$(".clear-form").on("click", function(e) {
+    e.preventDefault();
+    document.getElementById('form-add').reset();
+    $(".modal-add-contact input[type='text']").val('');
+    $(".modal-add-contact input[type='date']").val('');
+    $(".modal-add-contact input[type='number']").val('');
+    $(".modal-add-contact input[type='datetime-local']").val('');
+})
+
 function validateForm(e, context){
     let noError = true;
     e.preventDefault()
     let passMatch = $('#confirmPasswordNotMatch')
+    let roleEmpty = $('#roleEmpty')
     let password = $('#password')
     let confirmPassword = $('#confirmPassword')
     let newPassword = $('#newPassword')
@@ -21,6 +58,12 @@ function validateForm(e, context){
             passMatch.html('')
         }
     }
+    if(options.length === 0){
+        roleEmpty.html('Vui lòng chọn role').css('color', 'red');
+        noError = false;
+    }else {
+        roleEmpty.html('')
+    }
     let url = context;
     if(userId.length === 0){
         url += `/users/check-add`
@@ -35,7 +78,8 @@ function validateForm(e, context){
             'email': $('#email').val(),
             'phone': $('#phone').val(),
             'password': password.val(),
-            'userId': userId.length === 0  ? 0 : userId.val()
+            'userId': userId.val() === ''  ? 0 : userId.val(),
+            'hasChangePass': newPassword.val() !== '' || confirmPassword.val() !== ''
         },
         async: false,
         success: function (data){

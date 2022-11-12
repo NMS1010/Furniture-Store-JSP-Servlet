@@ -6,6 +6,7 @@ import models.repositories.cart_item.CartItemRepository;
 import models.repositories.product.ProductRepository;
 import models.services.cart_item.CartItemService;
 import models.services.discount.DiscountService;
+import models.services.mail.MailService;
 import models.services.order.OrderService;
 import models.services.order_item.OrderItemService;
 import models.view_models.cart_items.CartItemUpdateRequest;
@@ -348,6 +349,7 @@ public class OrderRepository implements IOrderRepository{
         UserViewModel user = (UserViewModel) session.getAttribute("user");
         user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
         session.setAttribute("user", user);
+        MailService.getInstance().sendMail(orderReq.getName(), orderReq.getEmail());
         return true;
     }
 

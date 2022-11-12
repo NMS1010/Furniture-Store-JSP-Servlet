@@ -31,7 +31,7 @@ public class CheckEditUser extends HttpServlet {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-
+        String hasChangePass = request.getParameter("hasChangePass");
         ArrayList<String> exists = new ArrayList<>();
         if(!Objects.equals(user.getUsername(), username) && UserService.getInstance().checkUsername(username)){
             exists.add("user".trim());
@@ -43,7 +43,7 @@ public class CheckEditUser extends HttpServlet {
             exists.add("phone".trim());
         }
         try {
-            if(!Objects.equals(user.getPassword(), UserUtils.hashPassword(request.getParameter("password")))){
+            if(hasChangePass.equals("true") && !Objects.equals(user.getPassword(), UserUtils.hashPassword(request.getParameter("password")))){
                 exists.add("password".trim());
             }
         } catch (NoSuchAlgorithmException e) {

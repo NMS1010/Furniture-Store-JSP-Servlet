@@ -279,6 +279,6 @@
                 validateForm(e, `<%=request.getContextPath()%>`)
             })
         </script>
-        <script src="<%=request.getContextPath()%>/assets/admin/js/validate/admin/user/user_validation.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/admin/js/validate/admin/user/user-validation.js"></script>
     </body>
 </html>

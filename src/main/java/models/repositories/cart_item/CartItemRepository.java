@@ -259,7 +259,10 @@ public class CartItemRepository implements ICartItemRepository {
                 updateReq.setQuantity(cartItem.getQuantity() + 1);
                 updateReq.setStatus(cartItem.getStatus());
                 count = CartItemService.getInstance().updateCartItem(updateReq) ? 1 : 0;
-                responseStatus = "repeat";
+                if(count > 0)
+                    responseStatus = "repeat";
+                else
+                    responseStatus = "error";
             } else {
                 CartItemCreateRequest createReq = new CartItemCreateRequest();
                 createReq.setCartId(cartId);
@@ -274,9 +277,6 @@ public class CartItemRepository implements ICartItemRepository {
                 else{
                     responseStatus = "error";
                 }
-            }
-            if(count <= 0){
-                responseStatus = "error";
             }
         }else{
             responseStatus = "expired";
