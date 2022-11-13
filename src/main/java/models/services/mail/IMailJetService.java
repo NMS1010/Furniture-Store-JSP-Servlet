@@ -1,5 +1,5 @@
 package models.services.mail;
 
-public interface IMailService {
+public interface IMailJetService {
     void sendMail(String name, String email);
 }

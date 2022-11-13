@@ -6,7 +6,7 @@ import models.repositories.cart_item.CartItemRepository;
 import models.repositories.product.ProductRepository;
 import models.services.cart_item.CartItemService;
 import models.services.discount.DiscountService;
-import models.services.mail.MailService;
+import models.services.mail.MailJetService;
 import models.services.order.OrderService;
 import models.services.order_item.OrderItemService;
 import models.view_models.cart_items.CartItemUpdateRequest;
@@ -27,7 +27,6 @@ import utils.constants.ORDER_STATUS;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -349,7 +348,7 @@ public class OrderRepository implements IOrderRepository{
         UserViewModel user = (UserViewModel) session.getAttribute("user");
         user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
         session.setAttribute("user", user);
-        MailService.getInstance().sendMail(orderReq.getName(), orderReq.getEmail());
+        MailJetService.getInstance().sendMail(orderReq.getName(), orderReq.getEmail());
         return true;
     }
 

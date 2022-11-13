@@ -11,11 +11,11 @@ import com.mailjet.client.resource.Emailv31;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class MailService implements IMailService{
-    private static MailService instance = null;
-    public static MailService getInstance(){
+public class MailJetService implements IMailJetService {
+    private static MailJetService instance = null;
+    public static MailJetService getInstance(){
         if(instance == null)
-            instance = new MailService();
+            instance = new MailJetService();
         return instance;
     }
     @Override
@@ -40,7 +40,7 @@ public class MailService implements IMailService{
         try {
             response = client.post(request);
         } catch (MailjetException | MailjetSocketTimeoutException e) {
-            throw new RuntimeException(e);
+            return;
         }
     }
 }
