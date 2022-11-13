@@ -106,7 +106,7 @@
     <!-- End brand logo section -->
 
 
-    <div class="modal" id="modal-delete-wishitem" data-animation="slideInUp">
+    <div class="modal" id="modal-delete-wishitem" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Bạn có muốn xoá sản phẩm này khỏi danh sách yêu thích</h3>
             <div class="quickview__inner">
@@ -115,17 +115,17 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="modal-error" data-animation="slideInUp">
+    <div class="modal" id="modal-error" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Thao tác lỗi, vui lòng thực hiện lại</h3>
         </div>
     </div>
-    <div class="modal" id="modal-success" data-animation="slideInUp">
+    <div class="modal" id="modal-success" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
-    <div class="modal" id="modal-expired" data-animation="slideInUp">
+    <div class="modal" id="modal-expired" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Sản phẩm đã hết hàng hoặc ngừng kinh doanh</h3>
         </div>

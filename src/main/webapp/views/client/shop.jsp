@@ -304,7 +304,7 @@
                                                         <div class="product__items--content text-center">
                                                             <h3 class="product__items--content__title h4"><a href="<%=request.getContextPath()%>/product/details?productId=${products[p].productId}">${products[p].name}</a></h3>
                                                             <div class="product__items--price">
-                                                                <span class="current__price">${products[p].price}</span>
+                                                                <span class="current__price">${products[p].price} VND</span>
                                                             </div>
                                                             <a class="product__items--action__cart--btn primary__btn" onclick="addCartItem(this,'<%=request.getContextPath()%>')" data-productId="${products[p].productId}">
                                                                 <svg class="product__items--action__cart--btn__icon" xmlns="http://www.w3.org/2000/svg" width="13.897" height="14.565" viewBox="0 0 18.897 21.565">
@@ -426,18 +426,18 @@
         </div>
     </section>
 
-    <div class="modal" id="modal-error" style="z-index: 100;" data-animation="slideInUp">
+    <div class="modal" id="modal-error" style="z-index: 999;" data-animation="slideInUp">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal- border-bottom-0">Sản phẩm đã có trong Danh sách yêu thích của bạn</h3>
         </div>
     </div>
-    <div class="modal" id="modal-success" data-animation="slideInUp">
+    <div class="modal" id="modal-success" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
 
-    <div class="modal" id="modal-expired" data-animation="slideInUp">
+    <div class="modal" id="modal-expired" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Sản phẩm đã hết hàng hoặc ngừng kinh doanh</h3>
         </div>

@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6">
           <div class="footer__widget">
-            <h2 class="footer__widget--title d-none d-md-block">About Us <button class="footer__widget--button" aria-label="footer widget button"></button>
+            <h2 class="footer__widget--title d-none d-md-block">About<button class="footer__widget--button" aria-label="footer widget button"></button>
               <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
                 <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
               </svg>
@@ -60,7 +60,7 @@
               </svg>
             </h2>
             <ul class="footer__widget--menu footer__widget--inner">
-              <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="<%=request.getContextPath()%>/about">About Us</a></li>
+              <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="<%=request.getContextPath()%>/about">About me</a></li>
               <li class="footer__widget--menu__list"><a class="footer__widget--menu__text" href="<%=request.getContextPath()%>/wish-list">Danh sách yêu thích</a></li>
             </ul>
           </div>
@@ -81,7 +81,7 @@
       </div>
     </div>
     <div class="footer__bottom d-flex justify-content-between align-items-center">
-      <p class="copyright__content  m-0">Copyright © 2022 <a class="copyright__content--link" href="<%=request.getContextPath()%>/home">Furea</a> . All Rights Reserved.Design By Furea</p>
+      <p class="copyright__content  m-0">Copyright © 2022 <a class="copyright__content--link" href="<%=request.getContextPath()%>/home">FurSshop</a> . All Rights Reserved.Design By Furea</p>
       <div class="footer__payment text-right">
         <img class="footer__payment--visa__card display-block" src="<%=request.getContextPath()%>/assets/client/img/other/payment-visa-card.webp" alt="visa-card">
       </div>

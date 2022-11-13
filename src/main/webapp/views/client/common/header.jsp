@@ -23,7 +23,7 @@
                 <a class="header__menu--link" href="<%=request.getContextPath()%>/products">Shop</a>
               </li>
               <li class="header__menu--items">
-                <a class="header__menu--link" href="<%=request.getContextPath()%>/about">About US </a>
+                <a class="header__menu--link" href="<%=request.getContextPath()%>/about">About</a>
               </li>
             </ul>
           </nav>

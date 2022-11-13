@@ -247,13 +247,13 @@
             <h3 class="modal- border-bottom-0">Sản phẩm đã có trong Danh sách yêu thích của bạn</h3>
         </div>
     </div>
-    <div class="modal" id="modal-success" data-animation="slideInUp">
+    <div class="modal" id="modal-success" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
 
-    <div class="modal" id="modal-expired" data-animation="slideInUp">
+    <div class="modal" id="modal-expired" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Sản phẩm đã hết hàng hoặc ngừng kinh doanh</h3>
         </div>

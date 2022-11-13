@@ -6,9 +6,9 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://fursshop_1742:_RD7i30H_iCXt9TkNw4e@fursshop-1742.mysql.a.osc-fr1.scalingo-dbs.com:32772/fursshop_1742?useSSL=true&amp;verifyServerCertificate=false&amp;useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8</property>
-    <property name="hibernate.connection.username">fursshop_1742</property>
-    <property name="hibernate.connection.password">_RD7i30H_iCXt9TkNw4e</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306?useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8</property>
+    <property name="hibernate.connection.username">1234</property>
+    <property name="hibernate.connection.password">1234</property>
     <property name = "hibernate.show_sql">true</property>
     <!-- SQL dialect -->
     <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>

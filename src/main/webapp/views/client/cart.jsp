@@ -149,7 +149,7 @@
     <!-- End brand logo section -->
 
 
-    <div class="modal" id="modal-delete-cart" data-animation="slideInUp">
+    <div class="modal" id="modal-delete-cart" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Bạn có muốn xoá sản phẩm này khỏi giỏ hàng</h3>
             <div class="quickview__inner">
@@ -158,17 +158,17 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="modal-error" data-animation="slideInUp">
+    <div class="modal" id="modal-error" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Thao tác lỗi, vui lòng thực hiện lại</h3>
         </div>
     </div>
-    <div class="modal" id="modal-success" data-animation="slideInUp">
+    <div class="modal" id="modal-success" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Thêm thành công</h3>
         </div>
     </div>
-    <div class="modal" id="modal-checkout-error" data-animation="slideInUp">
+    <div class="modal" id="modal-checkout-error" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Có lỗi xảy ra khi đặt hàng, vui lòng thử lại</h3>
         </div>

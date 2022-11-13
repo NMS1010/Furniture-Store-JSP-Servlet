@@ -111,7 +111,12 @@ public class CartItemRepository implements ICartItemRepository {
         CartItemViewModel cartItemViewModel = new CartItemViewModel();
 
         ProductViewModel product = ProductService.getInstance().retrieveProductById(cartItem.getProductId());
-
+        if(cartItem.getQuantity() > product.getQuantity()){
+            CartItemUpdateRequest req = new CartItemUpdateRequest();
+            req.setCartItemId(cartItem.getCartItemId());
+            req.setQuantity(product.getQuantity());
+            update(req);
+        }
         cartItemViewModel.setCartItemId(cartItem.getCartItemId());
         cartItemViewModel.setDateAdded(cartItem.getDateAdded());
         cartItemViewModel.setQuantity(cartItem.getQuantity());
