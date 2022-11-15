@@ -540,21 +540,32 @@ for (const el of closeEls)
     });
 function customAccordion(accordionWrapper, accordionButton, accordionBody) {
     let accoridonButtons;
-    document.querySelectorAll(accordionButton).forEach(function (item) {
-        item.addEventListener("click", function () {
+    document.querySelectorAll(accordionWrapper).forEach(function (item) {
+        item.addEventListener("mouseenter", function (e) {
+            e.target.style.backgroundColor = "greenyellow"
             let singleAccordionWrapper = this.closest(accordionWrapper),
                 singleAccordionBody =
                     singleAccordionWrapper.querySelector(accordionBody);
             singleAccordionWrapper.classList.contains("active")
                 ? (singleAccordionWrapper.classList.remove("active"),
-                    slideUp(singleAccordionBody))
+                    slideUp(singleAccordionBody,0))
                 : (singleAccordionWrapper.classList.add("active"),
                     slideDown(singleAccordionBody),
                     getSiblings(singleAccordionWrapper).forEach(function (item) {
                         let sibllingSingleAccordionBody = item.querySelector(accordionBody);
                         item.classList.remove("active"),
-                            slideUp(sibllingSingleAccordionBody);
+                            slideUp(sibllingSingleAccordionBody,0);
                     }));
+        });
+        item.addEventListener("mouseleave", function (e) {
+            e.target.style.backgroundColor = "white"
+            let singleAccordionWrapper = this.closest(accordionWrapper),
+                singleAccordionBody =
+                    singleAccordionWrapper.querySelector(accordionBody);
+            if(singleAccordionWrapper.classList.contains("active")){
+                singleAccordionWrapper.classList.remove("active")
+                slideUp(singleAccordionBody,0)
+            }
         });
     });
 }

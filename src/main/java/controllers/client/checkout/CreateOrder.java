@@ -5,6 +5,7 @@ import models.services.cart_item.CartItemService;
 import models.services.order.OrderService;
 import models.services.order_item.OrderItemService;
 import models.services.product.ProductService;
+import models.services.user.UserService;
 import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.order_items.OrderItemCreateRequest;
 import models.view_models.orders.OrderCreateRequest;
@@ -62,6 +63,11 @@ public class CreateOrder extends HttpServlet {
         String error = "";
         if(!res)
             error = "?error=true";
+        else{
+            UserViewModel user = UserService.getInstance().retrieveUserById(userId);
+            request.getSession().setAttribute("user", user);
+        }
+
         ServletUtils.redirect(response, request.getContextPath() + "/cart/items" + error);
     }
 }

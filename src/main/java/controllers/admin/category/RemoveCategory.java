@@ -21,10 +21,13 @@ public class RemoveCategory extends HttpServlet {
         if(!isSuccess){
             error = "error=true";
         }
-        if(sub == null || sub.equals(""))
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?" + error);
+        if(sub == null || sub.equals("")) {
+            error = "?" +error;
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories" + error);
+        }
         else {
-            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true&" + error);
+            error = "&" +error;
+            ServletUtils.redirect(response, request.getContextPath() + "/admin/categories?sub-categories=true" + error);
         }
     }
 

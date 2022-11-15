@@ -134,12 +134,19 @@
     </section>
     <!-- End about section -->
 
-
+    <div class="modal" id="modal-error"  data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal- border-bottom-0">Thao tác bị lỗi. Lưu ý: Chỉ có thể đánh giá sản phẩm 1 lần <br> nhưng bạn có thể chỉnh sửa</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script>
+    if(window.location.href.includes("error")){
+        document.getElementById("modal-error").classList.add('is-visible')
+    }
     if(${productReview != null}){
         document.getElementById('writereview').style.display = 'block'
         onChangeRating(document.getElementById("star-"+`${productReview.rating}`))

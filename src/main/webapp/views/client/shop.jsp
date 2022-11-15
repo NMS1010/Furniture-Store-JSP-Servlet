@@ -40,20 +40,14 @@
             <ul class="widget__categories--menu">
                 <c:forEach var="c" items="${categories}">
                     <li class="widget__categories--menu__list">
-                        <label class="widget__categories--menu__label d-flex align-items-center">
+                        <a class="widget__categories--menu__label d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
                             <img class="widget__categories--menu__img" src="data:image/png;base64, ${c.image}" alt="categories-img">
                             <span class="widget__categories--menu__text">${c.name}</span>
                             <svg class="widget__categories--menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394">
                                 <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
                             </svg>
-                        </label>
+                        </a>
                         <ul class="widget__categories--sub__menu">
-                            <li class="widget__categories--sub__menu--list">
-                                <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
-                                    <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${c.image}" alt="categories-img">
-                                    <span class="widget__categories--sub__menu--text">${c.name}</span>
-                                </a>
-                            </li>
                             <c:forEach var="sub" items="${c.subCategories}">
                                 <li class="widget__categories--sub__menu--list">
                                     <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
@@ -142,20 +136,14 @@
                             <ul class="widget__categories--menu">
                                 <c:forEach var="c" items="${categories}">
                                     <li class="widget__categories--menu__list">
-                                        <label class="widget__categories--menu__label d-flex align-items-center">
+                                        <a class="widget__categories--menu__label d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
                                             <img class="widget__categories--menu__img" src="data:image/png;base64, ${c.image}" alt="categories-img">
                                             <span class="widget__categories--menu__text">${c.name}</span>
                                             <svg class="widget__categories--menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394">
                                                 <path  d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z" transform="translate(-6 -8.59)" fill="currentColor"></path>
                                             </svg>
-                                        </label>
+                                        </a>
                                         <ul class="widget__categories--sub__menu">
-                                            <li class="widget__categories--sub__menu--list">
-                                                <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
-                                                    <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${c.image}" alt="categories-img">
-                                                    <span class="widget__categories--sub__menu--text">${c.name}</span>
-                                                </a>
-                                            </li>
                                             <c:forEach var="sub" items="${c.subCategories}">
                                                 <li class="widget__categories--sub__menu--list">
                                                     <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${sub.categoryId}">

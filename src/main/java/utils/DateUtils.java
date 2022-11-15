@@ -5,14 +5,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtils {
+
     public static LocalDate dateNow() {
         return LocalDate.now();
     }
     public static LocalDateTime dateTimeNow() {
-        return LocalDateTime.now();
+        return LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toLocalDateTime();
     }
 
 //    public static String toString(Date date, String format){
@@ -39,6 +42,6 @@ public class DateUtils {
         return datetime.format(dtf);
     }
     public static LocalDateTime stringToLocalDateTime(String dateStr){
-        return LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        return LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toLocalDateTime();
     }
 }
