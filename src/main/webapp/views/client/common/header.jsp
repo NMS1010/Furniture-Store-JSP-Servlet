@@ -170,6 +170,8 @@
     <div class="predictive__search--box__inner">
       <h2 class="predictive__search--title">Tìm kiếm sản phẩm</h2>
       <form class="predictive__search--form" action="<%=request.getContextPath()%>/products">
+        <input type="hidden" name="pageSize" value="${pageSize}"/>
+        <input type="hidden" name="sortBy" value="${sortBy}"/>
         <label>
           <input class="predictive__search--input" placeholder="Nhập tên sản phẩm" type="text" name="keyword" id="keyword">
         </label>

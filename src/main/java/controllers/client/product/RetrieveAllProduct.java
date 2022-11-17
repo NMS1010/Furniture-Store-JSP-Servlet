@@ -84,15 +84,21 @@ public class RetrieveAllProduct extends HttpServlet {
 
             }
             request.setAttribute("sortBy", s);
+        }else{
+            request.setAttribute("sortBy", SORT_BY.BY_NAME_AZ);
         }
         int pageIndex = StringUtils.toInt(request.getParameter("pageIndex"));
+        int pageSize = StringUtils.toInt(request.getParameter("pageSize"));
         if(pageIndex == 0)
             pageIndex = PAGING_PARAM.PAGE_INDEX;
-        int pageSize = PAGING_PARAM.PAGE_SIZE;
+        if(pageSize == 0)
+            pageSize = PAGING_PARAM.PAGE_SIZE;
+
         req1.setPageIndex(pageIndex);
         req1.setPageSize(pageSize);
         ArrayList<ProductViewModel> products = ProductService.getInstance().retrieveAllProduct(req1);
         request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("pageSize", pageSize);
         request.setAttribute("totalPage", Math.ceil((totalProduct * 1.0) / pageSize));
 
         request.setAttribute("products", products);
@@ -103,6 +109,6 @@ public class RetrieveAllProduct extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        doGet(request, response);
     }
 }

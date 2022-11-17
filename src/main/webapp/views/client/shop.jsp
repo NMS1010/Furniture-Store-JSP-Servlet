@@ -1,4 +1,5 @@
 <%@ page import="utils.constants.SORT_BY" %>
+<%@ page import="utils.constants.PAGE_SIZE" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="categories" type="java.util.ArrayList<models.view_models.categories.CategoryViewModel>" scope="request"/>
@@ -27,6 +28,8 @@
         <div class="single__widget widget__bg">
             <h2 class="widget__title position__relative h3">Tìm kiếm theo tên sản phẩm</h2>
             <form class="widget__search--form" action="<%=request.getContextPath()%>/products">
+                <input type="hidden" name="pageSize" value="${pageSize}"/>
+                <input type="hidden" name="sortBy" value="${sortBy}"/>
                 <label>
                     <input class="widget__search--form__input border-0" placeholder="Nhập tên sản phẩm..." type="text" name="keyword">
                 </label>
@@ -40,7 +43,7 @@
             <ul class="widget__categories--menu">
                 <c:forEach var="c" items="${categories}">
                     <li class="widget__categories--menu__list">
-                        <a class="widget__categories--menu__label d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
+                        <a class="widget__categories--menu__label d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}&pageSize=${pageSize}&sortBy=${sortBy}">
                             <img class="widget__categories--menu__img" src="data:image/png;base64, ${c.image}" alt="categories-img">
                             <span class="widget__categories--menu__text">${c.name}</span>
                             <svg class="widget__categories--menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394">
@@ -50,7 +53,7 @@
                         <ul class="widget__categories--sub__menu">
                             <c:forEach var="sub" items="${c.subCategories}">
                                 <li class="widget__categories--sub__menu--list">
-                                    <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
+                                    <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}&pageSize=${pageSize}&sortBy=${sortBy}">
                                         <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${sub.image}" alt="categories-img">
                                         <span class="widget__categories--sub__menu--text">${sub.name}</span>
                                     </a>
@@ -64,6 +67,8 @@
         <div class="single__widget price__filter widget__bg">
             <h2 class="widget__title position__relative h3">Lọc theo giá</h2>
             <form class="price__filter--form" action="<%=request.getContextPath()%>/products">
+                <input type="hidden" name="pageSize" value="${pageSize}"/>
+                <input type="hidden" name="sortBy" value="${sortBy}"/>
                 <div class="price__filter--form__inner mb-15 d-flex align-items-center">
                     <div class="price__filter--group">
                         <label class="price__filter--label" for="Filter-Price-GTE2">Từ</label>
@@ -90,7 +95,7 @@
             <h2 class="widget__title position__relative h3">Thương hiệu</h2>
             <ul class="widget__tagcloud">
                 <c:forEach var="b" items="${brands}">
-                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="<%=request.getContextPath()%>/products?brandId=${b.brandId}">${b.brandName}</a></li>
+                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="<%=request.getContextPath()%>/products?brandId=${b.brandId}&pageSize=${pageSize}&sortBy=${sortBy}">${b.brandName}</a></li>
                 </c:forEach>
             </ul>
         </div>
@@ -123,6 +128,8 @@
                         <div class="single__widget widget__bg">
                             <h2 class="widget__title position__relative h3">Tìm kiếm theo tên sản phẩm</h2>
                             <form class="widget__search--form" action="<%=request.getContextPath()%>/products">
+                                <input type="hidden" name="pageSize" value="${pageSize}"/>
+                                <input type="hidden" name="sortBy" value="${sortBy}"/>
                                 <label>
                                     <input class="widget__search--form__input border-0" placeholder="Nhập tên sản phẩm..." type="text" name="keyword" id="keyword">
                                 </label>
@@ -136,7 +143,7 @@
                             <ul class="widget__categories--menu">
                                 <c:forEach var="c" items="${categories}">
                                     <li class="widget__categories--menu__list">
-                                        <a class="widget__categories--menu__label d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}">
+                                        <a class="widget__categories--menu__label d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${c.categoryId}&pageSize=${pageSize}&sortBy=${sortBy}">
                                             <img class="widget__categories--menu__img" src="data:image/png;base64, ${c.image}" alt="categories-img">
                                             <span class="widget__categories--menu__text">${c.name}</span>
                                             <svg class="widget__categories--menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355" height="8.394">
@@ -146,7 +153,7 @@
                                         <ul class="widget__categories--sub__menu">
                                             <c:forEach var="sub" items="${c.subCategories}">
                                                 <li class="widget__categories--sub__menu--list">
-                                                    <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${sub.categoryId}">
+                                                    <a class="widget__categories--sub__menu--link d-flex align-items-center" href="<%=request.getContextPath()%>/products?categoryId=${sub.categoryId}&pageSize=${pageSize}&sortBy=${sortBy}">
                                                         <img class="widget__categories--sub__menu--img" src="data:image/png;base64, ${sub.image}" alt="categories-img">
                                                         <span class="widget__categories--sub__menu--text">${sub.name}</span>
                                                     </a>
@@ -160,6 +167,8 @@
                         <div class="single__widget price__filter widget__bg">
                             <h2 class="widget__title position__relative h3">Lọc sản phẩm theo giá</h2>
                             <form class="price__filter--form" action="<%=request.getContextPath()%>/products">
+                                <input type="hidden" name="pageSize" value="${pageSize}"/>
+                                <input type="hidden" name="sortBy" value="${sortBy}"/>
                                 <div class="price__filter--form__inner mb-15 d-flex align-items-center">
                                     <div class="price__filter--group">
                                         <label class="price__filter--label" for="Filter-Price-GTE2">Từ</label>
@@ -186,7 +195,7 @@
                             <h2 class="widget__title position__relative h3">Thương hiệu</h2>
                             <ul class="widget__tagcloud">
                                 <c:forEach var="b" items="${brands}">
-                                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="<%=request.getContextPath()%>/products?brandId=${b.brandId}">${b.brandName}</a></li>
+                                    <li class="widget__tagcloud--list"><a class="widget__tagcloud--link" href="<%=request.getContextPath()%>/products?brandId=${b.brandId}&pageSize=${pageSize}&sortBy=${sortBy}">${b.brandName}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -200,17 +209,32 @@
                         </button>
                         <div class="product__view--mode d-flex align-items-center">
                             <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
+                                <label class="product__view--label">Page Size</label>
+                                <form action="<%=request.getContextPath()%>/products" class="d-flex">
+                                    <div class="select shop__header--select">
+                                        <input type="hidden" name="sortBy" value="${sortBy}"/>
+                                        <select class="product__view--select" name="pageSize">
+                                            <c:forEach var="s" items="<%=PAGE_SIZE.PageSize%>">
+                                                <option <c:if test="${s.value == pageSize}"> selected</c:if> value="${s.value}">${s.value}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="price__filter--btn primary__btn">Chọn</button>
+                                </form>
+                            </div>
+                            <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
                                 <label class="product__view--label">Sắp xếp :</label>
-                                    <form action="<%=request.getContextPath()%>/products" class="d-flex">
-                                        <div class="select shop__header--select">
-                                            <select class="product__view--select" name="sortBy">
-                                                <c:forEach var="s" items="<%=SORT_BY.SortBy%>">
-                                                    <option <c:if test="${s.value == sortBy}"> selected</c:if> value="${s.value}">${s.key}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="price__filter--btn primary__btn">Sắp xếp</button>
-                                    </form>
+                                <form action="<%=request.getContextPath()%>/products" class="d-flex">
+                                    <div class="select shop__header--select">
+                                        <input type="hidden" name="pageSize" value="${pageSize}"/>
+                                        <select class="product__view--select" name="sortBy">
+                                            <c:forEach var="s" items="<%=SORT_BY.SortBy%>">
+                                                <option <c:if test="${s.value == sortBy}"> selected</c:if> value="${s.value}">${s.key}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="price__filter--btn primary__btn">Sắp xếp</button>
+                                </form>
                             </div>
                             <div class="product__view--mode__list">
                                 <div class="product__grid--column__buttons d-flex justify-content-center">
