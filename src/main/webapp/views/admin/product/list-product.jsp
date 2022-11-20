@@ -84,8 +84,9 @@
                                 </button>
 
                                 <div class="dropdown-menu">
-                                  <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/product/edit?productId=${product.productId}">Edit</a>
-                                  <a class="dropdown-item" href="<%=request.getContextPath()%>/admin/product/delete?productId=${product.productId}">Delete</a>
+                                  <a class="dropdown-item btn btn-info" href="<%=request.getContextPath()%>/admin/product/edit?productId=${product.productId}">Edit</a>
+                                  <a type="button" class="dropdown-item btn btn-danger" data-bs-toggle="modal"
+                                     data-bs-target="#modal-delete-product" data-id="${product.productId}" href="#modal-delete-product">Delete</a>
                                 </div>
                               </div>
                             </td>
@@ -99,6 +100,29 @@
               </div>
             </div>
           </div>
+          <div class="modal fade" id="modal-delete-product" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+              <div class="modal-content">
+                <h3 class="modal-header border-bottom-0">Bạn có muốn xoá sản phẩm này</h3>
+                <div class="modal-footer px-4">
+                  <button type="button" class="btn btn-secondary btn-pill"
+                          data-bs-dismiss="modal">Huỷ</button>
+                  <a id="link-delete" class="btn btn-danger btn-pill" >Xoá</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="modal-error" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+              <div class="modal-content">
+                <h3 class="modal-header border-bottom-0 d-flex justify-content-center">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
+                <div class="modal-footer px-4">
+                  <button type="button" class="btn btn-secondary btn-pill d-flex justify-content-center"
+                          data-bs-dismiss="modal">Thoát</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <jsp:include page="/views/admin/common/footer.jsp"/>
@@ -106,7 +130,21 @@
   </div>
   <jsp:include page="/views/admin/common/common_js.jsp"/>
 <script>
-
+  $(window).on('load', function() {
+    if(${error != null}){
+      $('#modal-error').modal('show');
+    }
+    else if(window.location.href.includes("error")){
+      $('#modal-error').modal('show');
+    }
+  });
+  $(document).ready(function () {
+    $('#modal-delete-product').on('show.bs.modal', function (event) {
+      let id = $(event.relatedTarget).attr('data-id');
+      let link = "<%=request.getContextPath()%>/admin/product/delete?productId=" + id;
+      document.getElementById('link-delete').href = link
+    });
+  });
 </script>
 </body>
 </html>

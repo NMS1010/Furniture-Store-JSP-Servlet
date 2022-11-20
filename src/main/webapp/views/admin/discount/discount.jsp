@@ -79,7 +79,7 @@
                       <div class="col-12">
                         <select id="status" name="status" class="form-select" required>
                           <c:forEach var="s" items="<%=DISCOUNT_STATUS.Status%>">
-                              <option value="${s.value}">${s.key}</option>
+                            <option value="${s.value}" <c:if test="${s.value == discount.status}">selected</c:if> >${s.key}</option>
                           </c:forEach>
                         </select>
                       </div>

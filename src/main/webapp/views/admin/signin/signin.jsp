@@ -28,11 +28,11 @@
                     <form action="<%=request.getContextPath()%>/admin/login" method="post" id="form-login">
                         <div class="row">
                             <div class="form-group col-md-12 mb-4">
-                                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
                             </div>
 
                             <div class="form-group col-md-12 ">
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                             </div>
 
                             <div class="col-md-12">
@@ -66,11 +66,14 @@
             success: function (data){
                 console.log(data)
                 let str = data.toString()
-                if(str.includes('error') && str.length <= 10){
+                if(str.includes('error')){
                     $('#authenticationValidateMessage').html('Username/password không chính xác').css('color','red')
                     noError = false;
-                }else if(str.includes("banned") && str.length <= 10){
+                }else if(str.includes("banned")){
                     $('#authenticationValidateMessage').html('Tài khoản bị cấm hoạt động').css('color','red')
+                    noError = false;
+                }else if(str.includes("unauthorize")){
+                    $('#authenticationValidateMessage').html('Tài khoản không có quyền truy cập').css('color','red')
                     noError = false;
                 }
             },

@@ -28,7 +28,9 @@ public class Login extends HttpServlet {
         UserLoginRequest loginRequest = UserUtils.CreateLoginRequest(request);
         boolean isAdmin = false;
         boolean isBanned = false;
+        boolean isLogin = false;
         if(UserService.getInstance().login(loginRequest)){
+            isLogin = true;
             UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
             for(UserRoleViewModel role:user.getRoles()){
                 if(role.getRoleName().equalsIgnoreCase("admin")){
@@ -45,10 +47,12 @@ public class Login extends HttpServlet {
                 }
             }
         }
-
-        if(!isAdmin){
+        if(!isLogin){
             out.println("error");
-        }else if(isAdmin && isBanned){
+        }
+        else if(!isAdmin){
+            out.println("unauthorize");
+        }else if(isBanned){
             out.println("banned");
         }
         else{

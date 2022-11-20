@@ -7,8 +7,8 @@ $(".clear-form").on("click", function(e) {
     $("input[type='datetime-local']").val('');
 })
 $('#form-add').submit(function (e) {
-    e.preventDefault()
     let noError = true
+    e.preventDefault()
     let discountValueValidate = $('#discountValueValidate')
     let endDateValidate = $('#endDateValidate')
 
@@ -29,6 +29,6 @@ $('#form-add').submit(function (e) {
         endDateValidate.html('')
     }
     if(noError){
-        $('#form-add').unbind('submit').submit()
+        $('#form-add').unbind('submit').submit();
     }
 })

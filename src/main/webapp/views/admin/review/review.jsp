@@ -40,7 +40,7 @@
                                                 <th>Ratings</th>
                                                 <th>Nội dung đánh giá</th>
                                                 <th>Ngày đánh giá</th>
-                                                <th>Ngày cập nhật đánh giá</th>
+                                                <th>Ngày cập nhật</th>
                                                 <th>Trạng thái</th>
                                                 <th>Action</th>
                                             </tr>

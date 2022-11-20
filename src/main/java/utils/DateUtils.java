@@ -3,10 +3,7 @@ package utils;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class DateUtils {
@@ -15,7 +12,9 @@ public class DateUtils {
         return LocalDate.now();
     }
     public static LocalDateTime dateTimeNow() {
-        return LocalDateTime.now().atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toLocalDateTime();
+        Instant now = Instant.now();
+        ZonedDateTime vietnam = now.atZone(ZoneId.of("Asia/Ho_Chi_Minh"));
+        return vietnam.toLocalDateTime();
     }
 
 //    public static String toString(Date date, String format){
@@ -42,6 +41,6 @@ public class DateUtils {
         return datetime.format(dtf);
     }
     public static LocalDateTime stringToLocalDateTime(String dateStr){
-        return LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).atZone(ZoneId.of("Asia/Ho_Chi_Minh")).toLocalDateTime();
+        return LocalDateTime.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
     }
 }

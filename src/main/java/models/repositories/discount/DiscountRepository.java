@@ -34,7 +34,12 @@ public class DiscountRepository implements IDiscountRepository{
         discount.setDateStart(request.getStartDate());
         discount.setDateEnd(request.getEndDate());
         discount.setQuantity(request.getQuantity());
-
+        if(request.getQuantity() == 0){
+            discount.setStatus(DISCOUNT_STATUS.IN_ACTIVE);
+        }
+        if(request.getStatus() == DISCOUNT_STATUS.IN_ACTIVE){
+            discount.setQuantity(0);
+        }
         int discountId = -1;
         try {
             tx = session.beginTransaction();
@@ -61,10 +66,16 @@ public class DiscountRepository implements IDiscountRepository{
 
         discount.setDiscountCode(request.getDiscountCode());
         discount.setDiscountValue(request.getDiscountValue());
-        discount.setStatus(request.getStatus());
         discount.setDateStart(request.getStartDate());
         discount.setDateEnd(request.getEndDate());
         discount.setQuantity(request.getQuantity());
+        discount.setStatus(request.getStatus());
+        if(request.getQuantity() == 0){
+            discount.setStatus(DISCOUNT_STATUS.IN_ACTIVE);
+        }
+        if(request.getStatus() == DISCOUNT_STATUS.IN_ACTIVE){
+            discount.setQuantity(0);
+        }
         return HibernateUtils.merge(discount);
     }
 

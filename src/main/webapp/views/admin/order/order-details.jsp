@@ -104,10 +104,10 @@
                                                 <tbody>
                                                     <c:forEach var="i" begin="0" end="${orderItems.size() - 1}">
                                                         <tr class="<c:if test="${i == orderItems.size() - 1}">line</c:if>">
-                                                            <td>${orderItems.get(i).orderItemId}</td>
-                                                            <td><img class="product-img"
+                                                            <td class="text-center">${orderItems.get(i).orderItemId}</td>
+                                                            <td class="text-center"><img class="product-img"
                                                                      src="data:image/png;base64, ${orderItems.get(i).productImage}" alt="" /></td>
-                                                            <td><strong>${orderItems.get(i).productName}</strong></td>
+                                                            <td class="text-center"><strong>${orderItems.get(i).productName}</strong></td>
                                                             <td class="text-center">${orderItems.get(i).unitPrice}</td>
                                                             <td class="text-center">${orderItems.get(i).quantity}</td>
                                                             <td class="text-right">${orderItems.get(i).totalPrice}</td>
