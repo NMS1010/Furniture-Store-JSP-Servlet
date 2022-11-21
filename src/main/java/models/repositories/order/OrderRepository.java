@@ -3,6 +3,7 @@ package models.repositories.order;
 import models.entities.Order;
 import models.entities.User;
 import models.repositories.cart_item.CartItemRepository;
+import models.repositories.discount.DiscountRepository;
 import models.repositories.product.ProductRepository;
 import models.services.cart_item.CartItemService;
 import models.services.discount.DiscountService;
@@ -349,6 +350,8 @@ public class OrderRepository implements IOrderRepository{
         user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
         session.setAttribute("user", user);
         MailJetService.getInstance().sendMail(orderReq.getName(), orderReq.getEmail());
+        if(orderReq.getDiscountId() != 0)
+            DiscountRepository.getInstance().updateQuantity(orderReq.getDiscountId());
         return true;
     }
 

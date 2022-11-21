@@ -112,7 +112,7 @@
                       <label>
                         <input class="checkout__discount--code__input--field border-radius-5" name="discount" id="discount" placeholder="Mã giảm giá"  type="text">
                       </label>
-                      <a <c:if test="${cartItems.size() == 0}">disabled style="background-color: #000000; color: #ffffff" </c:if> class="checkout__discount--code__btn primary__btn border-radius-5" <c:if test="${cartItems.size() > 0}">onclick="onApplyDiscount('<%=request.getContextPath()%>')"</c:if> >Áp dụng</a>
+                      <a id="apply-btn" <c:if test="${cartItems.size() == 0}">disabled style="background-color: #000000; color: #ffffff" </c:if> class="checkout__discount--code__btn primary__btn border-radius-5" <c:if test="${cartItems.size() > 0}">onclick="onApplyDiscount('<%=request.getContextPath()%>')"</c:if> >Áp dụng</a>
                   </div>
                   <p id="discountValidateMessage"></p>
                   <div class="checkout__total">
@@ -121,19 +121,19 @@
                       <tr class="checkout__total--items">
                         <td class="checkout__total--title text-left">Tổng tiền sản phẩm</td>
                         <td class="checkout__total--amount text-right">
-                          <input value="${totalItemPrice}" name="totalItemPrice" class="primary__btn" size="4" type="text" readonly/>
+                          <input value="${totalItemPrice}" name="totalItemPrice" class="primary__btn" size="8" type="text" readonly/>
                         </td>
                       </tr>
                       <tr class="checkout__total--items">
                         <td class="checkout__total--title text-left">Phí vận chuyển</td>
                         <td class="checkout__total--calculated__text text-right">
-                          <input value="${shipping}" name="shipping" class="primary__btn" size="4" type="text" readonly/>
+                          <input value="${shipping}" name="shipping" class="primary__btn" size="8" type="text" readonly/>
                         </td>
                       </tr>
                       <tr class="checkout__total--items">
                         <td class="checkout__total--title text-left">Giảm giá</td>
                         <td class="checkout__total--calculated__text text-right">
-                          <input value="${discount} %" name="discountValue" id="discountValue" class="primary__btn" size="4" type="text" readonly=""/>
+                          <input value="${discount} %" name="discountValue" id="discountValue" class="primary__btn" size="8" type="text" readonly=""/>
                           <input type="hidden" value="" name="discountId" id="discountId" />
                         </td>
                       </tr>
@@ -142,7 +142,7 @@
                       <tr class="checkout__total--footer__items">
                         <td class="checkout__total--footer__title checkout__total--footer__list text-left">Tổng tiền </td>
                         <td class="checkout__total--footer__amount checkout__total--footer__list text-right">
-                          <input value="${totalPrice}" name="totalPrice" id="totalPrice" class="primary__btn" size="4" type="text" readonly/>
+                          <input value="${totalPrice}" name="totalPrice" id="totalPrice" class="primary__btn" size="8" type="text" readonly/>
                         </td>
                       </tr>
                       </tfoot>
@@ -171,6 +171,6 @@
 
 <script src="<%=request.getContextPath()%>/assets/admin/plugins/jquery/jquery-3.5.1.min.js"></script>
 <jsp:include page="/views/client/common/common_js.jsp"/>
-<script src="<%=request.getContextPath()%>/assets/client/js/app/order/order-handler.js"></script>
+<script src="<%=request.getContextPath()%>/assets/client/js/app/order/order_handler.js"></script>
 </body>
 </html>

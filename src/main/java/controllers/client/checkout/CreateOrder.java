@@ -41,14 +41,13 @@ public class CreateOrder extends HttpServlet {
 
         String totalItemPrice = request.getParameter("totalItemPrice");
         String shipping = request.getParameter("shipping");
-        String discountId = request.getParameter("discountId");
         String totalPrice = request.getParameter("totalPrice");
 
         String payment = request.getParameter("payment");
-
+        int discountId = StringUtils.toInt(request.getParameter("discountId"));
         OrderCreateRequest createOrderReq = new OrderCreateRequest();
         createOrderReq.setAddress(address);
-        createOrderReq.setDiscountId(StringUtils.toInt(discountId));
+        createOrderReq.setDiscountId(discountId);
         createOrderReq.setEmail(email);
         createOrderReq.setName(name);
         createOrderReq.setPayment(StringUtils.toInt(payment));

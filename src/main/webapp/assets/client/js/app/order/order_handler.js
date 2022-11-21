@@ -34,8 +34,12 @@ function onApplyDiscount(context){
                 let elem = document.getElementById("totalPrice")
                 let prevPrice = parseFloat(elem.value)
                 document.getElementById("discountId").value = discount.discountId.toString()
-                elem.value = (prevPrice - prevPrice * parseFloat(discount.discountValue)).toString()
-                elem.disable = true
+                elem.value = (prevPrice - prevPrice * parseFloat(discount.discountValue)).toFixed(3).toString()
+                elem.disabled = true
+                document.getElementById("discount").disabled = true
+                document.getElementById("apply-btn").style.pointerEvents = "none"
+                document.getElementById("apply-btn").style.backgroundColor = "black"
+                document.getElementById("apply-btn").style.color = "white"
             }
         },
         error: function (error){

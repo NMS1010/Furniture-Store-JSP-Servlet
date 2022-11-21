@@ -21,15 +21,14 @@ public class CheckDiscount extends HttpServlet {
         DiscountViewModel discount = DiscountService.getInstance().getDiscountByDiscountCode(discountCode);
         if(discount == null)
             out.println("error");
-        else if (DateUtils.stringToLocalDateTime(discount.getStartDate()).isAfter(DateUtils.dateTimeNow()) ||
-                DateUtils.stringToLocalDateTime(discount.getEndDate()).isBefore(DateUtils.dateTimeNow())){
+        else if (DateUtils.stringToLocalDateTime(discount.getStartDate().replace(" ", "T")).isAfter(DateUtils.dateTimeNow()) ||
+                DateUtils.stringToLocalDateTime(discount.getEndDate().replace(" ", "T")).isBefore(DateUtils.dateTimeNow())){
             out.println("expired");
         }
         else if(discount.getQuantity() == 0){
             out.println("out");
         }
         else {
-            DiscountService.getInstance().updateQuantity(discount.getDiscountId());
             out.println(new Gson().toJson(discount));
         }
     }
