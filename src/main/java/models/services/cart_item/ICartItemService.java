@@ -7,6 +7,7 @@ import models.view_models.cart_items.CartItemGetPagingRequest;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public interface ICartItemService {
@@ -22,4 +23,6 @@ public interface ICartItemService {
     int canUpdateQuantity(int cartItemId, int quantity);
     void updateQuantityByProductId(int productId, int quantity);
     String addProductToCart(int productId, int quantity, int userId);
+
+    BigDecimal getTotalCartItemPriceByUserId(int userId);
 }

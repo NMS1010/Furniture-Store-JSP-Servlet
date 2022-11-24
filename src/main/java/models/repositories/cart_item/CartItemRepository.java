@@ -289,4 +289,17 @@ public class CartItemRepository implements ICartItemRepository {
 
         return responseStatus;
     }
+
+    @Override
+    public BigDecimal getTotalCartItemPriceByUserId(int userId) {
+
+        ArrayList<CartItemViewModel> cartItems = retrieveCartByUserId(userId);
+        BigDecimal totalItemPrice = BigDecimal.valueOf(0);
+
+        for(CartItemViewModel c:cartItems){
+            totalItemPrice = totalItemPrice.add(c.getTotalPrice());
+        }
+
+        return totalItemPrice;
+    }
 }

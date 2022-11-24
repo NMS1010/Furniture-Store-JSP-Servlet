@@ -19,4 +19,5 @@ public interface ICartItemRepository  extends IModifyEntity<CartItemCreateReques
     int canUpdateQuantity(int cartItemId, int quantity);
     void updateQuantityByProductId(int productId, int quantity);
     String addProductToCart(int productId, int quantity, int userId);
+    BigDecimal getTotalCartItemPriceByUserId(int userId);
 }

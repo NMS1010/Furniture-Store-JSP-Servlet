@@ -11,6 +11,7 @@ import models.view_models.cart_items.CartItemGetPagingRequest;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,5 +79,10 @@ public class CartItemService implements ICartItemService{
     @Override
     public String addProductToCart(int productId, int quantity, int userId) {
         return CartItemRepository.getInstance().addProductToCart(productId, quantity, userId);
+    }
+
+    @Override
+    public BigDecimal getTotalCartItemPriceByUserId(int userId) {
+        return CartItemRepository.getInstance().getTotalCartItemPriceByUserId(userId);
     }
 }

@@ -22,16 +22,13 @@ public class GetCheckout extends HttpServlet {
         ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
         cartItems.removeIf(x -> x.getQuantity() == 0);
         request.setAttribute("cartItems",cartItems);
-        BigDecimal totalItemPrice = BigDecimal.valueOf(0);
+        BigDecimal totalItemPrice = CartItemService.getInstance().getTotalCartItemPriceByUserId(userId);
         BigDecimal shipping = BigDecimal.valueOf(0);
         BigDecimal discount = BigDecimal.valueOf(0);
         BigDecimal totalPrice;
-
-        for(CartItemViewModel c:cartItems){
-            totalItemPrice = totalItemPrice.add(c.getTotalPrice());
-        }
         totalPrice = totalItemPrice.add(shipping);
         totalPrice = totalPrice.subtract(totalPrice.multiply(discount));
+
         request.setAttribute("totalItemPrice",totalItemPrice);
         request.setAttribute("shipping",shipping);
         request.setAttribute("discount",discount);

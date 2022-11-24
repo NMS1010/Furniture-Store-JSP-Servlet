@@ -29,10 +29,7 @@ public class GetCart extends HttpServlet {
 
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(new BrandGetPagingRequest());
         request.setAttribute("brands", brands);
-        BigDecimal total = BigDecimal.valueOf(0);
-        for(CartItemViewModel c:cartItems){
-            total = total.add(c.getTotalPrice());
-        }
+        BigDecimal total = CartItemService.getInstance().getTotalCartItemPriceByUserId(userId);
         request.setAttribute("total", total);
         ServletUtils.forward(request,response,"/views/client/cart.jsp");
     }
