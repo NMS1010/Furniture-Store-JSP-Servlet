@@ -305,10 +305,12 @@ public class OrderRepository implements IOrderRepository{
 
     @Override
     public boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId) {
+        ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
+        if(cartItems.size() == 0)
+            return false;
         int orderId = OrderService.getInstance().insertOrder(orderReq);
         if(orderId < 1)
             return false;
-        ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
         for(CartItemViewModel c: cartItems){
             if(c.getQuantity() == 0)
                 continue;
