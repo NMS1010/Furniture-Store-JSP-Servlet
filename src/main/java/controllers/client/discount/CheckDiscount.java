@@ -5,6 +5,7 @@ import models.services.discount.DiscountService;
 import models.view_models.discounts.DiscountViewModel;
 import utils.DateUtils;
 import utils.StringUtils;
+import utils.constants.DISCOUNT_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -21,6 +22,9 @@ public class CheckDiscount extends HttpServlet {
         DiscountViewModel discount = DiscountService.getInstance().getDiscountByDiscountCode(discountCode);
         if(discount == null)
             out.println("error");
+        else if(discount.getStatus() == DISCOUNT_STATUS.SUSPENDED){
+            out.println("suspended");
+        }
         else if (DateUtils.stringToLocalDateTime(discount.getStartDate().replace(" ", "T")).isAfter(DateUtils.dateTimeNow()) ||
                 DateUtils.stringToLocalDateTime(discount.getEndDate().replace(" ", "T")).isBefore(DateUtils.dateTimeNow())){
             out.println("expired");

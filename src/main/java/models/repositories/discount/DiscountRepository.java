@@ -83,8 +83,9 @@ public class DiscountRepository implements IDiscountRepository{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Discount discount = session.find(Discount.class, entityId);
+        discount.setStatus(DISCOUNT_STATUS.SUSPENDED);
         session.close();
-        return HibernateUtils.remove(discount);
+        return HibernateUtils.merge(discount);
     }
     private String getStatus(int i){
         String status = "";
@@ -97,6 +98,9 @@ public class DiscountRepository implements IDiscountRepository{
                 break;
             case DISCOUNT_STATUS.IN_ACTIVE:
                 status = "Hết mã";
+                break;
+            case DISCOUNT_STATUS.SUSPENDED:
+                status = "Ngưng áp dụng";
                 break;
             default:
                 status = "Undefined";

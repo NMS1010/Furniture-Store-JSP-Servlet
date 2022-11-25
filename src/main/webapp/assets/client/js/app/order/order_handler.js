@@ -20,6 +20,10 @@ function onApplyDiscount(context){
                     discountValue.value = "0 %"
                 }
             }
+            else if(str.includes('suspended')){
+                discountValidateMessage.innerText = "Mã khuyến mãi không hợp lệ"
+                discountValue.value = "0 %"
+            }
             else if(str.includes('expired')){
                 discountValidateMessage.innerText = "Mã khuyến mãi đã hết hạn sử dụng"
                 discountValue.value = "0 %"
@@ -29,6 +33,7 @@ function onApplyDiscount(context){
                 discountValue.value = "0 %"
             }
             else{
+                discountValidateMessage.innerText = ""
                 let discount = JSON.parse(data)
                 discountValue.value = "-" + discount.discountValue.toString() + " %"
                 let elem = document.getElementById("totalPrice")
