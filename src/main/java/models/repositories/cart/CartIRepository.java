@@ -1,6 +1,8 @@
 package models.repositories.cart;
 
+import models.entities.Cart;
 import models.entities.CartItem;
+import models.entities.Product;
 import models.repositories.product.ProductRepository;
 import models.services.cart.CartService;
 import models.services.product.ProductService;
@@ -31,11 +33,12 @@ public class CartIRepository implements ICartRepository {
     public int insert(CartItemCreateRequest request) {
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
-
+        Cart cart = session.find(Cart.class, request.getCartId());
+        Product product = session.find(Product.class, request.getProductId());
         CartItem cartItem = new CartItem();
 
-        cartItem.setProductId(request.getProductId());
-        cartItem.setCartId(request.getCartId());
+        cartItem.setProduct(product);
+        cartItem.setCart(cart);
         cartItem.setQuantity(request.getQuantity());
         cartItem.setDateAdded(DateUtils.dateTimeNow());
 
@@ -68,7 +71,7 @@ public class CartIRepository implements ICartRepository {
         Transaction tx = null;
 
         CartItem cartItem = session.find(CartItem.class, request.getCartItemId());
-        ProductViewModel product = ProductRepository.getInstance().retrieveById(cartItem.getProductId());
+        ProductViewModel product = ProductRepository.getInstance().retrieveById(cartItem.getProduct().getProductId());
         if(request.getQuantity() > product.getQuantity())
             return false;
 
@@ -105,7 +108,7 @@ public class CartIRepository implements ICartRepository {
     private CartItemViewModel getCartItemViewModel(CartItem cartItem, Session session){
         CartItemViewModel cartItemViewModel = new CartItemViewModel();
 
-        ProductViewModel product = ProductService.getInstance().retrieveProductById(cartItem.getProductId());
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(cartItem.getProduct().getProductId());
         if(cartItem.getQuantity() > product.getQuantity()){
             CartItemUpdateRequest req = new CartItemUpdateRequest();
             req.setCartItemId(cartItem.getCartItemId());
@@ -117,10 +120,10 @@ public class CartIRepository implements ICartRepository {
         cartItemViewModel.setQuantity(cartItem.getQuantity());
         cartItemViewModel.setProductImage(product.getImage());
         cartItemViewModel.setProductName(product.getName());
-        cartItemViewModel.setCartId(cartItem.getCartId());
+        cartItemViewModel.setCartId(cartItem.getCart().getCartId());
         cartItemViewModel.setUnitPrice(product.getPrice());
         cartItemViewModel.setTotalPrice(product.getPrice().multiply(BigDecimal.valueOf(cartItem.getQuantity())));
-        cartItemViewModel.setProductId(cartItem.getProductId());
+        cartItemViewModel.setProductId(cartItem.getProduct().getProductId());
         cartItemViewModel.setStatus(cartItem.getStatus());
         cartItemViewModel.setProductStatus(getProductStatus(product.getStatus()));
 
@@ -164,7 +167,7 @@ public class CartIRepository implements ICartRepository {
 
         int cartId = getCartIdByUserId(userId);
 
-        Query q = session.createQuery("from CartItem where cartId=:s1");
+        Query q = session.createQuery("from CartItem where cart.cartId=:s1");
 
         q.setParameter("s1", cartId);
         List<CartItem> cartItems = q.list();
@@ -190,7 +193,7 @@ public class CartIRepository implements ICartRepository {
     @Override
     public CartItemViewModel getCartItemContain(int cartId, int productId) {
         Session session = HibernateUtils.getSession();
-        Query q = session.createQuery("from CartItem where cartId=:s1 and productId=:s2");
+        Query q = session.createQuery("from CartItem where cart.cartId=:s1 and product.productId=:s2");
         q.setParameter("s1", cartId);
         q.setParameter("s2",productId);
         Object o = null;
@@ -208,7 +211,7 @@ public class CartIRepository implements ICartRepository {
     public boolean deleteCartByUserId(int userId) {
         int cartId = getCartIdByUserId(userId);
         Session session = HibernateUtils.getSession();
-        Query q = session.createQuery("from CartItem where cartId=:s1");
+        Query q = session.createQuery("from CartItem where cart.cartId=:s1");
         q.setParameter("s1", cartId);
         List<CartItem> cartItems = q.list();
         for(CartItem c:cartItems){
@@ -231,7 +234,7 @@ public class CartIRepository implements ICartRepository {
     @Override
     public void updateQuantityByProductId(int productId, int quantity) {
         Session session = HibernateUtils.getSession();
-        Query q = session.createQuery("select cartItemId from CartItem where productId=:s1");
+        Query q = session.createQuery("select cartItemId from CartItem where product.productId=:s1");
         q.setParameter("s1",productId);
 
         List<Integer> cartItemIds = q.list();

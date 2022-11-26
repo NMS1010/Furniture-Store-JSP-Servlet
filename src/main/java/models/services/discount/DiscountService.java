@@ -50,8 +50,8 @@ public class DiscountService implements IDiscountService{
     }
 
     @Override
-    public DiscountViewModel getDiscountByDiscountCode(String discountCode) {
-        return DiscountRepository.getInstance().getDiscountByDiscountCode(discountCode);
+    public DiscountViewModel getByDiscountCode(String discountCode) {
+        return DiscountRepository.getInstance().getByDiscountCode(discountCode);
     }
 
     @Override

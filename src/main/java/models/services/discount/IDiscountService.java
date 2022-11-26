@@ -15,6 +15,6 @@ public interface IDiscountService {
     boolean deleteDiscount(Integer discountId);
     DiscountViewModel retrieveDiscountById(Integer discountId);
     ArrayList<DiscountViewModel> retrieveAllDiscount(DiscountGetPagingRequest request);
-    DiscountViewModel getDiscountByDiscountCode(String discountCode);
+    DiscountViewModel getByDiscountCode(String discountCode);
     boolean updateQuantity(int discountId);
 }

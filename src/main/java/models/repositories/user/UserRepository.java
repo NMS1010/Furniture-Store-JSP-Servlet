@@ -188,7 +188,7 @@ public class UserRepository implements IUserRepository{
         userViewModel.setPassword(user.getPassword());
 
         Query q1 = session.createQuery("select sum(oi.quantity) from Order o " +
-                "inner join OrderItem oi on o.orderId = oi.orderId where o.userId=:s1");
+                "inner join OrderItem oi on o.orderId = oi.order.orderId where o.user.userId=:s1");
         q1.setParameter("s1",user.getUserId());
         Object res1 = q1.getSingleResult();
         userViewModel.setTotalBought(res1 != null ? (long)res1 : 0);
@@ -196,22 +196,22 @@ public class UserRepository implements IUserRepository{
         userViewModel.setStatusCode(getUserStatus(user.getStatus()));
         userViewModel.setGenderCode(getUserGender(user.getGender()));
 
-        Query q2 = session.createQuery("select count(*) from WishItem wi inner join WishList wl on wi.wishId = wl.wishListId where wl.user.userId =:s1");
+        Query q2 = session.createQuery("select count(*) from WishItem wi inner join WishList wl on wi.wishList.wishListId = wl.wishListId where wl.user.userId =:s1");
         q2.setParameter("s1",user.getUserId());
         Object res2 = q2.getSingleResult();
         userViewModel.setTotalWishListItem(res2 != null ? (long)res2 : 0);
 
-        Query q3 = session.createQuery("select count(*) from CartItem ci inner join Cart c on ci.cartId = c.cartId where c.user.userId =:s1");
+        Query q3 = session.createQuery("select count(*) from CartItem ci inner join Cart c on ci.cart.cartId = c.cartId where c.user.userId =:s1");
         q3.setParameter("s1",user.getUserId());
         Object res3 = q3.getSingleResult();
         userViewModel.setTotalCartItem(res3 != null ? (long)res3 : 0);
 
-        Query q4 = session.createQuery("select count(*) from User u inner join Order o on u.userId = o.userId where o.userId=:s1");
+        Query q4 = session.createQuery("select count(*) from User u inner join Order o on u.userId = o.user.userId where o.user.userId=:s1");
         q4.setParameter("s1",user.getUserId());
         Object res4 = q4.getSingleResult();
         userViewModel.setTotalOrders(res4 != null ? (long)res4 : 0);
 
-        Query q5 = session.createQuery("select sum(o.totalPrice) from Order o where o.userId=:s1");
+        Query q5 = session.createQuery("select sum(o.totalPrice) from Order o where o.user.userId=:s1");
         q5.setParameter("s1",user.getUserId());
         Object res5 = q5.getSingleResult();
         userViewModel.setTotalCost(res5 != null ? (BigDecimal)res5 : BigDecimal.valueOf(0));

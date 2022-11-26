@@ -19,7 +19,7 @@ public class CheckDiscount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         String discountCode = request.getParameter("discountCode");
-        DiscountViewModel discount = DiscountService.getInstance().getDiscountByDiscountCode(discountCode);
+        DiscountViewModel discount = DiscountService.getInstance().getByDiscountCode(discountCode);
         if(discount == null)
             out.println("error");
         else if(discount.getStatus() == DISCOUNT_STATUS.SUSPENDED){

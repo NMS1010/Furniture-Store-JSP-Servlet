@@ -81,7 +81,7 @@ public class BrandRepository implements IBrandRepository{
         brandViewModel.setOrigin(brand.getOrigin());
         brandViewModel.setImage(brand.getImage());
 
-        Query q = session.createQuery("select sum(quantity) from Product where brandId=:s1");
+        Query q = session.createQuery("select sum(quantity) from Product p where p.brand.brandId=:s1");
         q.setParameter("s1",brand.getBrandId());
         Object o = q.getSingleResult();
         brandViewModel.setTotalProducts(o == null ? 0 : (long)o);

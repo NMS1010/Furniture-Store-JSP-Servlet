@@ -1,17 +1,9 @@
 package models.services.product;
 
-import models.entities.Product;
-import models.entities.ProductImage;
 import models.repositories.product.ProductRepository;
-import models.services.product_images.ProductImageService;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import utils.DateUtils;
-import utils.FileUtil;
-import utils.HibernateUtils;
-import utils.HtmlClassUtils;
-import utils.constants.PRODUCT_STATUS;
+import models.view_models.product_images.ProductImageCreateRequest;
+import models.view_models.product_images.ProductImageGetPagingRequest;
+import models.view_models.product_images.ProductImageUpdateRequest;
 import models.view_models.product_images.ProductImageViewModel;
 import models.view_models.products.ProductCreateRequest;
 import models.view_models.products.ProductGetPagingRequest;
@@ -60,5 +52,30 @@ public class ProductService implements IProductService {
     @Override
     public int getQuantity(int productId) {
         return ProductRepository.getInstance().getQuantity(productId);
+    }
+
+    @Override
+    public int insertImage(ProductImageCreateRequest request) {
+        return ProductRepository.getInstance().insertImage(request);
+    }
+
+    @Override
+    public boolean updateImage(ProductImageUpdateRequest request) {
+        return ProductRepository.getInstance().updateImage(request);
+    }
+
+    @Override
+    public boolean deleteImage(Integer entityId) {
+        return ProductRepository.getInstance().deleteImage(entityId);
+    }
+
+    @Override
+    public ProductImageViewModel retrieveImageById(Integer entityId) {
+        return ProductRepository.getInstance().retrieveImageById(entityId);
+    }
+
+    @Override
+    public ArrayList<ProductImageViewModel> retrieveAllImage(ProductImageGetPagingRequest request) {
+        return ProductRepository.getInstance().retrieveAllImage(request);
     }
 }

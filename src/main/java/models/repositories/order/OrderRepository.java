@@ -1,8 +1,6 @@
 package models.repositories.order;
 
-import models.entities.Order;
-import models.entities.OrderItem;
-import models.entities.User;
+import models.entities.*;
 import models.repositories.cart.CartIRepository;
 import models.repositories.discount.DiscountRepository;
 import models.repositories.product.ProductRepository;
@@ -54,9 +52,12 @@ public class OrderRepository implements IOrderRepository{
         order.setEmail(request.getEmail());
         order.setPhone(request.getPhone());
         order.setName(request.getName());
-        if(request.getDiscountId() > 0)
-            order.setDiscountId(request.getDiscountId());
-        order.setUserId(request.getUserId());
+        if(request.getDiscountId() > 0) {
+            Discount discount = session.find(Discount.class, request.getDiscountId());
+            order.setDiscount(discount);
+        }
+        User user = session.find(User.class, request.getUserId());
+        order.setUser(user);
         if(request.getPayment() == ORDER_PAYMENT.PAID)
             order.setDateDone(DateUtils.dateTimeNow());
         order.setShipping(request.getShipping());
@@ -151,10 +152,10 @@ public class OrderRepository implements IOrderRepository{
     private OrderViewModel getOrderViewModel(Order order, Session session){
         OrderViewModel orderViewModel = new OrderViewModel();
         DiscountViewModel discount = null;
-        if(order.getDiscountId() != null)
-            discount = DiscountService.getInstance().retrieveDiscountById(order.getDiscountId());
+        if(order.getDiscount() != null)
+            discount = DiscountService.getInstance().retrieveDiscountById(order.getDiscount().getDiscountId());
         Query q = session.createQuery("from User where id =:s1");
-        q.setParameter("s1",order.getUserId());
+        q.setParameter("s1",order.getUser().getUserId());
         User user = (User)q.getSingleResult();
 
         orderViewModel.setUserName(user.getUsername());
@@ -170,12 +171,12 @@ public class OrderRepository implements IOrderRepository{
         orderViewModel.setEmail(order.getEmail());
         orderViewModel.setPhone(order.getPhone());
         orderViewModel.setName(order.getName());
-        if(order.getDiscountId() != null) {
-            orderViewModel.setDiscountId(order.getDiscountId());
+        if(order.getDiscount() != null) {
+            orderViewModel.setDiscountId(order.getDiscount().getDiscountId());
             orderViewModel.setDiscountCode(discount.getDiscountCode());
             orderViewModel.setDiscountValue(discount.getDiscountValue());
         }
-        orderViewModel.setUserId(order.getUserId());
+        orderViewModel.setUserId(order.getUser().getUserId());
         if(order.getDateDone() != null)
             orderViewModel.setDateDone(DateUtils.dateTimeToStringWithFormat(order.getDateDone(),"yyyy-MM-dd HH:mm:ss"));
         orderViewModel.setShipping(order.getShipping());
@@ -238,7 +239,7 @@ public class OrderRepository implements IOrderRepository{
     @Override
     public ArrayList<OrderViewModel> retrieveOrderByUserId(int userId) {
         Session session = HibernateUtils.getSession();
-        Query q1 = session.createQuery("from Order where userId=:s1");
+        Query q1 = session.createQuery("from Order where user.userId=:s1");
         q1.setParameter("s1",userId);
         ArrayList<OrderViewModel> list = new ArrayList<>();
         List<Order> orders = q1.list();
@@ -363,7 +364,7 @@ public class OrderRepository implements IOrderRepository{
     @Override
     public boolean clearOrder(int orderId) {
         Session s = HibernateUtils.getSession();
-        Query q = s.createQuery("select orderItemId from OrderItem where orderId=:s1");
+        Query q = s.createQuery("select orderItemId from OrderItem where order.orderId=:s1");
         q.setParameter("s1",orderId);
         List<Integer> oIds = q.list();
         s.close();
@@ -376,10 +377,10 @@ public class OrderRepository implements IOrderRepository{
     }
     private OrderItemViewModel getOrderItemViewModel(OrderItem orderItem){
         OrderItemViewModel orderItemViewModel = new OrderItemViewModel();
-        ProductViewModel product = ProductService.getInstance().retrieveProductById(orderItem.getProductId());
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(orderItem.getProduct().getProductId());
 
-        orderItemViewModel.setProductId(orderItem.getProductId());
-        orderItemViewModel.setOrderId(orderItem.getOrderId());
+        orderItemViewModel.setProductId(orderItem.getProduct().getProductId());
+        orderItemViewModel.setOrderId(orderItem.getOrder().getOrderId());
         orderItemViewModel.setProductImage(product.getImage());
         orderItemViewModel.setProductName(product.getName());
         orderItemViewModel.setOrderItemId(orderItem.getOrderItemId());
@@ -393,7 +394,7 @@ public class OrderRepository implements IOrderRepository{
     public ArrayList<OrderItemViewModel> getItemByOrderId(int orderId) {
         Session session = HibernateUtils.getSession();
         ArrayList<OrderItemViewModel> orders = new ArrayList<>();
-        Query q = session.createQuery("from OrderItem where orderId=:s1");
+        Query q = session.createQuery("from OrderItem where order.orderId=:s1");
         q.setParameter("s1", orderId);
 
         List<OrderItem> l = q.list();
@@ -410,9 +411,10 @@ public class OrderRepository implements IOrderRepository{
         Transaction tx = null;
 
         OrderItem orderItem = new OrderItem();
-
-        orderItem.setOrderId(request.getOrderId());
-        orderItem.setProductId(request.getProductId());
+        Product product = session.find(Product.class, request.getProductId());
+        Order order = session.find(Order.class, request.getOrderId());
+        orderItem.setOrder(order);
+        orderItem.setProduct(product);
         orderItem.setQuantity(request.getQuantity());
         orderItem.setUnitPrice(request.getUnitPrice());
         orderItem.setTotalPrice(request.getUnitPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
@@ -432,9 +434,9 @@ public class OrderRepository implements IOrderRepository{
             session.close();
         }
         if(orderItemId != -1) {
-            boolean res = ProductService.getInstance().updateQuantity(orderItem.getProductId(), orderItem.getQuantity());
+            boolean res = ProductService.getInstance().updateQuantity(orderItem.getProduct().getProductId(), orderItem.getQuantity());
             if (!res) {
-                OrderService.getInstance().clearOrder(orderItem.getOrderId());
+                OrderService.getInstance().clearOrder(orderItem.getOrder().getOrderId());
                 return 0;
             }
         }

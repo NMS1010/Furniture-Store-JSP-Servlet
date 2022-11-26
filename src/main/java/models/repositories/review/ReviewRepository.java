@@ -2,6 +2,7 @@ package models.repositories.review;
 
 import models.entities.Product;
 import models.entities.ProductImage;
+import models.entities.Review;
 import models.entities.ReviewItem;
 import models.services.review.ReviewService;
 import models.view_models.review_items.ReviewItemCreateRequest;
@@ -27,7 +28,8 @@ public class ReviewRepository implements IReviewRepository {
     public int insert(ReviewItemCreateRequest request) {
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
-
+        Product product = session.find(Product.class, request.getProductId());
+        Review review = session.find(Review.class, request.getReviewId());
         ReviewItem reviewItem = new ReviewItem();
 
         reviewItem.setContent(request.getContent());
@@ -35,8 +37,8 @@ public class ReviewRepository implements IReviewRepository {
         reviewItem.setRating(request.getRating());
         reviewItem.setCreatedAt(DateUtils.dateTimeNow());
         reviewItem.setUpdatedAt(DateUtils.dateTimeNow());
-        reviewItem.setProductId(request.getProductId());
-        reviewItem.setReviewId(request.getReviewId());
+        reviewItem.setReview(review);
+        reviewItem.setProduct(product);
 
         int reviewItemId = -1;
         try {
@@ -80,23 +82,23 @@ public class ReviewRepository implements IReviewRepository {
         //ProductViewModel product = ProductService.getInstance().retrieveProductById(reviewItem.getProductId());
 
         reviewItemViewModel.setReviewItemId(reviewItem.getReviewItemId());
-        reviewItemViewModel.setReviewId(reviewItem.getReviewId());
+        reviewItemViewModel.setReviewId(reviewItem.getReview().getReviewId());
         reviewItemViewModel.setContent(reviewItem.getContent());
-        reviewItemViewModel.setProductId(reviewItem.getProductId());
+        reviewItemViewModel.setProductId(reviewItem.getProduct().getProductId());
         reviewItemViewModel.setDateCreated(DateUtils.dateTimeToStringWithFormat(reviewItem.getCreatedAt(),"yyyy-MM-dd HH:mm:ss"));
         reviewItemViewModel.setRating(reviewItem.getRating());
         Query q = session.createQuery("select r.user.userId from Review r where reviewId=:s1");
-        q.setParameter("s1",reviewItem.getReviewId());
+        q.setParameter("s1",reviewItem.getReview().getReviewId());
         int userId = (int)q.getSingleResult();
-        reviewItemViewModel.setUserId(reviewItem.getReviewId());
+        reviewItemViewModel.setUserId(reviewItem.getReview().getReviewId());
         reviewItemViewModel.setStatus(reviewItem.getStatus());
 
 
-        Query r = session.createQuery("from ProductImage where productId=:s1 and isDefault=true");
-        r.setParameter("s1",reviewItem.getProductId());
+        Query r = session.createQuery("from ProductImage where product.productId=:s1 and isDefault=true");
+        r.setParameter("s1",reviewItem.getProduct().getProductId());
 
         Query g = session.createQuery("from Product where productId=:s1");
-        g.setParameter("s1", reviewItem.getProductId());
+        g.setParameter("s1", reviewItem.getProduct().getProductId());
         ProductImage productImage = (ProductImage) r.getSingleResult();
         Product product = (Product) g.getSingleResult();
 
@@ -158,7 +160,7 @@ public class ReviewRepository implements IReviewRepository {
     public ArrayList<ReviewItemViewModel> retrieveByProductId(Integer productId) {
         Session session = HibernateUtils.getSession();
         ArrayList<ReviewItemViewModel> reviewItems = new ArrayList<>();
-        Query q = session.createQuery("select reviewItemId from ReviewItem where productId =:s1");
+        Query q = session.createQuery("select reviewItemId from ReviewItem where product.productId =:s1");
         q.setParameter("s1",productId);
         List<Integer> l = q.list();
         if(l!= null)
@@ -173,7 +175,7 @@ public class ReviewRepository implements IReviewRepository {
     public ArrayList<ReviewItemViewModel> retrieveByUserId(Integer userId) {
         Session session = HibernateUtils.getSession();
         ArrayList<ReviewItemViewModel> reviewItems = new ArrayList<>();
-        Query q = session.createQuery("select ri.reviewItemId from Review r inner join ReviewItem ri on r.reviewId = ri.reviewId where r.user.userId =:s1");
+        Query q = session.createQuery("select ri.reviewItemId from Review r inner join ReviewItem ri on r.reviewId = ri.review.reviewId where r.user.userId =:s1");
         q.setParameter("s1",userId);
         List<Integer> l = q.list();
         if(l!= null)

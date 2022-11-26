@@ -2,7 +2,6 @@ package controllers.admin.product;
 
 import models.services.cart.CartService;
 import models.services.product.ProductService;
-import models.services.product_images.ProductImageService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.product_images.ProductImageCreateRequest;
@@ -88,7 +87,7 @@ public class EditProduct extends HttpServlet {
             productImageCreateRequest.setProductId(productId);
             productImageCreateRequest.setImages(subImages);
 
-            int id = ProductImageService.getInstance().insertProductImage(productImageCreateRequest);
+            int id = ProductService.getInstance().insertImage(productImageCreateRequest);
             if(id < 1){
                 request.setAttribute("error", "true");
                 doGet(request, response);

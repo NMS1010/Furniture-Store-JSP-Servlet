@@ -100,12 +100,12 @@ public class CategoryRepository implements ICategoryRepository{
         categoryViewModel.setImage(category.getImage());
         categoryViewModel.setDescription(category.getDescription());
 
-        Query q2 = session.createQuery("select sum(quantity) from Product where categoryId=:s1");
+        Query q2 = session.createQuery("select sum(quantity) from Product p where p.category.categoryId=:s1");
         q2.setParameter("s1",category.getCategoryId());
         Object o2 = q2.getSingleResult();
         categoryViewModel.setTotalProduct(o2 == null ? 0 : (long)o2);
 
-        Query q3 = session.createQuery("select sum(o.quantity) from OrderItem o inner join Product p on o.productId = p.productId where p.categoryId =:s1");
+        Query q3 = session.createQuery("select sum(o.quantity) from OrderItem o inner join Product p on o.product.productId = p.productId where p.category.categoryId =:s1");
         q3.setParameter("s1",category.getCategoryId());
         Object o3 = q3.getSingleResult();
         categoryViewModel.setTotalSell(o3 == null ? 0 : (long)o3);

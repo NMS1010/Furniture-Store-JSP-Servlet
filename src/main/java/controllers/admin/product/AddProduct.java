@@ -3,7 +3,6 @@ package controllers.admin.product;
 import models.services.brand.BrandService;
 import models.services.category.CategoryService;
 import models.services.product.ProductService;
-import models.services.product_images.ProductImageService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.brands.BrandGetPagingRequest;
@@ -12,7 +11,6 @@ import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryViewModel;
 import models.view_models.product_images.ProductImageCreateRequest;
 import models.view_models.products.ProductCreateRequest;
-import utils.constants.PRODUCT_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -88,7 +86,7 @@ public class AddProduct extends HttpServlet {
 
         productImageCreateRequest.setImages(subImages);
 
-        int id = ProductImageService.getInstance().insertProductImage(productImageCreateRequest);
+        int id = ProductService.getInstance().insertImage(productImageCreateRequest);
         if(id < 1){
             request.setAttribute("error", "true");
             doGet(request, response);

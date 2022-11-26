@@ -153,7 +153,7 @@ public class DiscountRepository implements IDiscountRepository{
     }
 
     @Override
-    public DiscountViewModel getDiscountByDiscountCode(String discountCode) {
+    public DiscountViewModel getByDiscountCode(String discountCode) {
         Session session = HibernateUtils.getSession();
         Query q = session.createQuery("from Discount where discountCode=:s1");
         q.setParameter("s1", discountCode);
