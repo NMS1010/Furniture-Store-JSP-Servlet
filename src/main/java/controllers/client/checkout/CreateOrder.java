@@ -1,13 +1,7 @@
 package controllers.client.checkout;
 
-import models.entities.CartItem;
-import models.services.cart_item.CartItemService;
 import models.services.order.OrderService;
-import models.services.order_item.OrderItemService;
-import models.services.product.ProductService;
 import models.services.user.UserService;
-import models.view_models.cart_items.CartItemViewModel;
-import models.view_models.order_items.OrderItemCreateRequest;
 import models.view_models.orders.OrderCreateRequest;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;

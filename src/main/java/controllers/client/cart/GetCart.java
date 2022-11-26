@@ -1,7 +1,7 @@
 package controllers.client.cart;
 
 import models.services.brand.BrandService;
-import models.services.cart_item.CartItemService;
+import models.services.cart.CartService;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandViewModel;
 import models.view_models.cart_items.CartItemViewModel;
@@ -24,12 +24,12 @@ public class GetCart extends HttpServlet {
         if(user == null)
             return;
         int userId = user.getId();
-        ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
+        ArrayList<CartItemViewModel> cartItems = CartService.getInstance().retrieveCartByUserId(userId);
         request.setAttribute("cartItems", cartItems);
 
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(new BrandGetPagingRequest());
         request.setAttribute("brands", brands);
-        BigDecimal total = CartItemService.getInstance().getTotalCartItemPriceByUserId(userId);
+        BigDecimal total = CartService.getInstance().getTotalCartItemPriceByUserId(userId);
         request.setAttribute("total", total);
         ServletUtils.forward(request,response,"/views/client/cart.jsp");
     }

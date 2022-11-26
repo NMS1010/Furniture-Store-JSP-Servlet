@@ -1,9 +1,8 @@
 package controllers.client.wish_list;
 
-import models.services.wish_item.WishItemService;
+import models.services.wish.WishService;
 import models.view_models.users.UserViewModel;
 import models.view_models.wish_items.WishItemCreateRequest;
-import utils.ServletUtils;
 import utils.StringUtils;
 
 import javax.servlet.*;
@@ -25,14 +24,14 @@ public class AddWish extends HttpServlet {
         if(user == null)
             return;
         int userId = user.getId();
-        int wishId = WishItemService.getInstance().getWishIdByUserId(userId);
+        int wishId = WishService.getInstance().getWishIdByUserId(userId);
 
         WishItemCreateRequest createReq = new WishItemCreateRequest();
         createReq.setProductId(productId);
         createReq.setStatus(1);
         createReq.setWishId(wishId);
 
-        int count = WishItemService.getInstance().insertWishItem(createReq);
+        int count = WishService.getInstance().insertWishItem(createReq);
 
         if(count <= 0){
             out.println("error");

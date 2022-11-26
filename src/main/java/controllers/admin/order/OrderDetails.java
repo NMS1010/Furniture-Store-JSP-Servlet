@@ -1,7 +1,6 @@
 package controllers.admin.order;
 
 import models.services.order.OrderService;
-import models.services.order_item.OrderItemService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.order_items.OrderItemViewModel;
@@ -21,7 +20,7 @@ public class OrderDetails extends HttpServlet {
         OrderViewModel order = OrderService.getInstance().retrieveOrderById(orderId);
 
         request.setAttribute("order", order);
-        ArrayList<OrderItemViewModel> orderItems = OrderItemService.getInstance().getByOrderId(orderId);
+        ArrayList<OrderItemViewModel> orderItems = OrderService.getInstance().getItemByOrderId(orderId);
         request.setAttribute("orderItems", orderItems);
 
         ServletUtils.forward(request, response, "/views/admin/order/order-details.jsp");

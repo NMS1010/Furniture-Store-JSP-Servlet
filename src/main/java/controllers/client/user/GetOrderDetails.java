@@ -1,11 +1,8 @@
 package controllers.client.user;
 
 import models.services.order.OrderService;
-import models.services.order_item.OrderItemService;
-import models.services.review_item.ReviewItemService;
 import models.view_models.order_items.OrderItemViewModel;
 import models.view_models.orders.OrderViewModel;
-import models.view_models.review_items.ReviewItemViewModel;
 import utils.ServletUtils;
 import utils.StringUtils;
 
@@ -26,7 +23,7 @@ public class GetOrderDetails extends HttpServlet {
         OrderViewModel order = OrderService.getInstance().retrieveOrderById(orderId);
 
         request.setAttribute("order", order);
-        ArrayList<OrderItemViewModel> orderItems = OrderItemService.getInstance().getByOrderId(orderId);
+        ArrayList<OrderItemViewModel> orderItems = OrderService.getInstance().getItemByOrderId(orderId);
         request.setAttribute("orderItems", orderItems);
 
         ServletUtils.forward(request, response, "/views/client/my-account-order-details.jsp");

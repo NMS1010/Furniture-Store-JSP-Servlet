@@ -1,11 +1,10 @@
 package controllers.client.wish_list;
 
 import models.services.brand.BrandService;
-import models.services.wish_item.WishItemService;
+import models.services.wish.WishService;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandViewModel;
 import models.view_models.users.UserViewModel;
-import models.view_models.wish_items.WishItemGetPagingRequest;
 import models.view_models.wish_items.WishItemViewModel;
 import utils.ServletUtils;
 
@@ -25,7 +24,7 @@ public class GetWishList extends HttpServlet {
         if(user == null)
             return;
         int userId = user.getId();
-        ArrayList<WishItemViewModel> wishItems = WishItemService.getInstance().retrieveWishListByUserId(userId);
+        ArrayList<WishItemViewModel> wishItems = WishService.getInstance().retrieveWishListByUserId(userId);
         request.setAttribute("wishItems", wishItems);
 
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(new BrandGetPagingRequest());

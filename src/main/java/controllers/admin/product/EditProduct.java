@@ -1,9 +1,8 @@
 package controllers.admin.product;
 
-import models.services.cart_item.CartItemService;
+import models.services.cart.CartService;
 import models.services.product.ProductService;
 import models.services.product_images.ProductImageService;
-import models.view_models.cart_items.CartItemUpdateRequest;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.product_images.ProductImageCreateRequest;
@@ -81,7 +80,7 @@ public class EditProduct extends HttpServlet {
             return;
         }else{
             if(status == PRODUCT_STATUS.OUT_STOCK || status == PRODUCT_STATUS.SUSPENDED){
-                CartItemService.getInstance().updateQuantityByProductId(productId, 0);
+                CartService.getInstance().updateQuantityByProductId(productId, 0);
             }
         }
         if(subImages.size() > 0) {

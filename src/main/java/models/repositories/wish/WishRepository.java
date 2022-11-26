@@ -1,8 +1,7 @@
-package models.repositories.wish_item;
+package models.repositories.wish;
 
 import models.entities.WishItem;
 import models.services.product.ProductService;
-import models.services.wish_item.WishItemService;
 import models.view_models.products.ProductViewModel;
 import models.view_models.wish_items.WishItemCreateRequest;
 import models.view_models.wish_items.WishItemGetPagingRequest;
@@ -18,11 +17,11 @@ import utils.constants.PRODUCT_STATUS;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WishItemRepository implements IWishItemRepository{
-    private static WishItemRepository instance = null;
-    public static WishItemRepository getInstance(){
+public class WishRepository implements IWishRepository {
+    private static WishRepository instance = null;
+    public static WishRepository getInstance(){
         if(instance == null)
-            instance = new WishItemRepository();
+            instance = new WishRepository();
         return instance;
     }
     @Override

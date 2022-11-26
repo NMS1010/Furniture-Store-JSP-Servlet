@@ -3,7 +3,7 @@ package models.repositories.user;
 import common.user.UserUtils;
 import models.entities.*;
 import models.services.user.UserService;
-import models.services.user_role.UserRoleService;
+import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -216,7 +216,7 @@ public class UserRepository implements IUserRepository{
         Object res5 = q5.getSingleResult();
         userViewModel.setTotalCost(res5 != null ? (BigDecimal)res5 : BigDecimal.valueOf(0));
 
-        userViewModel.setRoles(UserRoleService.getInstance().getByUserId(user.getUserId()));
+        userViewModel.setRoles(UserService.getInstance().getUserRoleByUserId(user.getUserId()));
 
         ArrayList<Integer> roleIds = new ArrayList<>();
         userViewModel.getRoles().forEach(s -> roleIds.add(s.getRoleId()));
@@ -406,5 +406,33 @@ public class UserRepository implements IUserRepository{
     @Override
     public long getTotalUser() {
         return HibernateUtils.count("User","");
+    }
+    private UserRoleViewModel getUserRoleViewModel(UserRole userRole, Session session){
+        UserRoleViewModel userRoleViewModel = new UserRoleViewModel();
+        Query q1 = session.createQuery("select username from User where id = :s1");
+        q1.setParameter("s1",userRole.getUserId());
+
+        Query q2 = session.createQuery("select roleName from Role where roleId = :s1");
+        q2.setParameter("s1",userRole.getRoleId());
+        userRoleViewModel.setRoleId(userRole.getRoleId());
+        userRoleViewModel.setUserId(userRole.getUserId());
+        userRoleViewModel.setUserName(q1.getSingleResult().toString());
+        userRoleViewModel.setRoleName(q2.getSingleResult().toString());
+
+        return userRoleViewModel;
+    }
+    @Override
+    public ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId) {
+        ArrayList<UserRoleViewModel> userRoles = new ArrayList<>();
+        Session session = HibernateUtils.getSession();
+        Query q1 = session.createQuery("from UserRole where userId=:s1");
+        q1.setParameter("s1",userId);
+        List<UserRole> urs = q1.list();
+        if(urs != null){
+            for(UserRole ur:urs){
+                userRoles.add(getUserRoleViewModel(ur, session));
+            }
+        }
+        return userRoles;
     }
 }

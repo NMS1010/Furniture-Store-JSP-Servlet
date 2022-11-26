@@ -1,4 +1,4 @@
-package models.repositories.review_item;
+package models.repositories.review;
 
 import common.interfaces.IModifyEntity;
 import common.interfaces.IRetrieveEntity;
@@ -8,9 +8,8 @@ import models.view_models.review_items.ReviewItemUpdateRequest;
 import models.view_models.review_items.ReviewItemViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public interface IReviewItemRepository extends IModifyEntity<ReviewItemCreateRequest, ReviewItemUpdateRequest, Integer>,
+public interface IReviewRepository extends IModifyEntity<ReviewItemCreateRequest, ReviewItemUpdateRequest, Integer>,
         IRetrieveEntity<ReviewItemViewModel, ReviewItemGetPagingRequest, Integer> {
     boolean ChangeStatus(int reviewItemId);
 

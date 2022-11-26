@@ -1,5 +1,6 @@
 package models.services.user;
 
+import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
 
 import java.util.ArrayList;
@@ -18,4 +19,5 @@ public interface IUserService {
     UserViewModel getUserByUserName(String username);
     ArrayList<UserViewModel> getTopUserByTotalOrder(int top);
     long getTotalUser();
+    ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);
 }

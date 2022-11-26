@@ -23,4 +23,5 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     ArrayList<UserViewModel> getTopUserByTotalOrder(int top);
     UserViewModel getUserByUserName(String username);
     long getTotalUser();
+    ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);
 }

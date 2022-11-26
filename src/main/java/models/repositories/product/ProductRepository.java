@@ -2,9 +2,8 @@ package models.repositories.product;
 
 import models.entities.Product;
 import models.entities.ProductImage;
-import models.services.product.ProductService;
 import models.services.product_images.ProductImageService;
-import models.services.review_item.ReviewItemService;
+import models.services.review.ReviewService;
 import models.view_models.product_images.ProductImageViewModel;
 import models.view_models.products.ProductCreateRequest;
 import models.view_models.products.ProductGetPagingRequest;
@@ -20,7 +19,6 @@ import utils.HibernateUtils;
 import utils.HtmlClassUtils;
 import utils.constants.PRODUCT_STATUS;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,7 +192,7 @@ public class ProductRepository implements IProductRepository{
             productImageViewModels.add(ProductImageService.getInstance().retrieveProductImageById(id));
         });
         productViewModel.setProductImages(productImageViewModels);
-        ArrayList<ReviewItemViewModel> productReviews = ReviewItemService.getInstance().retrieveReviewItemByProductId(product.getProductId());
+        ArrayList<ReviewItemViewModel> productReviews = ReviewService.getInstance().retrieveReviewItemByProductId(product.getProductId());
         productReviews.removeIf(x -> x.getStatus() == 0);
         int totalRating = productReviews.stream().mapToInt(ReviewItemViewModel::getRating).sum();
         long avgRating = Math.round((totalRating * 1.0)/productReviews.size());

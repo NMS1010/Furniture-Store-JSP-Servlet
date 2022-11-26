@@ -1,19 +1,14 @@
-package models.repositories.cart_item;
+package models.repositories.cart;
 
 import models.entities.CartItem;
-import models.entities.CartItem;
 import models.repositories.product.ProductRepository;
-import models.repositories.user.UserRepository;
-import models.services.cart_item.CartItemService;
-import models.services.cart_item.ICartItemService;
+import models.services.cart.CartService;
 import models.services.product.ProductService;
 import models.view_models.cart_items.CartItemCreateRequest;
 import models.view_models.cart_items.CartItemGetPagingRequest;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.products.ProductViewModel;
-import models.view_models.users.UserViewModel;
-import models.view_models.wish_items.WishItemViewModel;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -25,11 +20,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartItemRepository implements ICartItemRepository {
-    private static CartItemRepository instance = null;
-    public static CartItemRepository getInstance(){
+public class CartIRepository implements ICartRepository {
+    private static CartIRepository instance = null;
+    public static CartIRepository getInstance(){
         if(instance == null)
-            instance = new CartItemRepository();
+            instance = new CartIRepository();
         return instance;
     }
     @Override
@@ -226,7 +221,7 @@ public class CartItemRepository implements ICartItemRepository {
 
     @Override
     public int canUpdateQuantity(int cartItemId, int quantity) {
-        CartItemViewModel cartItem = CartItemService.getInstance().retrieveCartItemById(cartItemId);
+        CartItemViewModel cartItem = CartService.getInstance().retrieveCartItemById(cartItemId);
         ProductViewModel product = ProductService.getInstance().retrieveProductById(cartItem.getProductId());
         if(product.getQuantity() < quantity)
             return product.getQuantity();
@@ -252,10 +247,10 @@ public class CartItemRepository implements ICartItemRepository {
 
     @Override
     public String addProductToCart(int productId, int quantity, int userId) {
-        int cartId = CartItemService.getInstance().getCartIdByUserId(userId);
+        int cartId = CartService.getInstance().getCartIdByUserId(userId);
         String responseStatus;
         int count = -1;
-        CartItemViewModel cartItem = CartItemService.getInstance().getCartItemContain(cartId, productId);
+        CartItemViewModel cartItem = CartService.getInstance().getCartItemContain(cartId, productId);
         ProductViewModel product = ProductService.getInstance().retrieveProductById(productId);
         if(product.getQuantity() > 0) {
             if (cartItem != null) {
@@ -263,7 +258,7 @@ public class CartItemRepository implements ICartItemRepository {
                 updateReq.setCartItemId(cartItem.getCartItemId());
                 updateReq.setQuantity(cartItem.getQuantity() + 1);
                 updateReq.setStatus(cartItem.getStatus());
-                count = CartItemService.getInstance().updateCartItem(updateReq) ? 1 : 0;
+                count = CartService.getInstance().updateCartItem(updateReq) ? 1 : 0;
                 if(count > 0)
                     responseStatus = "repeat";
                 else
@@ -275,7 +270,7 @@ public class CartItemRepository implements ICartItemRepository {
                 createReq.setQuantity(quantity);
                 createReq.setStatus(1);
 
-                count = CartItemService.getInstance().insertCartItem(createReq);
+                count = CartService.getInstance().insertCartItem(createReq);
                 if (count > 0) {
                     responseStatus = "success";
                 }

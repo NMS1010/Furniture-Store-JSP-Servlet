@@ -1,8 +1,7 @@
 package controllers.client.wish_list;
 
-import models.services.wish_item.WishItemService;
+import models.services.wish.WishService;
 import models.view_models.users.UserViewModel;
-import utils.ServletUtils;
 import utils.StringUtils;
 
 import javax.servlet.*;
@@ -17,7 +16,7 @@ public class RemoveWish extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         int wishItemId = StringUtils.toInt(request.getParameter("wishItemId"));
-        boolean success = WishItemService.getInstance().deleteWishItem(wishItemId);
+        boolean success = WishService.getInstance().deleteWishItem(wishItemId);
         PrintWriter out = response.getWriter();
         if(!success){
             out.println("error");

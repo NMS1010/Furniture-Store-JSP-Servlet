@@ -1,11 +1,9 @@
-package models.repositories.review_item;
+package models.repositories.review;
 
 import models.entities.Product;
 import models.entities.ProductImage;
 import models.entities.ReviewItem;
-import models.services.product.ProductService;
-import models.services.review_item.ReviewItemService;
-import models.view_models.products.ProductViewModel;
+import models.services.review.ReviewService;
 import models.view_models.review_items.ReviewItemCreateRequest;
 import models.view_models.review_items.ReviewItemGetPagingRequest;
 import models.view_models.review_items.ReviewItemUpdateRequest;
@@ -18,11 +16,11 @@ import utils.HibernateUtils;
 
 import java.util.*;
 
-public class ReviewItemRepository implements IReviewItemRepository{
-    private static ReviewItemRepository instance = null;
-    public static ReviewItemRepository getInstance(){
+public class ReviewRepository implements IReviewRepository {
+    private static ReviewRepository instance = null;
+    public static ReviewRepository getInstance(){
         if(instance == null)
-            instance = new ReviewItemRepository();
+            instance = new ReviewRepository();
         return instance;
     }
     @Override
@@ -188,7 +186,7 @@ public class ReviewItemRepository implements IReviewItemRepository{
 
     @Override
     public ArrayList<ReviewItemViewModel> retrieveUserReviewByProductId(Integer userId, Integer productId) {
-        ArrayList<ReviewItemViewModel> reviewItems = ReviewItemService.getInstance().retrieveReviewItemByUserId(userId);
+        ArrayList<ReviewItemViewModel> reviewItems = ReviewService.getInstance().retrieveReviewItemByUserId(userId);
         reviewItems.removeIf(x -> x.getProductId() != productId || x.getStatus() == 0);
         return reviewItems;
     }

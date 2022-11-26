@@ -1,23 +1,10 @@
 package models.services.user;
 
-import models.entities.*;
-import models.entities.User;
 import models.repositories.user.UserRepository;
-import models.services.user_role.UserRoleService;
+import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import utils.DateUtils;
-import utils.FileUtil;
-import utils.HibernateUtils;
-import utils.constants.USER_GENDER;
-import utils.constants.USER_STATUS;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
 public class UserService implements IUserService{
     private static UserService instance = null;
@@ -86,6 +73,11 @@ public class UserService implements IUserService{
     @Override
     public long getTotalUser() {
         return UserRepository.getInstance().getTotalUser();
+    }
+
+    @Override
+    public ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId) {
+        return UserRepository.getInstance().getUserRoleByUserId(userId);
     }
 
 }

@@ -133,7 +133,7 @@
                       <tr class="checkout__total--items">
                         <td class="checkout__total--title text-left">Giảm giá</td>
                         <td class="checkout__total--calculated__text text-right">
-                          <input value="${discount} %" name="discountValue" id="discountValue" class="primary__btn" size="8" type="text" readonly=""/>
+                          <input value="${discount} %" name="discountValue" id="discountValue" class="primary__btn" size="8" type="text" readonly/>
                           <input type="hidden" value="" name="discountId" id="discountId" />
                         </td>
                       </tr>

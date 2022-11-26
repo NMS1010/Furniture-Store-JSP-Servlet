@@ -4,6 +4,8 @@ import models.entities.Order;
 import models.entities.User;
 import models.repositories.order.OrderRepository;
 import models.services.discount.DiscountService;
+import models.view_models.order_items.OrderItemCreateRequest;
+import models.view_models.order_items.OrderItemViewModel;
 import models.view_models.orders.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -95,5 +97,20 @@ public class OrderService implements IOrderService{
     @Override
     public boolean clearOrder(int orderId) {
         return OrderRepository.getInstance().clearOrder(orderId);
+    }
+
+    @Override
+    public ArrayList<OrderItemViewModel> getItemByOrderId(int orderId) {
+        return OrderRepository.getInstance().getItemByOrderId(orderId);
+    }
+
+    @Override
+    public int insertOrderItem(OrderItemCreateRequest request) {
+        return OrderRepository.getInstance().insertOrderItem(request);
+    }
+
+    @Override
+    public boolean deleteOrderItem(Integer entityId) {
+        return OrderRepository.getInstance().deleteOrderItem(entityId);
     }
 }

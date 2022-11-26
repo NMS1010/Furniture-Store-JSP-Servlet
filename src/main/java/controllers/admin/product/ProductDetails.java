@@ -1,17 +1,14 @@
 package controllers.admin.product;
 
 import models.services.product.ProductService;
-import models.services.review_item.ReviewItemService;
 import utils.ServletUtils;
 import utils.StringUtils;
 import models.view_models.products.ProductViewModel;
-import models.view_models.review_items.ReviewItemViewModel;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "ProductDetails", value = "/admin/product/detail")
 public class ProductDetails extends HttpServlet {

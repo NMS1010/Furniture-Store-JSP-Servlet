@@ -1,16 +1,13 @@
-package models.services.review_item;
+package models.services.review;
 
-import common.interfaces.IModifyEntity;
-import common.interfaces.IRetrieveEntity;
 import models.view_models.review_items.ReviewItemCreateRequest;
 import models.view_models.review_items.ReviewItemGetPagingRequest;
 import models.view_models.review_items.ReviewItemUpdateRequest;
 import models.view_models.review_items.ReviewItemViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public interface IReviewItemService {
+public interface IReviewService {
     int insertReviewItem(ReviewItemCreateRequest request);
     boolean updateReviewItem(ReviewItemUpdateRequest request);
     boolean deleteReviewItem(Integer reviewItemId);

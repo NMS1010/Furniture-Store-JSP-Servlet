@@ -2,6 +2,8 @@ package models.repositories.order;
 
 import common.interfaces.IModifyEntity;
 import common.interfaces.IRetrieveEntity;
+import models.view_models.order_items.OrderItemCreateRequest;
+import models.view_models.order_items.OrderItemViewModel;
 import models.view_models.orders.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,4 +21,7 @@ public interface IOrderRepository  extends IModifyEntity<OrderCreateRequest, Ord
     ArrayList<OrderViewModel> getTopOrderSoon(int top);
     boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId);
     boolean clearOrder(int orderId);
+    ArrayList<OrderItemViewModel> getItemByOrderId(int orderId);
+    public int insertOrderItem(OrderItemCreateRequest request);
+    public boolean deleteOrderItem(Integer entityId);
 }

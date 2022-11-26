@@ -77,7 +77,7 @@
                     <td class="account__table--body__child--items"><a href="<%=request.getContextPath()%>/product/details?productId=${o.productId}">${o.productName}</a></td>
                     <td class="account__table--body__child--items" >${o.quantity}</td>
                     <td class="account__table--body__child--items">${o.unitPrice}</td>
-                    <td class="account__table--body__child--items">${o.totalPrice}</td>
+                    <td class="account__table--body__child--items text-left">${o.totalPrice}</td>
                     <c:if test="<%=order.getStatus() == ORDER_STATUS.DELIVERED%>">
                       <td class="account__table--body__child--items"><a class="primary__btn" href="<%=request.getContextPath()%>/my-account/order/reviews?productId=${o.productId}">Đánh giá</a></td>
                     </c:if>

@@ -1,20 +1,23 @@
 package models.repositories.order;
 
 import models.entities.Order;
+import models.entities.OrderItem;
 import models.entities.User;
-import models.repositories.cart_item.CartItemRepository;
+import models.repositories.cart.CartIRepository;
 import models.repositories.discount.DiscountRepository;
 import models.repositories.product.ProductRepository;
-import models.services.cart_item.CartItemService;
+import models.services.cart.CartService;
 import models.services.discount.DiscountService;
 import models.services.mail.MailJetService;
 import models.services.order.OrderService;
-import models.services.order_item.OrderItemService;
+import models.services.product.ProductService;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.discounts.DiscountViewModel;
 import models.view_models.order_items.OrderItemCreateRequest;
+import models.view_models.order_items.OrderItemViewModel;
 import models.view_models.orders.*;
+import models.view_models.products.ProductViewModel;
 import models.view_models.users.UserViewModel;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -305,7 +308,7 @@ public class OrderRepository implements IOrderRepository{
 
     @Override
     public boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId) {
-        ArrayList<CartItemViewModel> cartItems = CartItemService.getInstance().retrieveCartByUserId(userId);
+        ArrayList<CartItemViewModel> cartItems = CartService.getInstance().retrieveCartByUserId(userId);
         if(cartItems.size() == 0)
             return false;
         int orderId = OrderService.getInstance().insertOrder(orderReq);
@@ -319,7 +322,7 @@ public class OrderRepository implements IOrderRepository{
             createOrderItemReq.setQuantity(c.getQuantity());
             createOrderItemReq.setUnitPrice(c.getUnitPrice());
             createOrderItemReq.setProductId(c.getProductId());
-            int orderItemId = OrderItemService.getInstance().insertOrderItem(createOrderItemReq);
+            int orderItemId = insertOrderItem(createOrderItemReq);
             if(orderItemId == -1) {
                 return false;
             }
@@ -329,20 +332,20 @@ public class OrderRepository implements IOrderRepository{
                 for(CartItemViewModel ci: cartItems) {
                     int currQuantity = ProductRepository.getInstance().getQuantity(ci.getProductId());
                     if (currQuantity == 0) {
-                        CartItemRepository.getInstance().delete(ci.getCartItemId());
+                        CartIRepository.getInstance().delete(ci.getCartItemId());
                     }
                     else if(currQuantity < ci.getQuantity()) {
                         CartItemUpdateRequest r = new CartItemUpdateRequest();
                         r.setCartItemId(ci.getCartItemId());
                         r.setQuantity(currQuantity);
                         r.setStatus(1);
-                        CartItemRepository.getInstance().update(r);
+                        CartIRepository.getInstance().update(r);
                     }
                 }
                 return false;
             }
         }
-        boolean success = CartItemService.getInstance().deleteCartByUserId(userId);
+        boolean success = CartService.getInstance().deleteCartByUserId(userId);
         if(!success){
             clearOrder(orderId);
             return false;
@@ -365,10 +368,84 @@ public class OrderRepository implements IOrderRepository{
         List<Integer> oIds = q.list();
         s.close();
         for(int id:oIds) {
-            boolean res = OrderItemService.getInstance().deleteOrderItem(id);
+            boolean res = deleteOrderItem(id);
             if(!res)
                 return false;
         }
         return delete(orderId);
+    }
+    private OrderItemViewModel getOrderItemViewModel(OrderItem orderItem){
+        OrderItemViewModel orderItemViewModel = new OrderItemViewModel();
+        ProductViewModel product = ProductService.getInstance().retrieveProductById(orderItem.getProductId());
+
+        orderItemViewModel.setProductId(orderItem.getProductId());
+        orderItemViewModel.setOrderId(orderItem.getOrderId());
+        orderItemViewModel.setProductImage(product.getImage());
+        orderItemViewModel.setProductName(product.getName());
+        orderItemViewModel.setOrderItemId(orderItem.getOrderItemId());
+        orderItemViewModel.setUnitPrice(orderItem.getUnitPrice());
+        orderItemViewModel.setQuantity(orderItem.getQuantity());
+        orderItemViewModel.setTotalPrice(orderItem.getTotalPrice());
+
+        return orderItemViewModel;
+    }
+    @Override
+    public ArrayList<OrderItemViewModel> getItemByOrderId(int orderId) {
+        Session session = HibernateUtils.getSession();
+        ArrayList<OrderItemViewModel> orders = new ArrayList<>();
+        Query q = session.createQuery("from OrderItem where orderId=:s1");
+        q.setParameter("s1", orderId);
+
+        List<OrderItem> l = q.list();
+        l.forEach(oi -> {
+            orders.add(getOrderItemViewModel(oi));
+        });
+        session.close();
+        return orders;
+    }
+
+    @Override
+    public int insertOrderItem(OrderItemCreateRequest request) {
+        Session session = HibernateUtils.getSession();
+        Transaction tx = null;
+
+        OrderItem orderItem = new OrderItem();
+
+        orderItem.setOrderId(request.getOrderId());
+        orderItem.setProductId(request.getProductId());
+        orderItem.setQuantity(request.getQuantity());
+        orderItem.setUnitPrice(request.getUnitPrice());
+        orderItem.setTotalPrice(request.getUnitPrice().multiply(BigDecimal.valueOf(request.getQuantity())));
+
+        int orderItemId = -1;
+        try {
+            tx = session.beginTransaction();
+            session.persist(orderItem);
+            orderItemId = orderItem.getOrderItemId();
+            tx.commit();
+        }catch(Exception e){
+            if(tx != null)
+                tx.rollback();
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+        if(orderItemId != -1) {
+            boolean res = ProductService.getInstance().updateQuantity(orderItem.getProductId(), orderItem.getQuantity());
+            if (!res) {
+                OrderService.getInstance().clearOrder(orderItem.getOrderId());
+                return 0;
+            }
+        }
+        return orderItemId;
+    }
+
+    @Override
+    public boolean deleteOrderItem(Integer entityId) {
+        Session session = HibernateUtils.getSession();
+        OrderItem orderItem = session.find(OrderItem.class, entityId);
+        session.close();
+        return HibernateUtils.remove(orderItem);
     }
 }

@@ -1,11 +1,7 @@
 package controllers.client.cart;
 
-import models.services.cart_item.CartItemService;
-import models.services.product.ProductService;
+import models.services.cart.CartService;
 import models.view_models.cart_items.CartItemUpdateRequest;
-import models.view_models.cart_items.CartItemViewModel;
-import models.view_models.products.ProductViewModel;
-import models.view_models.users.UserViewModel;
 import utils.StringUtils;
 
 import javax.servlet.*;
@@ -27,11 +23,11 @@ public class UpdateItem extends HttpServlet {
         updateReq.setCartItemId(cartItemId);
         updateReq.setQuantity(quantity);
 
-        boolean success = CartItemService.getInstance().updateCartItem(updateReq);
+        boolean success = CartService.getInstance().updateCartItem(updateReq);
         if(success){
             out.println("success");
         }else{
-            int q = CartItemService.getInstance().canUpdateQuantity(cartItemId, quantity);
+            int q = CartService.getInstance().canUpdateQuantity(cartItemId, quantity);
             if(q != -1)
                 out.println(q + "-over");
             else
