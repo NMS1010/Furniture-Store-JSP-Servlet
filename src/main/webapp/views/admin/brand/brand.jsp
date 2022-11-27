@@ -66,16 +66,7 @@
                                                 <span class="brand-delete mdi mdi-delete-outline" data-bs-toggle="modal"
                                                       data-bs-target="#modal-delete-brand" data-backdrop="static" data-keyboard="false" data-id="${b.brandId}" href="#modal-delete-brand"></span>
                                                 <a
-                                                    <c:choose>
-                                                            <c:when test="${brand == null}">
-                                                                href="<%=request.getContextPath()%>/admin/brand/edit?brandId=${b.brandId}"
-                                                            </c:when>
-                                                    <c:when test="${brand != null}">
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-add-brand"
-                                                            href="#modal-add-brand"
-                                                    </c:when>
-                                                    </c:choose>
+                                                        href="<%=request.getContextPath()%>/admin/brand/edit?brandId=${b.brandId}"
                                                 >
                                                 <span class="mdi mdi-account-edit "></span>
                                                 </a>
