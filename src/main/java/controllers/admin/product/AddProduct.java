@@ -11,6 +11,8 @@ import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryViewModel;
 import models.view_models.product_images.ProductImageCreateRequest;
 import models.view_models.products.ProductCreateRequest;
+import utils.constants.BRAND_STATUS;
+import utils.constants.CATEGORY_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -32,9 +34,11 @@ public class AddProduct extends HttpServlet {
         CategoryGetPagingRequest req1 = new CategoryGetPagingRequest();
 
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req1);
+        categories.removeIf(x -> x.getStatus() == CATEGORY_STATUS.IN_ACTIVE);
         BrandGetPagingRequest req2 = new BrandGetPagingRequest();
 
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req2);
+        brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
         request.setAttribute("categories",categories);
         request.setAttribute("brands",brands);
         ServletUtils.forward(request, response, "/views/admin/product/add-product.jsp");

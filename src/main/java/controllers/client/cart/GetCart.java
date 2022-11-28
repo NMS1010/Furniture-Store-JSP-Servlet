@@ -7,6 +7,7 @@ import models.view_models.brands.BrandViewModel;
 import models.view_models.cart_items.CartItemViewModel;
 import models.view_models.users.UserViewModel;
 import utils.ServletUtils;
+import utils.constants.BRAND_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -28,6 +29,7 @@ public class GetCart extends HttpServlet {
         request.setAttribute("cartItems", cartItems);
 
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(new BrandGetPagingRequest());
+        brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
         request.setAttribute("brands", brands);
         BigDecimal total = CartService.getInstance().getTotalCartItemPriceByUserId(userId);
         request.setAttribute("total", total);

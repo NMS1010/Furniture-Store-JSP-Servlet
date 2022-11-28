@@ -1,3 +1,4 @@
+<%@ page import="utils.constants.CATEGORY_STATUS" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="categories" type="java.util.ArrayList<models.view_models.categories.CategoryViewModel>" scope="request"/>
@@ -54,6 +55,16 @@
                           <label class="col-12 col-form-label" for="description">Mô tả</label>
                           <div class="col-12">
                             <input type="text" id="description" name="description" cols="40" rows="4" class="form-control" value="${category.description}" required/>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-12 col-form-label" for="status">Trạng thái</label>
+                          <div class="col-12">
+                            <select id="status" name="status" class="form-select" required>
+                              <c:forEach var="s" items="<%=CATEGORY_STATUS.Status%>">
+                                <option value="${s.value}" <c:if test="${s.value == category.status}">selected</c:if> >${s.key}</option>
+                              </c:forEach>
+                            </select>
                           </div>
                         </div>
                         <div class="row ec-vendor-uploads">
@@ -117,6 +128,7 @@
                             <th>Sub Categories</th>
                             <th>Total Product</th>
                             <th>Total Sell</th>
+                            <th>Status</th>
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -138,6 +150,7 @@
                               </td>
                               <td><c:out value="${category.totalProduct}"/></td>
                               <td><c:out value="${category.totalSell}"/></td>
+                              <td>${category.statusCode}</td>
                               <td>
                                 <div class="btn-group">
                                   <button type="button"

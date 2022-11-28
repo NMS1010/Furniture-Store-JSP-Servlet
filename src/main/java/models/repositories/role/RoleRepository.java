@@ -9,6 +9,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.HibernateUtils;
+import utils.constants.BRAND_STATUS;
+import utils.constants.ROLE_STATUS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class RoleRepository implements IRoleRepository{
 
         Role role = new Role();
         role.setRoleName(request.getRoleName());
+        role.setStatus(request.getStatus());
         int roleId = -1;
         try {
             tx = session.beginTransaction();
@@ -50,22 +53,45 @@ public class RoleRepository implements IRoleRepository{
         Session session = HibernateUtils.getSession();
         Role role = session.find(Role.class, request.getRoleId());
         role.setRoleName(request.getRoleName());
+        role.setStatus(request.getStatus());
         return HibernateUtils.merge(role);
     }
 
     @Override
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
+        Query q3 = session.createQuery("select roleId from UserRole where roleId=:s1");
+        q3.setParameter("s1",entityId);
+        List<Integer> roleIds = q3.list();
+        if(roleIds.size() > 0)
+            return false;
         Role role = session.find(Role.class, entityId);
+        role.setStatus(ROLE_STATUS.IN_ACTIVE);
         session.close();
-        return HibernateUtils.remove(role);
+        return HibernateUtils.merge(role);
+    }
+    private String getStatus(int i){
+        String status = "";
+        switch (i){
+            case ROLE_STATUS.ACTIVE:
+                status = "Đang dùng";
+                break;
+            case ROLE_STATUS.IN_ACTIVE:
+                status = "Đã xoá";
+                break;
+            default:
+                status = "Undefined";
+                break;
+        }
+        return status;
     }
     private RoleViewModel getRoleViewModel(Role role, Session session){
         RoleViewModel roleViewModel = new RoleViewModel();
 
         roleViewModel.setRoleId(role.getRoleId());
         roleViewModel.setRoleName(role.getRoleName());
-
+        roleViewModel.setStatus(role.getStatus());
+        roleViewModel.setStatusCode(getStatus(role.getStatus()));
         return roleViewModel;
     }
     @Override

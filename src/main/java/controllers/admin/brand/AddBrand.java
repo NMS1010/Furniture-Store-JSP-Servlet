@@ -3,6 +3,7 @@ package controllers.admin.brand;
 import models.services.brand.BrandService;
 import utils.ServletUtils;
 import models.view_models.brands.BrandCreateRequest;
+import utils.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -31,7 +32,7 @@ public class AddBrand extends HttpServlet {
         brandReq.setBrandName(request.getParameter("brandName"));
         brandReq.setOrigin(request.getParameter("brandOrigin"));
         brandReq.setImage(filePart);
-
+        brandReq.setStatus(StringUtils.toInt(request.getParameter("status")));
         int brandId = BrandService.getInstance().insertBrand(brandReq);
         String error = "";
         if(brandId < 1){

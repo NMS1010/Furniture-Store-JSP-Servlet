@@ -1,6 +1,7 @@
 package models.repositories.category;
 
 import models.entities.Category;
+import models.entities.Product;
 import models.view_models.categories.CategoryCreateRequest;
 import models.view_models.categories.CategoryGetPagingRequest;
 import models.view_models.categories.CategoryUpdateRequest;
@@ -10,6 +11,9 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.FileUtil;
 import utils.HibernateUtils;
+import utils.constants.BRAND_STATUS;
+import utils.constants.CATEGORY_STATUS;
+import utils.constants.PRODUCT_STATUS;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +37,7 @@ public class CategoryRepository implements ICategoryRepository{
         category.setDescription(request.getDescription());
         category.setParentCategoryId(request.getParentCategoryId());
         category.setImage(FileUtil.encodeBase64(request.getImage()));
+        category.setStatus(request.getStatus());
         int categoryId = -1;
         try {
             tx = session.beginTransaction();
@@ -60,9 +65,29 @@ public class CategoryRepository implements ICategoryRepository{
         category.setCategoryName(request.getName());
         category.setDescription(request.getDescription());
         category.setParentCategoryId(request.getParentCategoryId());
+        category.setStatus(request.getStatus());
         if(!request.getImage().getSubmittedFileName().equals(""))
             category.setImage(FileUtil.encodeBase64(request.getImage()));
 
+        Query q2 = session.createQuery("select categoryId from Category where parentCategoryId=:s1");
+        q2.setParameter("s1",category.getCategoryId());
+        List<Integer> categoryIds = q2.list();
+        session.close();
+        for(Integer id:categoryIds){
+            Category sub = session.find(Category.class, id);
+            if(sub.getStatus() != CATEGORY_STATUS.IN_ACTIVE)
+                return false;
+        }
+        if(request.getStatus() == CATEGORY_STATUS.IN_ACTIVE){
+            Query q3 = session.createQuery("select productId from Product where category.categoryId=:s1");
+            q3.setParameter("s1",category.getCategoryId());
+            List<Integer> productIds = q3.list();
+            for(Integer id:productIds){
+                Product subProduct = session.find(Product.class, id);
+                if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                    return false;
+            }
+        }
         return HibernateUtils.merge(category);
     }
 
@@ -75,11 +100,37 @@ public class CategoryRepository implements ICategoryRepository{
         q2.setParameter("s1",category.getCategoryId());
         List<Integer> categoryIds = q2.list();
 
-        session.close();
-        if(categoryIds.size() > 0){
-            return false;
+        for(Integer id:categoryIds){
+            Category sub = session.find(Category.class, id);
+            if(sub.getStatus() != CATEGORY_STATUS.IN_ACTIVE)
+                return false;
         }
-        return HibernateUtils.remove(category);
+
+        Query q3 = session.createQuery("select productId from Product where category.categoryId=:s1");
+        q3.setParameter("s1",category.getCategoryId());
+        List<Integer> productIds = q3.list();
+        for(Integer id:productIds){
+            Product subProduct = session.find(Product.class, id);
+            if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                return false;
+        }
+        category.setStatus(CATEGORY_STATUS.IN_ACTIVE);
+        return HibernateUtils.merge(category);
+    }
+    private String getStatus(int i){
+        String status = "";
+        switch (i){
+            case CATEGORY_STATUS.ACTIVE:
+                status = "Đang dùng";
+                break;
+            case CATEGORY_STATUS.IN_ACTIVE:
+                status = "Đã xoá";
+                break;
+            default:
+                status = "Undefined";
+                break;
+        }
+        return status;
     }
     private CategoryViewModel getCategoryViewModel(Category category, Session session){
         CategoryViewModel categoryViewModel = new CategoryViewModel();
@@ -95,7 +146,8 @@ public class CategoryRepository implements ICategoryRepository{
         }
         categoryViewModel.setParentCategoryId(category.getParentCategoryId());
         categoryViewModel.setParentCategoryName(parentCategoryName);
-
+        categoryViewModel.setStatus(category.getStatus());
+        categoryViewModel.setStatusCode(getStatus(category.getStatus()));
 
         categoryViewModel.setImage(category.getImage());
         categoryViewModel.setDescription(category.getDescription());

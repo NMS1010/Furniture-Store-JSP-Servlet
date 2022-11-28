@@ -7,6 +7,7 @@ import models.view_models.brands.BrandViewModel;
 import models.view_models.users.UserViewModel;
 import models.view_models.wish_items.WishItemViewModel;
 import utils.ServletUtils;
+import utils.constants.BRAND_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -28,6 +29,7 @@ public class GetWishList extends HttpServlet {
         request.setAttribute("wishItems", wishItems);
 
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(new BrandGetPagingRequest());
+        brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
         request.setAttribute("brands", brands);
 
         ServletUtils.forward(request,response,"/views/client/wishlist.jsp");

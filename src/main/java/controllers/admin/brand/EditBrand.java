@@ -38,6 +38,7 @@ public class EditBrand extends HttpServlet {
         brandReq.setBrandName(request.getParameter("brandName"));
         brandReq.setOrigin(request.getParameter("brandOrigin"));
         brandReq.setImage(filePart);
+        brandReq.setStatus(StringUtils.toInt(request.getParameter("status")));
 
         boolean isSuccess = BrandService.getInstance().updateBrand(brandReq);
         String error = "";

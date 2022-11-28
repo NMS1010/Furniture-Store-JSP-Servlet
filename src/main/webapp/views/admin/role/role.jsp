@@ -1,4 +1,5 @@
 <%@ page import="utils.constants.DISCOUNT_STATUS" %>
+<%@ page import="utils.constants.ROLE_STATUS" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:useBean id="roles" type="java.util.ArrayList<models.view_models.roles.RoleViewModel>" scope="request"/>
@@ -47,6 +48,17 @@
                         <input id="roleName" name="roleName" class="form-control here slug-title" type="text" value="${role.roleName}" required/>
                       </div>
                     </div>
+
+                    <div class="row">
+                      <label class="col-12 col-form-label" for="status">Trạng thái</label>
+                      <div class="col-12">
+                        <select id="status" name="status" class="form-select" required>
+                          <c:forEach var="s" items="<%=ROLE_STATUS.Status%>">
+                            <option value="${s.value}" <c:if test="${s.value == role.status}">selected</c:if> >${s.key}</option>
+                          </c:forEach>
+                        </select>
+                      </div>
+                    </div>
                     <div class="row mt-4">
                       <div class="col col-6">
                         <input type="button" class="btn btn-danger clear-form" value="Huỷ">
@@ -70,6 +82,7 @@
                     <tr>
                       <th>Mã vai trò</th>
                       <th>Tên vai trò</th>
+                      <th>Trạng thái</th>
                       <th>Action</th>
                     </tr>
                     </thead>
@@ -80,6 +93,7 @@
                         <tr>
                           <td>${r.roleId}</td>
                           <td>${r.roleName}</td>
+                          <td>${r.statusCode}</td>
                           <td>
                             <div class="btn-group">
                               <button type="button"

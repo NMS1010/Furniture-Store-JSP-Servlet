@@ -7,6 +7,7 @@ import models.view_models.categories.CategoryViewModel;
 import models.view_models.products.ProductGetPagingRequest;
 import models.view_models.products.ProductViewModel;
 import utils.ServletUtils;
+import utils.constants.CATEGORY_STATUS;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -35,7 +36,7 @@ public class ClientIndex extends HttpServlet {
         }
         CategoryGetPagingRequest req2 = new CategoryGetPagingRequest();
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req2);
-        categories.removeIf(x -> x.getParentCategoryId() != 0);
+        categories.removeIf(x -> x.getParentCategoryId() != 0 || x.getStatus() == CATEGORY_STATUS.IN_ACTIVE);
         request.setAttribute("products", popularProducts);
         request.setAttribute("categories", categories);
         ServletUtils.forward(request,response,"/views/client/index.jsp");

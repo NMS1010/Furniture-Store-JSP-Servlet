@@ -12,6 +12,8 @@ import models.view_models.products.ProductViewModel;
 import utils.HibernateUtils;
 import utils.ServletUtils;
 import utils.StringUtils;
+import utils.constants.BRAND_STATUS;
+import utils.constants.CATEGORY_STATUS;
 import utils.constants.PAGING_PARAM;
 import utils.constants.SORT_BY;
 
@@ -31,10 +33,11 @@ public class RetrieveAllProduct extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         BrandGetPagingRequest req = new BrandGetPagingRequest();
         ArrayList<BrandViewModel> brands = BrandService.getInstance().retrieveAllBrand(req);
+        brands.removeIf(x -> x.getStatus() == BRAND_STATUS.IN_ACTIVE);
 
         CategoryGetPagingRequest req2 = new CategoryGetPagingRequest();
         ArrayList<CategoryViewModel> categories = CategoryService.getInstance().retrieveAllCategory(req2);
-        categories.removeIf(x -> x.getParentCategoryId() != 0);
+        categories.removeIf(x -> x.getParentCategoryId() != 0 || x.getStatus() == CATEGORY_STATUS.IN_ACTIVE);
 
         ProductGetPagingRequest req1 = new ProductGetPagingRequest();
 

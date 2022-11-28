@@ -36,7 +36,7 @@ public class AddCategory extends HttpServlet {
         req.setImage(categoryLogo);
         if(parentCategoryId != null && !parentCategoryId.equals(""))
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
-
+        req.setStatus(StringUtils.toInt(request.getParameter("status")));
         int categoryId = CategoryService.getInstance().insertCategory(req);
         String error = "";
         if(categoryId < 1){

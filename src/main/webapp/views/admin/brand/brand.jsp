@@ -1,4 +1,5 @@
 <%@ page import="com.google.gson.Gson" %>
+<%@ page import="utils.constants.BRAND_STATUS" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <jsp:useBean id="brands" scope="request" type="java.util.ArrayList<models.view_models.brands.BrandViewModel>"/>
@@ -62,6 +63,7 @@
 
                                                 <h3 class="card-title text-dark">${b.brandName}</h3>
                                                 <h5 class="card-title text-dark">${b.origin}</h5>
+                                                <h5 class="card-title text-dark">${b.statusCode}</h5>
                                                 <p class="item-count">${b.totalProducts}<span> items</span></p>
                                                 <span class="brand-delete mdi mdi-delete-outline" data-bs-toggle="modal"
                                                       data-bs-target="#modal-delete-brand" data-backdrop="static" data-keyboard="false" data-id="${b.brandId}" href="#modal-delete-brand"></span>
@@ -109,6 +111,17 @@
                                             <label class="col-12 col-form-label" for="brandOrigin">Nguồn gốc</label>
                                             <div class="col-12">
                                                 <input type="text" id="brandOrigin" name="brandOrigin" cols="40" rows="4" class="form-control" value="${brand.origin}" required/>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <label class="col-12 col-form-label" for="status">Trạng thái</label>
+                                            <div class="col-12">
+                                                <select id="status" name="status" class="form-select" required>
+                                                    <c:forEach var="s" items="<%=BRAND_STATUS.Status%>">
+                                                        <option value="${s.value}" <c:if test="${s.value == brand.status}">selected</c:if> >${s.key}</option>
+                                                    </c:forEach>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row ec-vendor-uploads">

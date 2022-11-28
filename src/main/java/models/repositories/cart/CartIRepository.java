@@ -69,7 +69,8 @@ public class CartIRepository implements ICartRepository {
     public boolean update(CartItemUpdateRequest request) {
         Session session = HibernateUtils.getSession();
         Transaction tx = null;
-
+        if(request.getQuantity() < 0)
+            return false;
         CartItem cartItem = session.find(CartItem.class, request.getCartItemId());
         ProductViewModel product = ProductRepository.getInstance().retrieveById(cartItem.getProduct().getProductId());
         if(request.getQuantity() > product.getQuantity())
@@ -226,8 +227,13 @@ public class CartIRepository implements ICartRepository {
     public int canUpdateQuantity(int cartItemId, int quantity) {
         CartItemViewModel cartItem = CartService.getInstance().retrieveCartItemById(cartItemId);
         ProductViewModel product = ProductService.getInstance().retrieveProductById(cartItem.getProductId());
-        if(product.getQuantity() < quantity)
+        if(product.getQuantity() < quantity) {
+            CartItemUpdateRequest req = new CartItemUpdateRequest();
+            req.setQuantity(product.getQuantity());
+            req.setCartItemId(cartItemId);
+            update(req);
             return product.getQuantity();
+        }
         return -1;
     }
 

@@ -60,7 +60,7 @@ function deleteCartItem(e, context){
         }
     })
 }
-function updateCartItemQuantity(e, context){
+function updateCartItemQuantity(e, context, currQuantity){
     let cartItemId  = parseInt(e.getAttribute("data-cartItemId"));
     let quantity = parseInt(document.getElementById("cart-item-quantity-"+cartItemId.toString()).value)
     if(e.type === 'button'){
@@ -70,9 +70,9 @@ function updateCartItemQuantity(e, context){
             quantity -= 1
         }
     }
-    if(quantity < 0 || quantity === 0) {
-        quantity = 0
+    if(quantity < 0 || quantity === 0 || isNaN(quantity)) {
         document.getElementById("modal-delete-cart").classList.add('is-visible')
+        document.getElementById("cart-item-quantity-" + cartItemId.toString()).value = parseInt(currQuantity)
         openCartItemModal(document.getElementById('cart-remove-'+cartItemId))
         return;
     }

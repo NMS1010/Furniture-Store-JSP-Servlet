@@ -1,6 +1,7 @@
 package models.repositories.brand;
 
 import models.entities.Brand;
+import models.entities.Product;
 import models.view_models.brands.BrandCreateRequest;
 import models.view_models.brands.BrandGetPagingRequest;
 import models.view_models.brands.BrandUpdateRequest;
@@ -10,6 +11,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.FileUtil;
 import utils.HibernateUtils;
+import utils.constants.BRAND_STATUS;
+import utils.constants.PRODUCT_STATUS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ public class BrandRepository implements IBrandRepository{
         brand.setBrandName(request.getBrandName());
         brand.setOrigin(request.getOrigin());
         brand.setImage(FileUtil.encodeBase64(request.getImage()));
-
+        brand.setStatus(request.getStatus());
         int brandId = -1;
         try {
             tx = session.beginTransaction();
@@ -63,6 +66,17 @@ public class BrandRepository implements IBrandRepository{
         if(!request.getImage().getSubmittedFileName().equals("")){
             brand.setImage(FileUtil.encodeBase64(request.getImage()));
         }
+        if(request.getStatus() == BRAND_STATUS.IN_ACTIVE){
+            Query q1 = session.createQuery("select productId from Product where brand.brandId=:s1");
+            q1.setParameter("s1",brand.getBrandId());
+            List<Integer> productIds = q1.list();
+            for(Integer id:productIds){
+                Product subProduct = session.find(Product.class, id);
+                if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                    return false;
+            }
+        }
+        brand.setStatus(request.getStatus());
         return HibernateUtils.merge(brand);
     }
 
@@ -70,8 +84,32 @@ public class BrandRepository implements IBrandRepository{
     public boolean delete(Integer entityId) {
         Session session = HibernateUtils.getSession();
         Brand brand = session.find(Brand.class, entityId);
+        Query q3 = session.createQuery("select productId from Product where brand.brandId=:s1");
+        q3.setParameter("s1",brand.getBrandId());
+        List<Integer> productIds = q3.list();
+        for(Integer id:productIds){
+            Product subProduct = session.find(Product.class, id);
+            if(subProduct.getStatus() != PRODUCT_STATUS.SUSPENDED)
+                return false;
+        }
+        brand.setStatus(BRAND_STATUS.IN_ACTIVE);
         session.close();
-        return HibernateUtils.remove(brand);
+        return HibernateUtils.merge(brand);
+    }
+    private String getStatus(int i){
+        String status = "";
+        switch (i){
+            case BRAND_STATUS.ACTIVE:
+                status = "Đang dùng";
+                break;
+            case BRAND_STATUS.IN_ACTIVE:
+                status = "Đã xoá";
+                break;
+            default:
+                status = "Undefined";
+                break;
+        }
+        return status;
     }
     private BrandViewModel getBrandViewModel(Brand brand, Session session){
         BrandViewModel brandViewModel = new BrandViewModel();
@@ -80,7 +118,8 @@ public class BrandRepository implements IBrandRepository{
         brandViewModel.setBrandName(brand.getBrandName());
         brandViewModel.setOrigin(brand.getOrigin());
         brandViewModel.setImage(brand.getImage());
-
+        brandViewModel.setStatus(brand.getStatus());
+        brandViewModel.setStatusCode(getStatus(brand.getStatus()));
         Query q = session.createQuery("select sum(quantity) from Product p where p.brand.brandId=:s1");
         q.setParameter("s1",brand.getBrandId());
         Object o = q.getSingleResult();

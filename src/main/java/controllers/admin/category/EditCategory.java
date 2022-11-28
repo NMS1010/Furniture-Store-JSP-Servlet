@@ -48,6 +48,7 @@ public class EditCategory extends HttpServlet {
         req.setDescription(description);
         req.setName(categoryName);
         req.setImage(categoryLogo);
+        req.setStatus(StringUtils.toInt(request.getParameter("status")));
         if(parentCategoryId != null && !parentCategoryId.equals(""))
             req.setParentCategoryId(StringUtils.toInt(parentCategoryId));
 
