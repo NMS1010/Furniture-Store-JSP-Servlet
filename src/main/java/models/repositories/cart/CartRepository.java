@@ -22,11 +22,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartIRepository implements ICartRepository {
-    private static CartIRepository instance = null;
-    public static CartIRepository getInstance(){
+public class CartRepository implements ICartRepository {
+    private static CartRepository instance = null;
+    public static CartRepository getInstance(){
         if(instance == null)
-            instance = new CartIRepository();
+            instance = new CartRepository();
         return instance;
     }
     @Override

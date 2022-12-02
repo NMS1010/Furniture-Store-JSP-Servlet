@@ -1,13 +1,15 @@
 package models.repositories.order;
 
+import com.paypal.base.rest.PayPalRESTException;
 import models.entities.*;
-import models.repositories.cart.CartIRepository;
+import models.repositories.cart.CartRepository;
 import models.repositories.discount.DiscountRepository;
 import models.repositories.product.ProductRepository;
 import models.services.cart.CartService;
 import models.services.discount.DiscountService;
 import models.services.mail.MailJetService;
 import models.services.order.OrderService;
+import models.services.paypal.PayPalService;
 import models.services.product.ProductService;
 import models.view_models.cart_items.CartItemUpdateRequest;
 import models.view_models.cart_items.CartItemViewModel;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderRepository implements IOrderRepository{
     private static OrderRepository instance = null;
@@ -58,7 +61,7 @@ public class OrderRepository implements IOrderRepository{
         }
         User user = session.find(User.class, request.getUserId());
         order.setUser(user);
-        if(request.getPayment() == ORDER_PAYMENT.PAID)
+        if(request.getPayment() == ORDER_PAYMENT.PAYPAL)
             order.setDateDone(DateUtils.dateTimeNow());
         order.setShipping(request.getShipping());
         order.setTotalItemPrice(request.getTotalItemPrice());
@@ -92,7 +95,7 @@ public class OrderRepository implements IOrderRepository{
             return false;
         order.setStatus(request.getStatus());
         if(request.getStatus() == ORDER_STATUS.DELIVERED && order.getPayment() == ORDER_PAYMENT.COD){
-            order.setPayment(ORDER_PAYMENT.PAID);
+            order.setPayment(ORDER_PAYMENT.PAYPAL);
             order.setDateDone(DateUtils.dateTimeNow());
         }
         session.close();
@@ -137,8 +140,8 @@ public class OrderRepository implements IOrderRepository{
     private String getPayment(int i){
         String payment = "";
         switch (i){
-            case ORDER_PAYMENT.PAID:
-                payment = "PAID";
+            case ORDER_PAYMENT.PAYPAL:
+                payment = "PAYPAL";
                 break;
             case ORDER_PAYMENT.COD:
                 payment = "COD";
@@ -309,10 +312,11 @@ public class OrderRepository implements IOrderRepository{
 
     @Override
     public boolean createOrder(HttpServletRequest request, OrderCreateRequest orderReq, int userId) {
-        ArrayList<CartItemViewModel> cartItems = CartService.getInstance().retrieveCartByUserId(userId);
+
+        ArrayList<CartItemViewModel> cartItems = CartRepository.getInstance().retrieveCartByUserId(userId);
         if(cartItems.size() == 0)
             return false;
-        int orderId = OrderService.getInstance().insertOrder(orderReq);
+        int orderId = OrderRepository.getInstance().insert(orderReq);
         if(orderId < 1)
             return false;
         for(CartItemViewModel c: cartItems){
@@ -333,14 +337,14 @@ public class OrderRepository implements IOrderRepository{
                 for(CartItemViewModel ci: cartItems) {
                     int currQuantity = ProductRepository.getInstance().getQuantity(ci.getProductId());
                     if (currQuantity == 0) {
-                        CartIRepository.getInstance().delete(ci.getCartItemId());
+                        CartRepository.getInstance().delete(ci.getCartItemId());
                     }
                     else if(currQuantity < ci.getQuantity()) {
                         CartItemUpdateRequest r = new CartItemUpdateRequest();
                         r.setCartItemId(ci.getCartItemId());
                         r.setQuantity(currQuantity);
                         r.setStatus(1);
-                        CartIRepository.getInstance().update(r);
+                        CartRepository.getInstance().update(r);
                     }
                 }
                 return false;
@@ -358,6 +362,7 @@ public class OrderRepository implements IOrderRepository{
         MailJetService.getInstance().sendMail(orderReq.getName(), orderReq.getEmail());
         if(orderReq.getDiscountId() != 0)
             DiscountRepository.getInstance().updateQuantity(orderReq.getDiscountId());
+
         return true;
     }
 
