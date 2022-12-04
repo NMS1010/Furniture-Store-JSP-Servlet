@@ -92,6 +92,8 @@ public class PayPalService implements IPayPalService{
         List<Item> items = new ArrayList<>();
         BigDecimal subTotal = BigDecimal.valueOf(0);
         for (CartItemViewModel ci:cartItems){
+            if(ci.getQuantity() == 0)
+                continue;
             Item item = new Item();
             item.setCurrency("USD");
             item.setName(ci.getProductName());
