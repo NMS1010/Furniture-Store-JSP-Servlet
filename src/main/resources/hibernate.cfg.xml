@@ -6,7 +6,7 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ecomwebapp?useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306?useUnicode=true&amp;createDatabaseIfNotExist=true&amp;characterEncoding=utf-8</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">Nms10102002</property>
     <property name = "hibernate.show_sql">true</property>
