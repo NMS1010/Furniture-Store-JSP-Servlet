@@ -17,6 +17,7 @@ public interface IUserService {
     boolean checkPassword(int userId, String password);
     boolean login(UserLoginRequest request);
     UserViewModel getUserByUserName(String username);
+    UserViewModel getUserByEmail(String email);
     ArrayList<UserViewModel> getTopUserByTotalOrder(int top);
     long getTotalUser();
     ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);

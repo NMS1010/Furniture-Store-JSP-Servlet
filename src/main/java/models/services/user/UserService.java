@@ -66,6 +66,11 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public UserViewModel getUserByEmail(String email) {
+        return UserRepository.getInstance().getUserByEmail(email);
+    }
+
+    @Override
     public ArrayList<UserViewModel> getTopUserByTotalOrder(int top) {
         return UserRepository.getInstance().getTopUserByTotalOrder(top);
     }

@@ -55,6 +55,12 @@
                                         <span class="account__login--divide__text">Hoặc</span>
                                     </div>
                                     <div class="account__social d-flex justify-content-center mb-15">
+                                        <a class="account__social--link primary__btn" href="${urlGoogleLogin}">Đăng nhập với Google</a>
+                                    </div>
+                                    <div class="account__login--divide">
+                                        <span class="account__login--divide__text">Hoặc</span>
+                                    </div>
+                                    <div class="account__social d-flex justify-content-center mb-15">
                                         <a class="account__social--link twitter" href="<%=request.getContextPath()%>/admin/login">Đăng nhập vào trang quản trị</a>
                                     </div>
 
@@ -71,12 +77,24 @@
         </div>
     </div>
     <!-- End login section  -->
-
+    <div class="modal" id="modal-error" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
+        </div>
+    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script>
+    $(window).on('load', function() {
+        if(${error != null}){
+            document.getElementById("modal-error").classList.add('is-visible')
+        }
+        else if(window.location.href.includes("error")){
+            document.getElementById("modal-error").classList.add('is-visible')
+        }
+    });
     $('#form-login').submit(function (e){
         validateForm(e)
     })

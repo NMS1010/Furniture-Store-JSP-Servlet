@@ -404,6 +404,27 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
+    public UserViewModel getUserByEmail(String email) {
+        try {
+            Session session = HibernateUtils.getSession();
+
+            Query q = session.createQuery("from User where email=:s1");
+            q.setParameter("s1", email);
+            Object o = q.getSingleResult();
+            User user = null;
+            if (o != null) {
+                user = (User) o;
+            }
+            if (user != null) {
+                return getUserViewModel(user, session);
+            }
+        }catch(Exception e){
+            return null;
+        }
+        return null;
+    }
+
+    @Override
     public long getTotalUser() {
         return HibernateUtils.count("User","");
     }
