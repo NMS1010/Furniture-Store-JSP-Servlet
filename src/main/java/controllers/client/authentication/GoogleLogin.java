@@ -19,7 +19,7 @@ public class GoogleLogin extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) {
-            throw new ServletException();
+            ServletUtils.redirect(response, request.getContextPath() + "/signin");
         } else {
             String url = request.getRequestURL().toString();
             String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
@@ -32,7 +32,7 @@ public class GoogleLogin extends HttpServlet {
             }else{
                 PrintWriter out = response.getWriter();
                 if(user.getStatus() == USER_STATUS.IN_ACTIVE){
-                    ServletUtils.redirect(response, request.getContextPath() + "/signin?error=true");
+                    ServletUtils.redirect(response, request.getContextPath() + "/signin?banned=true");
                 }else {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
