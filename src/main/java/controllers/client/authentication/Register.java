@@ -50,10 +50,12 @@ public class Register extends HttpServlet {
         });
 
         int userId = UserService.getInstance().insertUser(createReq);
-        String error = "";
+        String status = "";
         if(userId < 1){
-            error = "?error=true";
+            status = "?error=true";
+        }else{
+            status = "?register=success";
         }
-        ServletUtils.redirect(response, request.getContextPath() + "/signin" + error);
+        ServletUtils.redirect(response, request.getContextPath() + "/signin" + status);
     }
 }

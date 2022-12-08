@@ -82,6 +82,11 @@
             <h3 class="modal-header border-bottom-0">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
         </div>
     </div>
+    <div class="modal" id="modal-register" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Đăng kí tài khoản thành công</h3>
+        </div>
+    </div>
     <div class="modal" id="modal-banned" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Tài khoản của bạn bị cấm hoạt động, vui lòng liên hệ quản trị viên</h3>
@@ -101,6 +106,8 @@
         }
         else if(window.location.href.includes("banned")){
             document.getElementById("modal-banned").classList.add('is-visible')
+        }else if(window.location.href.includes("register")){
+            document.getElementById("modal-register").classList.add('is-visible')
         }
     });
     $('#form-login').submit(function (e){
