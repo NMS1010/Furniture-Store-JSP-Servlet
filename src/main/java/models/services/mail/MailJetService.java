@@ -19,7 +19,7 @@ public class MailJetService implements IMailJetService {
         return instance;
     }
     @Override
-    public void sendMail(String name, String email, String content, String title) {
+    public boolean sendMail(String name, String email, String content, String title) {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
@@ -40,7 +40,8 @@ public class MailJetService implements IMailJetService {
         try {
             response = client.post(request);
         } catch (MailjetException | MailjetSocketTimeoutException e) {
-            return;
+            return false;
         }
+        return true;
     }
 }

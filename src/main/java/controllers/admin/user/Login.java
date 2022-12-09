@@ -29,6 +29,7 @@ public class Login extends HttpServlet {
         boolean isAdmin = false;
         boolean isBanned = false;
         boolean isLogin = false;
+        boolean isUnConfirm = false;
         if(UserService.getInstance().login(loginRequest)){
             isLogin = true;
             UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
@@ -39,6 +40,9 @@ public class Login extends HttpServlet {
                     isAdmin = true;
                     if(user.getStatus() == USER_STATUS.IN_ACTIVE) {
                         isBanned = true;
+                        break;
+                    }else if(user.getStatus() == USER_STATUS.UN_CONFIRM){
+                        isUnConfirm = true;
                         break;
                     }
                     HttpSession session = request.getSession();
@@ -52,8 +56,12 @@ public class Login extends HttpServlet {
         }
         else if(!isAdmin){
             out.println("unauthorize");
-        }else if(isBanned){
+        }
+        else if(isBanned){
             out.println("banned");
+        }
+        else if(isUnConfirm){
+            out.println("unconfirm");
         }
         else{
             ServletUtils.redirect(response, request.getContextPath() + "/admin/home");

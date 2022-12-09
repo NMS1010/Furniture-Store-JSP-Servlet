@@ -36,6 +36,7 @@
     <mapping class="models.entities.UserRole"/>
     <mapping class="models.entities.WishItem"/>
     <mapping class="models.entities.WishList"/>
+    <mapping class="models.entities.MailConfirmToken"/>
 
   </session-factory>
 </hibernate-configuration>

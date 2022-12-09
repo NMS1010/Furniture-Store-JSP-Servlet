@@ -33,7 +33,10 @@ public class GoogleLogin extends HttpServlet {
                 PrintWriter out = response.getWriter();
                 if(user.getStatus() == USER_STATUS.IN_ACTIVE){
                     ServletUtils.redirect(response, request.getContextPath() + "/signin?banned=true");
-                }else {
+                }else if(user.getStatus() == USER_STATUS.UN_CONFIRM){
+                    ServletUtils.redirect(response, request.getContextPath() + "/signin?unconfirm=true");
+                }
+                else {
                     HttpSession session = request.getSession();
                     session.setAttribute("user", user);
                     ServletUtils.redirect(response, request.getContextPath() + "/home");

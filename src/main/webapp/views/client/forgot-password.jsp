@@ -32,7 +32,7 @@
     <!-- Start login section  -->
     <div class="login__section section--padding">
         <div class="container">
-            <form id="form-login" action="<%=request.getContextPath()%>/forgot-password" method="post">
+            <form id="form-forgot-password" action="<%=request.getContextPath()%>/forgot-password" method="post">
                 <div class="login__section--inner">
                     <div class="row justify-content-center">
                         <div class="col col-8">
@@ -61,34 +61,58 @@
             <h3 class="modal-header border-bottom-0">Thao tác bị lỗi, vui lòng thực hiện lại</h3>
         </div>
     </div>
-    <div class="modal" id="modal-register" data-animation="slideInUp" style="z-index: 999;">
-        <div class="modal-dialog quickview__main--wrapper">
-            <h3 class="modal-header border-bottom-0">Đăng kí tài khoản thành công</h3>
-        </div>
-    </div>
-    <div class="modal" id="modal-banned" data-animation="slideInUp" style="z-index: 999;">
-        <div class="modal-dialog quickview__main--wrapper">
-            <h3 class="modal-header border-bottom-0">Tài khoản của bạn bị cấm hoạt động, vui lòng liên hệ quản trị viên</h3>
-        </div>
-    </div>
 </main>
 
 <jsp:include page="/views/client/common/footer.jsp" />
 <jsp:include page="/views/client/common/common_js.jsp"/>
 <script>
-    $(window).on('load', function() {
-        if(${error != null}){
-            document.getElementById("modal-error").classList.add('is-visible')
+    <%--$(window).on('load', function() {--%>
+    <%--    if(${error != null}){--%>
+    <%--        document.getElementById("modal-error").classList.add('is-visible')--%>
+    <%--    }--%>
+    <%--    else if(window.location.href.includes("error")){--%>
+    <%--        document.getElementById("modal-error").classList.add('is-visible')--%>
+    <%--    }--%>
+    <%--    else if(window.location.href.includes("banned")){--%>
+    <%--        document.getElementById("modal-banned").classList.add('is-visible')--%>
+    <%--    }else if(window.location.href.includes("register")){--%>
+    <%--        document.getElementById("modal-register").classList.add('is-visible')--%>
+    <%--    }--%>
+    <%--});--%>
+    $('#form-forgot-password').submit(function (e){
+        validateForm(e)
+    })
+    function validateForm(e){
+        let noError = true;
+        e.preventDefault()
+        let url = `<%=request.getContextPath()%>` + `/email-check`
+        $.ajax({
+            url: url,
+            method: "GET",
+            data: {
+                'email': $('#email').val()
+            },
+            async: false,
+            success: function (data){
+                console.log(data)
+                let str = data.toString()
+                if(str.includes('error') && str.length <=10){
+                    document.getElementById("modal-error").classList.add('is-visible')
+                    noError = false;
+                }
+                else if(str.includes('non-exist') && str.length <= 15){
+                    $('#authenticationValidateMessage').html('Email không tồn tại').css('color','red')
+                    noError = false;
+                }
+            },
+            error: function (error){
+                noError = false;
+            }
+        })
+        if(noError){
+            $('#form-forgot-password').unbind('submit').submit();
         }
-        else if(window.location.href.includes("error")){
-            document.getElementById("modal-error").classList.add('is-visible')
-        }
-        else if(window.location.href.includes("banned")){
-            document.getElementById("modal-banned").classList.add('is-visible')
-        }else if(window.location.href.includes("register")){
-            document.getElementById("modal-register").classList.add('is-visible')
-        }
-    });
+    }
 </script>
 </body>
 </html>

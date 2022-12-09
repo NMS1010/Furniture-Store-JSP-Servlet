@@ -43,10 +43,13 @@ public class SignIn extends HttpServlet {
             UserViewModel user = UserService.getInstance().getUserByUserName(loginRequest.getUsername());
             if(user.getStatus() == USER_STATUS.IN_ACTIVE){
                 out.println("banned".trim());
+
+            }else if (user.getStatus() == USER_STATUS.UN_CONFIRM){
+                out.println("unconfirm".trim());
             }else {
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-                ServletUtils.redirect(response, request.getContextPath() + "/home");
+            HttpSession session = request.getSession();
+            session.setAttribute("user", user);
+            ServletUtils.redirect(response, request.getContextPath() + "/home");
             }
         }else{
             out.println("error".trim());

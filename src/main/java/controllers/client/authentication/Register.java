@@ -1,6 +1,7 @@
 package controllers.client.authentication;
 
 import common.user.UserUtils;
+import models.services.mail_verify_token.VerifyTokenService;
 import models.services.role.RoleService;
 import models.services.user.UserService;
 import models.view_models.roles.RoleGetPagingRequest;
@@ -38,7 +39,7 @@ public class Register extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         UserCreateRequest createReq = UserUtils.CreateRegisterRequest(request);
-        createReq.setStatus(USER_STATUS.ACTIVE);
+        createReq.setStatus(USER_STATUS.UN_CONFIRM);
         RoleGetPagingRequest reqRole = new RoleGetPagingRequest();
         ArrayList<RoleViewModel> roles = RoleService.getInstance().retrieveAllRole(reqRole);
 
@@ -55,6 +56,7 @@ public class Register extends HttpServlet {
             status = "?error=true";
         }else{
             status = "?register=success";
+            VerifyTokenService.getInstance().sendVerifyTokenMail(userId,request);
         }
         ServletUtils.redirect(response, request.getContextPath() + "/signin" + status);
     }

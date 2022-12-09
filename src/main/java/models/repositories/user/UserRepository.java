@@ -475,7 +475,7 @@ public class UserRepository implements IUserRepository{
         boolean res = HibernateUtils.merge(u);
         if(!res)
             return false;
-        MailJetService.getInstance().sendMail(u.getFirstName() + " " + u.getLastName(), email, "<h2>Chào" + u.getFirstName() + " " + u.getLastName() + ", </h2><h3>Mật khẩu mới cho tài khoản " + u.getUsername() + ": " + randomPassword + " </h3>" + "<br /><h4>Bạn vui lòng đổi mật khẩu sau khi đăng nhập. Xin cảm ơn!!!</h4>", "Mật khẩu mới FurSshop");
+        MailJetService.getInstance().sendMail(u.getFirstName() + " " + u.getLastName(), email, "<h2>Chào " + u.getFirstName() + " " + u.getLastName() + ", </h2><h3>Mật khẩu mới cho tài khoản " + u.getUsername() + ": " + randomPassword + " </h3>" + "<br /><h4>Bạn vui lòng đổi mật khẩu sau khi đăng nhập. Xin cảm ơn!!!</h4>", "(FurSshop) Mật khẩu mới ");
         return true;
     }
 }
