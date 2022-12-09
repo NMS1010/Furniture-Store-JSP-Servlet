@@ -2,9 +2,11 @@ package models.repositories.user;
 
 import common.user.UserUtils;
 import models.entities.*;
+import models.services.mail.MailJetService;
 import models.services.user.UserService;
 import models.view_models.user_roles.UserRoleViewModel;
 import models.view_models.users.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -455,5 +457,25 @@ public class UserRepository implements IUserRepository{
             }
         }
         return userRoles;
+    }
+
+    @Override
+    public boolean forgotPassword(String email) {
+        String randomPassword = RandomStringUtils.randomAlphabetic(10);
+        Session session = HibernateUtils.getSession();
+        Query q = session.createQuery("from User where email=:s1");
+        q.setParameter("s1", email);
+        User u = null;
+        try {
+            u = (User) q.getSingleResult();
+            u.setPassword(UserUtils.hashPassword(randomPassword));
+        }catch(Exception e){
+            return false;
+        }
+        boolean res = HibernateUtils.merge(u);
+        if(!res)
+            return false;
+        MailJetService.getInstance().sendMail(u.getFirstName() + " " + u.getLastName(), email, "<h2>Chào" + u.getFirstName() + " " + u.getLastName() + ", </h2><h3>Mật khẩu mới cho tài khoản " + u.getUsername() + ": " + randomPassword + " </h3>" + "<br /><h4>Bạn vui lòng đổi mật khẩu sau khi đăng nhập. Xin cảm ơn!!!</h4>", "Mật khẩu mới FurSshop");
+        return true;
     }
 }

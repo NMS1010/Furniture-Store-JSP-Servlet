@@ -85,4 +85,9 @@ public class UserService implements IUserService{
         return UserRepository.getInstance().getUserRoleByUserId(userId);
     }
 
+    @Override
+    public boolean forgotPassword(String email) {
+        return UserRepository.getInstance().forgotPassword(email);
+    }
+
 }

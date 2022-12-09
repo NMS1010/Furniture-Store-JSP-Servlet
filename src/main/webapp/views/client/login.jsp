@@ -68,6 +68,7 @@
                                         <span class="account__login--divide__text">Hoặc</span>
                                     </div>
                                     <p class="account__login--signup__text">Bạn chưa có tài khoản? <a class="text__secondary" href="<%=request.getContextPath()%>/register">Đăng ký ngay</a></p>
+                                    <p class="account__login--signup__text">Bạn không đăng nhập được? <a class="text__secondary" href="<%=request.getContextPath()%>/forgot-password">Quên mật khẩu</a></p>
                                 </div>
                             </div>
                         </div>
@@ -85,6 +86,11 @@
     <div class="modal" id="modal-register" data-animation="slideInUp" style="z-index: 999;">
         <div class="modal-dialog quickview__main--wrapper">
             <h3 class="modal-header border-bottom-0">Đăng kí tài khoản thành công</h3>
+        </div>
+    </div>
+    <div class="modal" id="modal-forgot-password" data-animation="slideInUp" style="z-index: 999;">
+        <div class="modal-dialog quickview__main--wrapper">
+            <h3 class="modal-header border-bottom-0">Vui lòng kiểm tra mail để biết thông tin chi tiết về mật khẩu</h3>
         </div>
     </div>
     <div class="modal" id="modal-banned" data-animation="slideInUp" style="z-index: 999;">
@@ -108,6 +114,8 @@
             document.getElementById("modal-banned").classList.add('is-visible')
         }else if(window.location.href.includes("register")){
             document.getElementById("modal-register").classList.add('is-visible')
+        }else if(window.location.href.includes("forgot-password")){
+            document.getElementById("modal-forgot-password").classList.add('is-visible')
         }
     });
     $('#form-login').submit(function (e){

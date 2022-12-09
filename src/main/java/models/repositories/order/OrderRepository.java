@@ -359,10 +359,9 @@ public class OrderRepository implements IOrderRepository{
         UserViewModel user = (UserViewModel) session.getAttribute("user");
         user.setTotalCartItem(user.getTotalCartItem() - cartItems.size());
         session.setAttribute("user", user);
-        MailJetService.getInstance().sendMail(user.getFirstName() + " " + user.getLastName(), user.getEmail());
         if(orderReq.getDiscountId() != 0)
             DiscountRepository.getInstance().updateQuantity(orderReq.getDiscountId());
-
+        MailJetService.getInstance().sendMail(user.getFirstName() + " " + user.getLastName(), user.getEmail(), "<h2>Chào " + user.getFirstName() + " " + user.getLastName() + " </h2>, <h4>FurSshop cảm ơn vì đã tin tưởng mua sản phẩm, đơn hàng sẽ nhanh chóng đến tay của bạn.<br />Bạn có thể xem chi tiết đơn hàng trong mục Đơn hàng của tôi. </h4><br />Xin chân thành cảm ơn bạn !!! Rất vui được phục vụ.","Đơn xác nhận đặt hàng");
         return true;
     }
 

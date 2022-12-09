@@ -19,7 +19,7 @@ public class MailJetService implements IMailJetService {
         return instance;
     }
     @Override
-    public void sendMail(String name, String email) {
+    public void sendMail(String name, String email, String content, String title) {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
@@ -34,8 +34,8 @@ public class MailJetService implements IMailJetService {
                                         .put(new JSONObject()
                                                 .put("Email", email)
                                                 .put("Name", name)))
-                                .put(Emailv31.Message.SUBJECT, "Đơn xác nhận đặt hàng")
-                                .put(Emailv31.Message.HTMLPART, "<h2>Chào " + name + " </h2>, <h4>FurSshop cảm ơn vì đã tin tưởng mua sản phẩm, đơn hàng sẽ nhanh chóng đến tay của bạn.<br />Bạn có thể xem chi tiết đơn hàng trong mục Đơn hàng của tôi. </h4><br />Xin chân thành cảm ơn bạn !!! Rất vui được phục vụ.")));
+                                .put(Emailv31.Message.SUBJECT, title)
+                                .put(Emailv31.Message.HTMLPART, content)));
 
         try {
             response = client.post(request);

@@ -21,4 +21,5 @@ public interface IUserService {
     ArrayList<UserViewModel> getTopUserByTotalOrder(int top);
     long getTotalUser();
     ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);
+    boolean forgotPassword(String email);
 }

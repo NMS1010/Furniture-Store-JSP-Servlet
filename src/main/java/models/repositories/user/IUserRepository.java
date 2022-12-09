@@ -25,4 +25,6 @@ public interface IUserRepository extends IModifyEntity<UserCreateRequest, UserUp
     UserViewModel getUserByEmail(String email);
     long getTotalUser();
     ArrayList<UserRoleViewModel> getUserRoleByUserId(int userId);
+
+    boolean forgotPassword(String email);
 }

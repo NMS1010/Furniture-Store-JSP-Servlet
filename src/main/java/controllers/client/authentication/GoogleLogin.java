@@ -19,7 +19,7 @@ public class GoogleLogin extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String code = request.getParameter("code");
         if (code == null || code.isEmpty()) {
-            ServletUtils.redirect(response, request.getContextPath() + "/signin");
+            ServletUtils.redirect(response, request.getContextPath() + "/signin?error=true");
         } else {
             String url = request.getRequestURL().toString();
             String baseURL = url.substring(0, url.length() - request.getRequestURI().length()) + request.getContextPath();
